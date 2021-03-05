@@ -29,6 +29,28 @@ const actions = {
     const data = await axios.get(`${apiUrl}object/${id}`);
     commit("setObject", data.data.data);
   },
+  async createObject({ commit }, data) {
+    await axios.post(
+      `${apiUrl}object`,
+      {
+        ...data,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+  },
+  async updateObject({ commit }, data) {
+    await axios.patch(
+      `${apiUrl}object/${data.id}`,
+      {
+        ...data.payload,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+  },
 };
 
 export default {

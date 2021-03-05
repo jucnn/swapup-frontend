@@ -1,8 +1,7 @@
 <template>
   <div>
-    <h1>All Objects</h1>
-    <div v-for="(object, index) in allObjects" :key="object.id">
-      <h2>Object #{{ index + 1 }}</h2>
+    <h1>Tous les objets</h1>
+    <div v-for="(object, index) in othersObjects" :key="object.id">
       <h3>{{ object.title }}</h3>
       <p>{{ object.description }}</p>
       <p>Etat: {{ object.state }}</p>
@@ -23,19 +22,29 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Index",
-
+  data() {
+    return {
+      othersObjects: [],
+    };
+  },
   computed: {
     ...mapState({
       allObjects: (state) => state.objects.allObjects,
+      profile: (state) => state.profile.profile.data,
     }),
   },
   methods: {
     ...mapActions({
       fetchAllObjects: "objects/fetchAllObjects",
+      fetchProfile: "profile/fetchProfile",
     }),
   },
-  mounted() {
-    this.fetchAllObjects();
+  async mounted() {
+    await this.fetchProfile();
+    await this.fetchAllObjects();
+    this.othersObjects = this.allObjects.filter(
+      (object) => object.seller_id !== this.profile._id
+    );
   },
 };
 </script>

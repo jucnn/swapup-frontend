@@ -10,7 +10,10 @@
       <div>
         <h2>Mes objets :</h2>
         <ul v-for="object in userObjects" :key="object._id">
-          <li>{{object.title}}</li>
+          <li>{{ object.title }}</li>
+          <router-link :to="{ name: 'objects.edit', params: { id: object._id } }"
+            >Modifier</router-link
+          >
         </ul>
       </div>
     </div>
