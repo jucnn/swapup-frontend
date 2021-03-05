@@ -7,6 +7,12 @@
       <p>{{ profile.telephone }}</p>
       <p>{{ profile.description }}</p>
       <p>{{ profile.address }}</p>
+      <div>
+        <h2>Mes objets :</h2>
+        <ul v-for="object in userObjects" :key="object._id">
+          <li>{{object.title}}</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -15,20 +21,30 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  name: "Login",
-
+  name: "Profile",
+  data() {
+    return {
+      userObjects: [],
+    };
+  },
   computed: {
     ...mapState({
       profile: (state) => state.profile.profile.data,
+      allObjects: (state) => state.objects.allObjects,
     }),
   },
   methods: {
     ...mapActions({
       fetchProfile: "profile/fetchProfile",
+      fetchAllObjects: "objects/fetchAllObjects",
     }),
   },
-  mounted() {
-    this.fetchProfile();
+  async mounted() {
+    await this.fetchProfile();
+    await this.fetchAllObjects();
+    this.userObjects = this.allObjects.filter(
+      (object) => object.seller_id == this.profile._id
+    );
   },
 };
 </script>
