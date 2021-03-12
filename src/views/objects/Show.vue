@@ -1,6 +1,7 @@
 <template>
   <div v-if="object">
     <h1>One object</h1>
+    <img :src="object.image" alt="">
     <h2>{{ object.title }}</h2>
     <p>{{ object.description }}</p>
     <p>Etat : {{ object.state }}</p>

@@ -1,7 +1,8 @@
 <template>
   <div>
     <h1>Tous les objets</h1>
-    <div v-for="(object, index) in othersObjects" :key="object.id">
+    <div v-for="object in othersObjects" :key="object.id">
+      <img :src="object.image" alt="" />
       <h3>{{ object.title }}</h3>
       <p>{{ object.description }}</p>
       <p>Etat: {{ object.state }}</p>
