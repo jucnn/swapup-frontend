@@ -34,6 +34,12 @@ const router = new Router({
           component: Index,
         },
         ...objectsRoutes,
+        {
+          path: "/profile",
+          name: "profile",
+          component: Profile,
+          beforeEnter: auth,
+        },
       ],
     },
     {
@@ -60,12 +66,7 @@ const router = new Router({
         next();
       },
     },
-    {
-      path: "/profile",
-      name: "profile",
-      component: Profile,
-      beforeEnter: auth,
-    },
+
     {
       path: "/user/:id",
       name: "user.index",

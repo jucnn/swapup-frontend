@@ -1,0 +1,28 @@
+.button {
+    padding:10px;
+    border-radius: 10px;
+    color:white;
+    border:none;
+    cursor: pointer;
+    display: inline-block;
+    font-size:18px;
+    font-weight: $semibold;
+    text-align: center;
+    width: 100%;
+
+    &--blue {
+        background-color: $blue;
+    }
+
+    &--green {
+        background-color: $green;
+    }
+
+    &--purple {
+        background-color: $purple;
+    }
+
+    &--red {
+        background-color: $red;
+    }
+}

@@ -5,9 +5,6 @@
 </template>
 
 <style lang="scss">
-  body #app {
-    font-family: $fontfamily;
-    color:$black;
-}
+
 
 </style>

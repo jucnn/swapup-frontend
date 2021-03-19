@@ -1,25 +1,19 @@
 <template>
   <div>
     <h1>Tous les objets</h1>
-    <div v-for="object in othersObjects" :key="object.id">
-      <img :src="object.image" alt="" />
-      <h3>{{ object.title }}</h3>
-      <p>{{ object.description }}</p>
-      <p>Etat: {{ object.state }}</p>
-      <p>Marque: {{ object.brand }}</p>
-      <p>Prix: {{ object.price }}</p>
-      <p>Association: {{ object.association }}</p>
-      <p>Pourcentage du don: {{ object.donationPercentage }}%</p>
-      <router-link :to="{ name: 'objects.show', params: { id: object._id } }"
-        >See more</router-link
-      >
-      <hr />
+    <div class="objects-container">
+      <ObjectCard class="objects-item"
+        v-for="object in othersObjects"
+        :key="object.id"
+        :object="object"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import ObjectCard from "@/components/object/ObjectCard";
 
 export default {
   name: "Index",
@@ -27,6 +21,9 @@ export default {
     return {
       othersObjects: [],
     };
+  },
+  components: {
+    ObjectCard,
   },
   computed: {
     ...mapState({
@@ -42,10 +39,22 @@ export default {
   },
   async mounted() {
     await this.fetchProfile();
-    await this.fetchAllObjects();
+    await this.fetchAllObjects(this.$route.query);
     this.othersObjects = this.allObjects.filter(
       (object) => object.seller_id !== this.profile._id
     );
   },
 };
 </script>
+
+<style lang="scss">
+.objects-container {
+  display: flex;
+  column-gap: 20px;
+
+  .objects-item {
+    flex: 1 1 0;
+    max-width: 320px;
+  }
+}
+</style>

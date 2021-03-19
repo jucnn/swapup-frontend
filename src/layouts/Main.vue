@@ -1,27 +1,25 @@
 <template>
   <div>
     <TheHeader>I'm a header</TheHeader>
-    <router-view></router-view>
+    <main>
+      <router-view />
+    </main>
     <TheFooter>I'm a footer</TheFooter>
   </div>
 </template>
 
 <script>
-import TheHeader from "@/components/TheHeader"
-import TheFooter from "@/components/TheFooter"
-
+import TheHeader from "@/components/layout/TheHeader";
+import TheFooter from "@/components/layout/TheFooter";
 
 export default {
+  name: "Main",
   components: {
     TheHeader,
-    TheFooter
-  }
-}
+    TheFooter,
+  },
+};
 </script>
 
 <style lang="scss">
-body #app {
-  font-family: $fontfamily;
-  color: $black;
-}
 </style>

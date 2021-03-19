@@ -8,7 +8,7 @@
       </div>
       <div>
         <label for="description">Description</label> <br />
-        <input type="text" name="description" v-model="description" />
+        <textarea name="description" v-model="description"></textarea>
       </div>
       <div>
         <label for="image">Sélectionne une image : (200px x 200px) *</label>
@@ -111,6 +111,7 @@ export default {
         donationPercentage: this.donationPercentage,
       };
       this.createObject(payload);
+      this.$router.push({ name: "profile" });
     },
     extractImage(input) {
       return new Promise((resolve, reject) => {

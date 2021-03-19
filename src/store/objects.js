@@ -53,8 +53,12 @@ const mutations = {
 };
 
 const actions = {
-  async fetchAllObjects({ commit }) {
-    const data = await axios.get(`${apiUrl}object`);
+  async fetchAllObjects({ commit }, query) {
+    console.log(query);
+    const data = await axios.get(`${apiUrl}object`, {
+      params: query,
+    });
+    console.log(data);
     commit("setAllObjects", data.data.data);
   },
   async fetchObject({ commit }, id) {

@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="header-logo">
-      <router-link :to="{name: 'index'}">
+      <router-link :to="{ name: 'index' }">
         <svg
           id="Logo_-_Desktop"
           data-name="Logo - Desktop"
@@ -58,7 +58,9 @@
       <router-link :to="{ name: 'register' }">S'inscrire</router-link>
     </div>
     <div class="header-profile" v-else>
-      {{ profile.username }}
+      <router-link :to="{ name: 'profile' }">{{
+        profile.username
+      }}</router-link>
     </div>
   </header>
 </template>
@@ -120,7 +122,7 @@ header {
     a {
       color: white;
       text-decoration: none;
-      font-weight:$semibold;
+      font-weight: $semibold;
     }
   }
 }
