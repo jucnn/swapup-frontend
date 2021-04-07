@@ -1,21 +1,22 @@
 <template>
-  <div class="object-card">
-    <router-link :to="{ name: 'objects.show', params: { id: object._id } }">
-      <div class="object-card_img">
-        <img :src="object.image" alt="" />
-      </div>
-      <div class="object-card_description">
-        <p>{{ object.category }}</p>
-        <h3>{{ object.title }}</h3>
-        <p>{{ object.price }}€</p>
-        <p>{{ object.seller.address }}</p>
-        <p>
-          Don : {{ object.donationPercentage }}% à "{{
-            object.association.name
-          }}"
-        </p>
-      </div>
-    </router-link>
+  <div class="col col-lg-4 col-sm-6 col-xs-12">
+    <div class="object-card">
+      <router-link :to="{ name: 'objects.show', params: { id: object._id } }">
+        <div class="object-card_img">
+          <img :src="object.image" alt="" />
+        </div>
+        <div class="object-card_description">
+          <Tag :category="object.category" />
+          <h3>{{ object.title }}</h3>
+          <p>{{ object.seller.address }}</p>
+          <p>{{ object.price }}€</p>
+          <p>
+            Don : {{ object.donationPercentage }}% à
+            <i>{{ object.association.name }}</i>
+          </p>
+        </div>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -37,6 +38,7 @@ export default {
   background-color: white;
   box-shadow: $boxshadow;
   border-radius: 10px;
+  overflow: hidden;
 
   a {
     text-decoration: none;
@@ -54,15 +56,26 @@ export default {
 
   &_description {
     padding: 20px;
+    position: relative;
+
     h3 {
       font-size: 22px;
+      line-height: 22px;
       font-weight: $semibold;
       margin-bottom: 10px;
+      margin-top: 10px;
     }
 
     p {
       margin-top: 0;
-      margin-bottom: 10px;
+      margin-bottom: 0px;
+      font-weight: $regular;
+    }
+
+    .tag {
+      position: absolute;
+      top: 0;
+      transform: translateY(-50%);
     }
   }
 }

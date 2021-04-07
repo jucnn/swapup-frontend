@@ -5,8 +5,6 @@
         id="Logo_-_Desktop"
         data-name="Logo - Desktop"
         xmlns="http://www.w3.org/2000/svg"
-        width="179.601"
-        height="49.864"
         viewBox="0 0 179.601 49.864"
       >
         <g
@@ -51,8 +49,6 @@
       :class="['bcg', loginPage ? '' : 'bcg-register']"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
-      width="1398"
-      height="804"
       viewBox="0 0 1398 804"
     >
       <defs>
@@ -173,7 +169,7 @@ export default {
       createAccount: "profile/register",
     }),
     login() {
-      console.log('fzf');
+      console.log("fzf");
       axios
         .post(
           "http://localhost:8769/auth/login",
@@ -189,7 +185,7 @@ export default {
         .catch((err) => console.log(err));
     },
     register() {
-      console.log('fzffds');
+      console.log("fzffds");
 
       axios
         .post(

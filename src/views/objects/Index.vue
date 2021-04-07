@@ -1,12 +1,15 @@
 <template>
   <div>
     <h1>Tous les objets</h1>
-    <div class="objects-container">
-      <ObjectCard class="objects-item"
-        v-for="object in othersObjects"
-        :key="object.id"
-        :object="object"
-      />
+    <div class="objects-container container">
+      <div class="row">
+        <ObjectCard
+          class="objects-item"
+          v-for="object in othersObjects"
+          :key="object.id"
+          :object="object"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -49,12 +52,12 @@ export default {
 
 <style lang="scss">
 .objects-container {
-  display: flex;
+  /*   display: flex;
   column-gap: 20px;
 
   .objects-item {
     flex: 1 1 0;
     max-width: 320px;
-  }
+  } */
 }
 </style>

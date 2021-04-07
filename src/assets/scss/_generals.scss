@@ -1,0 +1,80 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  line-height: 1.5;
+  color: $black;
+  background-color: $white;
+  position: relative;
+}
+
+main {
+  max-width: 80%;
+  margin: 60px auto;
+}
+
+body,
+input,
+textarea,
+button {
+  font-family: $fontfamily;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: $black;
+  font-weight: $semibold;
+  text-decoration: none;
+}
+
+p,
+h1,
+h2,
+h3,
+h4 {
+  margin-top: 0;
+}
+
+#register form [type="text"],
+#login form [type="text"],
+#register form [type="password"],
+#login form [type="password"] {
+  background-color: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid $black;
+  padding: 5px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+#register form [type="submit"],
+#login form [type="submit"] {
+  background-color: $purple;
+  border: none;
+  border-radius: 10px;
+  width: 70%;
+  padding: 10px 0;
+  color: $white;
+  font-weight: $semibold;
+  margin: 20px 0;
+}
+
+#register form label,
+#login form label {
+  font-weight: $semibold;
+}
+
+input:focus {
+  outline: 2px solid $lightpurple;
+}
