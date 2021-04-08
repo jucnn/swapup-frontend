@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container object-container">
     <BackButton />
     <div v-if="object" class="object">
       <div class="object_img">
@@ -87,6 +87,10 @@ export default {
   grid-template-areas:
     "img seller"
     "details details";
+
+  &-container {
+    margin-top: 80px;
+  }
 
   &_details,
   &_img,

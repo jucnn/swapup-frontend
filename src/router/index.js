@@ -2,7 +2,7 @@ import Router from "vue-router";
 import Vue from "vue";
 import VueCookies from "vue-cookies";
 
-import Index from "@/views/Index";
+import Index from "@/views/Index"; 
 import Login from "@/views/Login";
 import Register from "@/views/Register";
 import Profile from "@/views/Profile";

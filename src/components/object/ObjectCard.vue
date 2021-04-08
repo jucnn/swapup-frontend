@@ -12,7 +12,7 @@
           <p>{{ object.price }}€</p>
           <p>
             Don : {{ object.donationPercentage }}% à
-            <i>{{ object.association.name }}</i>
+            <i>{{ object.association }}</i>
           </p>
         </div>
       </router-link>
