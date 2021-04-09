@@ -3,21 +3,29 @@
     <h2>Filtres</h2>
     <div>
       <h3>Catégories</h3>
-      <Select :options="filters.categories"/>
+      <Select :options="categories" @select="categoryChecked" />
     </div>
-    <hr>
+    <hr />
     <div>
       <h3>Localisation</h3>
       <SearchBar />
     </div>
-    <hr>
+    <hr />
     <div>
       <h3>Etat</h3>
       <div>
-        <Checkbox v-model="checkedStates" v-for="(state, index) in filters.states" :key="index" :label="state.label" :val="state.value" type="checkedStates"></Checkbox>
+        <Checkbox
+          v-model="checkedStates"
+          v-for="(state, index) in states"
+          :key="index"
+          :label="state.label"
+          :slug="state.slug"
+          :id="state._id"
+          type="checkedStates"
+        ></Checkbox>
       </div>
     </div>
-    <hr>
+    <hr />
     <div>
       <h3>Prix</h3>
       <Range />
@@ -31,7 +39,7 @@ import Select from "@/components/ui/Select";
 import Range from "@/components/ui/Range";
 import Checkbox from "@/components/ui/Checkbox";
 
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   components: {
@@ -42,20 +50,46 @@ export default {
   },
   data() {
     return {
-      checkedStates: []
-    }
+      checkedStates: [],
+      /*    checkCategory: null, */
+    };
+  },
+  watch: {
+    checkedStates() {
+      this.$emit("statesChecked", this.checkedStates);
+    },
+    /*   checkedCategory() {
+      this.$emit("categoryChecked", this.checkCategory);
+    }, */
   },
   computed: {
     ...mapState({
-      filters: (state) => state.objects.filters,
+      associations: (state) => state.filters.associations,
+      categories: (state) => state.filters.categories,
+      states: (state) => state.filters.states,
     }),
-  }
+  },
+  methods: {
+    ...mapActions({
+      fetchAllAssociations: "filters/fetchAllAssociations",
+      fetchAllCategories: "filters/fetchAllCategories",
+      fetchAllStates: "filters/fetchAllStates",
+    }),
+    categoryChecked(value) {
+      this.$emit("checkCategory", value);
+    },
+  },
+  mounted() {
+    this.fetchAllAssociations();
+    this.fetchAllCategories();
+    this.fetchAllStates();
+  },
 };
 </script>
 
 <style lang="scss">
 .filters-container {
-    position: sticky;
-    padding: 10px;
+  position: sticky;
+  padding: 10px;
 }
 </style>

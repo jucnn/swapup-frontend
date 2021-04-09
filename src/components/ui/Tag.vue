@@ -31,6 +31,6 @@ export default {
     border-radius: 20px;
     color:$white;
     font-weight: $bold;
-    font-size: 14px;
+    font-size: 10px;
 }
 </style>

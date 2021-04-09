@@ -1,10 +1,11 @@
 import Vuex from "vuex";
-import Vue from 'vue'
+import Vue from "vue";
 
 import users from "./users";
 import profile from "./profile";
 import objects from "./objects";
 import swap from "./swap";
+import filters from "./filters";
 
 Vue.use(Vuex);
 
@@ -13,7 +14,8 @@ const store = new Vuex.Store({
     users,
     profile,
     objects,
-    swap
+    swap,
+    filters,
   },
 });
 

@@ -1,9 +1,13 @@
 <template>
   <div class="select">
-    <select name="" id="">
-      <option v-for="(option, index) in options" :key="index" :value="option.value">{{
-        option.label
-      }}</option>
+    <select v-model="optionChecked" @change="$emit('select', $event.target.value)">
+      <option
+        v-for="(option, index) in options"
+        :key="index"
+        :value="option.label"
+      >
+        {{ option.label }}
+      </option>
     </select>
   </div>
 </template>
@@ -13,6 +17,11 @@ export default {
   props: {
     options: Array,
   },
+  data() {
+    return {
+      optionChecked: null,
+    };
+  }
 };
 </script>
 

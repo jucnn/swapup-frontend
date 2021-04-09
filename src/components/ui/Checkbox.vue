@@ -1,22 +1,24 @@
 <template>
-  <div>
+  <div class="checkbox">
     <input
       type="checkbox"
-      :id="val"
-      :value="val"
+      :id="slug"
+      :value="label"
       v-model="checked"
       @change="onChange"
     />
-    <label :for="val">{{label}}</label>
+    <label :for="slug">{{ label }}</label>
   </div>
 </template>
 
 <script>
+//TODO : change label for id (Update objects with ObjectId)
+
 export default {
-  props: ['value', 'val', 'label'],
+  props: ["value", "slug", "label", "id"],
   data() {
     return {
-      checkedItem: false,
+      checkedItem: [],
     };
   },
   computed: {
@@ -30,10 +32,17 @@ export default {
     },
   },
   methods: {
-    onChange: function(e) {
-      console.log(this.checkedItem);
+    onChange(e) {
       this.$emit("input", this.checkedItem);
     },
   },
 };
 </script>
+
+<style lang="scss">
+.checkbox {
+  label {
+    margin-left: 5px;
+  }
+}
+</style>

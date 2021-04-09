@@ -1,5 +1,5 @@
 <template>
-  <div class="col col-lg-4 col-sm-6 col-xs-12">
+  <div class="col col-sm-4 col-xs-12">
     <div class="object-card">
       <router-link :to="{ name: 'objects.show', params: { id: object._id } }">
         <div class="object-card_img">
@@ -7,12 +7,13 @@
         </div>
         <div class="object-card_description">
           <Tag :category="object.category" />
-          <h3>{{ object.title }}</h3>
+          <div class="d-flex justify-content-between align-items-center">
+            <h3>{{ object.title }}</h3>
+            <p>{{ object.price }}€</p>
+          </div>
           <p>{{ object.seller.address }}</p>
-          <p>{{ object.price }}€</p>
           <p>
-            Don : {{ object.donationPercentage }}% à
-            <i>{{ object.association }}</i>
+            Don à <i>{{ object.association }}</i>
           </p>
         </div>
       </router-link>
@@ -39,6 +40,7 @@ export default {
   box-shadow: $boxshadow;
   border-radius: 10px;
   overflow: hidden;
+  margin-bottom: 30px;
 
   a {
     text-decoration: none;
@@ -46,7 +48,7 @@ export default {
 
   &_img {
     background-color: $lightgrey;
-    height: 200px;
+    height: 160px;
     text-align: center;
 
     img {

@@ -3,21 +3,29 @@
     <div class="objects-container container">
       <h1>Tous les objets</h1>
       <div class="row">
-        <div class="d-md-block d-none">
-          <Filters />
+        <div class="d-md-block d-none col-3">
+          <Filters
+            @statesChecked="statesChecked"
+            @checkCategory="categoryChecked"
+          />
         </div>
-        <ObjectCard
-          class="objects-item"
-          v-for="object in othersObjects"
-          :key="object.id"
-          :object="object"
-        />
+        <div class="col container col-md-9 col-xs-12">
+          <div class="row">
+            <ObjectCard
+              class="objects-item"
+              v-for="object in othersObjects"
+              :key="object.id"
+              :object="object"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import { mapState, mapActions } from "vuex";
 import ObjectCard from "@/components/object/ObjectCard";
 import Filters from "@/components/Filters";
@@ -27,6 +35,16 @@ export default {
   data() {
     return {
       othersObjects: [],
+      query: {
+        title: null,
+        description: null,
+        category: null,
+        state: null,
+        brand: null,
+        price: null,
+        association: null,
+        seller: null,
+      },
     };
   },
   components: {
@@ -39,11 +57,40 @@ export default {
       profile: (state) => state.profile.profile.data,
     }),
   },
+  watch: {
+    query: {
+      // This will let Vue know to look inside the array
+      deep: true,
+
+      // We have to move our method to a handler field
+      handler() {
+        axios
+          .post("http://localhost:8769/api/object/search", this.query, {
+            withCredentials: true,
+          })
+          .then((data) => {
+            this.othersObjects = data.data.data;
+          })
+          .catch((err) => console.log(err));
+      },
+    },
+  },
   methods: {
     ...mapActions({
       fetchAllObjects: "objects/fetchAllObjects",
       fetchProfile: "profile/fetchProfile",
+      /*  fetchObjectBySearching: "objects/fetchObjectBySearching" */
     }),
+    statesChecked(states) {
+      console.log(states);
+      this.query.state = states;
+
+      /*  */
+    },
+    categoryChecked(category) {
+      console.log('dffds');
+      this.query.category = category;
+    },
   },
   async mounted() {
     await this.fetchProfile();
