@@ -114,13 +114,14 @@ export default {
 
 <style lang="scss">
 .profile {
-  p {
-    font-size: 22px;
-  }
   &-top {
     background-color: $lightpurple;
     padding: 60px 0;
     color: $white;
+
+    p {
+      font-size: 22px;
+    }
   }
 
   &-bottom {

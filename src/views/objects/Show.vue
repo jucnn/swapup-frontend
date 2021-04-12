@@ -56,15 +56,15 @@
         <h2>{{ object.title }}</h2>
         <div class="object_criteria">
           <p><span>Prix :</span> {{ object.price }}€</p>
-          <p><span>Etat :</span> {{ object.state }}</p>
-          <p><span>Marque : </span>{{ object.brand }}</p>
+          <p><span>Etat :</span> {{ object.state.label }}</p>
           <p>
-            <span>Association :</span> {{ object.association.name }} ({{
-              object.association.type
-            }})
+            <span>Marque : </span
+            >{{ object.brand ? object.brand : "Pas de marque" }}
           </p>
           <p>
-            <span>Pourcentage du don :</span> {{ object.donationPercentage }}%
+            <span>Association :</span> {{ object.association.label }} ({{
+              object.association.type
+            }})
           </p>
         </div>
         <p>{{ object.description }}</p>

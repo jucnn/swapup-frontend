@@ -36,9 +36,8 @@
               class="col-12 col-md-6"
               :value="query.description"
               :maxlength="300"
-              placeholder="Sac à dos renforcé dans le dos de couleur noir avec des bandes réfléchissantes. Encore avec étiquette
-
-"
+              placeholder="Sac à dos renforcé dans le dos de couleur noir avec des bandes réfléchissantes. Encore avec étiquette"
+              v-model="query.description"
             />
             <!--  <textarea
               class="col-12 col-md-6"
@@ -56,10 +55,11 @@
             <br />
             <Select
               class="col-12 col-md-6"
-              v-if="categoriesWithAll"
-              :options="categoriesWithAll"
+              v-if="categories"
+              :options="categories"
               name="categories"
-              :defaultValue="categoriesWithAll[0].label"
+              v-model="query.category"
+              @select="categoryChecked"
             />
           </div>
         </div>
@@ -71,7 +71,8 @@
               v-if="states[0]"
               :options="states"
               name="states"
-              :defaultValue="states[0].label"
+              v-model="query.state"
+              @select="stateChecked"
             />
           </div>
         </div>
@@ -113,7 +114,7 @@
               v-if="associations[0]"
               :options="associations"
               name="associations"
-              :defaultValue="associations[0].label"
+              @select="associationChecked"
             />
           </div>
         </div>
@@ -148,14 +149,14 @@ export default {
   data() {
     return {
       query: {
-        title: "Sac à dos",
-        description: "Description d'un sac à dos",
-        state: "Bon état",
-        brand: "Nike",
-        category: "Mode",
-        price: 20,
-        association: "Puzzle",
-        donationPercentage: 100,
+        title: "Télévision",
+        description:
+          "Télévision encore en état de marche mais sans télécommande. Taille : 22",
+        state: null,
+        brand: "LG",
+        category: null,
+        price: "22",
+        association: null,
       },
       categoriesWithAll: null,
     };
@@ -165,6 +166,7 @@ export default {
       associations: (state) => state.filters.associations,
       categories: (state) => state.filters.categories,
       states: (state) => state.filters.states,
+      profile: (state) => state.profile.profile.data,
     }),
   },
   methods: {
@@ -172,24 +174,27 @@ export default {
       fetchAllAssociations: "filters/fetchAllAssociations",
       fetchAllCategories: "filters/fetchAllCategories",
       fetchAllStates: "filters/fetchAllStates",
+      fetchProfile: "profile/fetchProfile",
+
+      createObject: "objects/createObject",
     }),
     async create() {
-      const objectImage = await this.extractImage(
+      /*   const objectImage = await this.extractImage(
         document.querySelector('[name="image"]')
       );
-      const objectImageResized = await this.resizeImage(objectImage.value);
+      const objectImageResized = await this.resizeImage(objectImage.value); */
 
       const payload = {
-        title: this.title,
-        description: this.description,
-        image: objectImageResized,
-        category: this.category,
-        state: this.state,
-        brand: this.brand,
-        price: this.price,
-        association: this.association,
-        donationPercentage: this.donationPercentage,
+        title: this.query.title,
+        description: this.query.description,
+        image: null,
+        category: this.query.category,
+        state: this.query.state,
+        brand: this.query.brand,
+        price: this.query.price,
+        association: this.query.association,
       };
+      console.log(payload);
       this.createObject(payload);
       this.$router.push({ name: "profile" });
     },
@@ -236,24 +241,21 @@ export default {
         };
       });
     },
-    statesChecked(value) {
-      console.log(value);
+    stateChecked(value) {
+      this.query.state = value;
     },
     categoryChecked(value) {
-      console.log(value);
+      this.query.category = value;
     },
     associationChecked(value) {
-      console.log(value);
+      this.query.association = value;
     },
   },
-  async mounted() {
+  mounted() {
+    this.fetchProfile();
     this.fetchAllAssociations();
-    await this.fetchAllCategories();
+    this.fetchAllCategories();
     this.fetchAllStates();
-    this.categoriesWithAll = [
-      { label: "Toutes les catégories", slug: "All" },
-      ...this.categories,
-    ];
   },
 };
 </script>

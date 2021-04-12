@@ -9,7 +9,7 @@
       <option
         v-for="(option, index) in options"
         :key="index"
-        :value="option.label"
+        :value="option._id"
       >
         {{ option.label }}
       </option>
@@ -30,7 +30,7 @@ export default {
     };
   },
   mounted() {
-    this.optionChecked = this.defaultValue;
+    /* this.optionChecked = this.defaultValue; */
   },
 };
 </script>

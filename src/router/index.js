@@ -75,32 +75,5 @@ const router = new Router({
   ],
 });
 
-/* const router = new Router({
-  mode: "history",
-  base: "/",
-  routes: [
-    {
-      path: "/",
-      name: "index",
-      component: Index,
-    },
-    ,
-    {
-      path: "/objects",
-      name: "objects.index",
-      component: ObjectsIndex,
-    },
-    {
-      path: "/objects/:id",
-      name: "objects.show",
-      component: ObjectsShow,
-    },
-    {
-      path: "/user/:id",
-      name: "user.index",
-      component: UserIndex,
-    },
-  ],
-}); */
 
 export default router;

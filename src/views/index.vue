@@ -1,5 +1,5 @@
 <template>
-  <div class="objects-feed ">
+  <div class="objects-feed">
     <div class="objects-container container header-space">
       <h1>Tous les objets</h1>
       <div class="row">
@@ -13,7 +13,7 @@
           <div class="row">
             <ObjectCard
               class="objects-item"
-              v-for="object in othersObjects"
+              v-for="object in allObjects"
               :key="object.id"
               :object="object"
             />
@@ -54,7 +54,6 @@ export default {
   computed: {
     ...mapState({
       allObjects: (state) => state.objects.allObjects,
-      profile: (state) => state.profile.profile.data,
     }),
   },
   watch: {
@@ -78,7 +77,6 @@ export default {
   methods: {
     ...mapActions({
       fetchAllObjects: "objects/fetchAllObjects",
-      fetchProfile: "profile/fetchProfile",
       /*  fetchObjectBySearching: "objects/fetchObjectBySearching" */
     }),
     statesChecked(states) {
@@ -97,12 +95,8 @@ export default {
       }
     },
   },
-  async mounted() {
-    await this.fetchProfile();
-    await this.fetchAllObjects(this.$route.query);
-    this.othersObjects = this.allObjects.filter(
-      (object) => object.seller_id !== this.profile._id
-    );
+  mounted() {
+    this.fetchAllObjects(this.$route.query);
   },
 };
 </script>

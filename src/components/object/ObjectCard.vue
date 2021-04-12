@@ -6,14 +6,14 @@
           <img :src="object.image" alt="" />
         </div>
         <div class="object-card_description">
-          <Tag :category="object.category" />
+          <Tag :category="object.category.label" />
           <div class="d-flex justify-content-between align-items-center">
             <h3>{{ object.title }}</h3>
             <p>{{ object.price }}€</p>
           </div>
           <p>{{ object.seller.address }}</p>
           <p>
-            Don à <i>{{ object.association }}</i>
+            Don à <i>{{ object.association.label }}</i>
           </p>
         </div>
       </router-link>
