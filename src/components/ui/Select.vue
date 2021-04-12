@@ -1,6 +1,11 @@
 <template>
   <div class="select">
-    <select v-model="optionChecked" @change="$emit('select', $event.target.value)">
+    <select
+      :name="name"
+      :id="name"
+      v-model="optionChecked"
+      @change="$emit('select', $event.target.value)"
+    >
       <option
         v-for="(option, index) in options"
         :key="index"
@@ -16,12 +21,17 @@
 export default {
   props: {
     options: Array,
+    defaultValue: String,
+    name: String,
   },
   data() {
     return {
       optionChecked: null,
     };
-  }
+  },
+  mounted() {
+    this.optionChecked = this.defaultValue;
+  },
 };
 </script>
 

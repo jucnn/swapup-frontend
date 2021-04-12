@@ -1,28 +1,39 @@
 .button {
-    padding:10px;
-    border-radius: 10px;
-    color:white;
-    border:none;
-    cursor: pointer;
-    display: inline-block;
-    font-size:18px;
-    font-weight: $semibold;
-    text-align: center;
-    width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: $semibold;
+  text-align: center;
+  width: 100%;
 
-    &--blue {
-        background-color: $blue;
-    }
+  &--blue {
+    background-color: $blue;
+  }
 
-    &--green {
-        background-color: $green;
-    }
+  &--green {
+    background-color: $green;
+  }
 
-    &--purple {
-        background-color: $purple;
-    }
+  &--purple {
+    background-color: $purple;
+  }
 
-    &--red {
-        background-color: $red;
-    }
+  &--red {
+    background-color: $red;
+  }
+}
+
+.header-space {
+  margin-top: 80px;
+}
+
+.box-white {
+  background-color: white;
+  box-shadow: $boxshadow;
+  padding: 20px 40px;
+  border-radius: 10px;
 }

@@ -1,6 +1,6 @@
 <template>
-  <div class="objects-feed">
-    <div class="objects-container container">
+  <div class="objects-feed ">
+    <div class="objects-container container header-space">
       <h1>Tous les objets</h1>
       <div class="row">
         <div class="d-md-block d-none col-3">
@@ -82,14 +82,19 @@ export default {
       /*  fetchObjectBySearching: "objects/fetchObjectBySearching" */
     }),
     statesChecked(states) {
-      console.log(states);
-      this.query.state = states;
-
-      /*  */
+      if (states.length != 0) {
+        this.query.state = states;
+      } else {
+        this.query.state = null;
+      }
     },
     categoryChecked(category) {
-      console.log('dffds');
-      this.query.category = category;
+      console.log(category);
+      if (category != "Toutes les catégories") {
+        this.query.category = category;
+      } else {
+        this.query.category = null;
+      }
     },
   },
   async mounted() {

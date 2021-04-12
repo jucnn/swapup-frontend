@@ -3,7 +3,7 @@
     <h2>Filtres</h2>
     <div>
       <h3>Catégories</h3>
-      <Select :options="categories" @select="categoryChecked" />
+      <Select v-if="categoriesWithAll" :options="categoriesWithAll" :defaultValue="categoriesWithAll[0].label" @select="categoryChecked" />
     </div>
     <hr />
     <div>
@@ -51,6 +51,7 @@ export default {
   data() {
     return {
       checkedStates: [],
+      categoriesWithAll: null,
       /*    checkCategory: null, */
     };
   },
@@ -79,10 +80,14 @@ export default {
       this.$emit("checkCategory", value);
     },
   },
-  mounted() {
+  async mounted() {
     this.fetchAllAssociations();
-    this.fetchAllCategories();
+    await this.fetchAllCategories();
     this.fetchAllStates();
+    this.categoriesWithAll = [
+      { label: "Toutes les catégories", slug: "All" },
+      ...this.categories,
+    ];
   },
 };
 </script>

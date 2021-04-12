@@ -1,97 +1,177 @@
 <template>
-  <div>
+  <div class="container object-create header-space">
     <h1>Ajouter un objet</h1>
-    <form v-if="filters" @submit.prevent="create">
-      <div>
-        <label for="title">Titre</label> <br />
-        <input type="text" name="title" v-model="title" />
+    <form @submit.prevent="create">
+      <div class="box-white">
+        <div class="container">
+          <div class="row object-create_input">
+            <label class="col-12 col-md-6" for="image"
+              >Sélectionne une image : (200px x 200px) *</label
+            >
+            <input
+              class="col-12 col-md-6"
+              type="file"
+              name="image"
+              id="image"
+            />
+          </div>
+        </div>
+        <div class="container">
+          <div class="row object-create_input">
+            <label class="col-12 col-md-6" for="title">Titre</label> <br />
+            <Input
+              name="title"
+              class="col-12 col-md-6"
+              type="text"
+              placeholder="Ex : Sac de randonnée"
+              v-model="query.title"
+            />
+          </div>
+        </div>
+        <div class="container">
+          <div class="row object-create_input">
+            <label class="col-12 col-md-6" for="description">Description</label>
+            <br />
+            <Textarea
+              class="col-12 col-md-6"
+              :value="query.description"
+              :maxlength="300"
+              placeholder="Sac à dos renforcé dans le dos de couleur noir avec des bandes réfléchissantes. Encore avec étiquette
+
+"
+            />
+            <!--  <textarea
+              class="col-12 col-md-6"
+              name="description"
+              v-model="query.description"
+            ></textarea> -->
+          </div>
+        </div>
       </div>
-      <div>
-        <label for="description">Description</label> <br />
-        <textarea name="description" v-model="description"></textarea>
+
+      <div class="box-white">
+        <div class="container">
+          <div class="row object-create_input">
+            <label class="col-12 col-md-6" for="categories">Catégorie</label>
+            <br />
+            <Select
+              class="col-12 col-md-6"
+              v-if="categoriesWithAll"
+              :options="categoriesWithAll"
+              name="categories"
+              :defaultValue="categoriesWithAll[0].label"
+            />
+          </div>
+        </div>
+        <div class="container">
+          <div class="row object-create_input">
+            <label class="col-12 col-md-6" for="states">Etat</label>
+            <Select
+              class="col-12 col-md-6"
+              v-if="states[0]"
+              :options="states"
+              name="states"
+              :defaultValue="states[0].label"
+            />
+          </div>
+        </div>
+        <div class="container">
+          <div class="row object-create_input">
+            <label class="col-12 col-md-6" for="brand">Marque</label> <br />
+            <Input
+              name="brand"
+              class="col-12 col-md-6"
+              type="text"
+              placeholder="Ex : Nike"
+              v-model="query.brand"
+            />
+          </div>
+        </div>
       </div>
-      <div>
-        <label for="image">Sélectionne une image : (200px x 200px) *</label>
-        <input type="file" name="image" id="image" />
+
+      <div class="box-white">
+        <div class="container">
+          <div class="row object-create_input">
+            <label class="col-12 col-md-6" for="price">Prix</label> <br />
+            <Input
+              name="price"
+              class="col-12 col-md-6"
+              type="number"
+              placeholder="0.00€"
+              v-model="query.price"
+            />
+          </div>
+        </div>
+        <div class="container">
+          <div class="row object-create_input">
+            <label class="col-12 col-md-6" for="associations"
+              >Association</label
+            >
+            <br />
+            <Select
+              class="col-12 col-md-6"
+              v-if="associations[0]"
+              :options="associations"
+              name="associations"
+              :defaultValue="associations[0].label"
+            />
+          </div>
+        </div>
       </div>
-      <div>
-        <label for="category">Catégorie</label> <br />
-        <select name="category" id="category" v-model="category">
-          <option
-            v-for="category in filters.category"
-            :key="category"
-            :value="category"
+      <div class="container">
+        <div class="row justify-content-center">
+          <button
+            class="button button--purple col col-12 col-sm-6 col-md-4"
+            type="submit"
+            value="create"
           >
-            {{ category }}
-          </option>
-        </select>
+            Créer
+          </button>
+        </div>
       </div>
-      <div>
-        <label for="state">Etat</label> <br />
-        <select name="state" id="state" v-model="state">
-          <option v-for="state in filters.state" :key="state" :value="state">
-            {{ state }}
-          </option>
-        </select>
-      </div>
-      <div>
-        <label for="brand">Marque</label> <br />
-        <input type="text" name="brand" v-model="brand" />
-      </div>
-      <div>
-        <label for="price">Prix</label> <br />
-        <input type="number" name="price" v-model="price" />
-      </div>
-      <div>
-        <label for="association">Association</label> <br />
-        <select name="association" id="association" v-model="association">
-          <option
-            v-for="association in filters.associations"
-            :key="association.name"
-            :value="association"
-          >
-            {{ association.name }} ({{ association.type }})
-          </option>
-        </select>
-      </div>
-      <div>
-        <label for="donationPercentage">Pourcentage pour l'association</label>
-        <br />
-        <input
-          type="text"
-          name="donationPercentage"
-          v-model="donationPercentage"
-        />
-      </div>
-      <button type="submit" value="create">Créer</button>
     </form>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Select from "@/components/ui/Select";
+import Input from "@/components/ui/Input";
+import Textarea from "@/components/ui/Textarea";
 
 export default {
+  components: {
+    Select,
+    Input,
+    Textarea,
+  },
   data() {
     return {
-      title: "Sac à dos",
-      description: "Description d'un sac à dos",
-      state: "Bon état",
-      brand: "Nike",
-      category: "Mode",
-      price: 20,
-      association: "Puzzle",
-      donationPercentage: 100,
+      query: {
+        title: "Sac à dos",
+        description: "Description d'un sac à dos",
+        state: "Bon état",
+        brand: "Nike",
+        category: "Mode",
+        price: 20,
+        association: "Puzzle",
+        donationPercentage: 100,
+      },
+      categoriesWithAll: null,
     };
   },
   computed: {
     ...mapState({
-      filters: (state) => state.objects.filters,
+      associations: (state) => state.filters.associations,
+      categories: (state) => state.filters.categories,
+      states: (state) => state.filters.states,
     }),
   },
   methods: {
     ...mapActions({
-      createObject: "objects/createObject",
+      fetchAllAssociations: "filters/fetchAllAssociations",
+      fetchAllCategories: "filters/fetchAllCategories",
+      fetchAllStates: "filters/fetchAllStates",
     }),
     async create() {
       const objectImage = await this.extractImage(
@@ -156,9 +236,42 @@ export default {
         };
       });
     },
+    statesChecked(value) {
+      console.log(value);
+    },
+    categoryChecked(value) {
+      console.log(value);
+    },
+    associationChecked(value) {
+      console.log(value);
+    },
+  },
+  async mounted() {
+    this.fetchAllAssociations();
+    await this.fetchAllCategories();
+    this.fetchAllStates();
+    this.categoriesWithAll = [
+      { label: "Toutes les catégories", slug: "All" },
+      ...this.categories,
+    ];
   },
 };
 </script>
-
+ 
 <style lang="scss">
+.object {
+  &-create {
+    .box-white {
+      margin-bottom: 30px;
+    }
+
+    &_input {
+      margin-bottom: 30px;
+    }
+
+    button {
+      margin-top: 30px;
+    }
+  }
+}
 </style>

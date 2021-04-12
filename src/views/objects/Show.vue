@@ -5,8 +5,20 @@
       <div class="object_img">
         <img :src="object.image" alt="" />
       </div>
-      <div class="object_seller">
-        <div>
+      <div class="object_seller box-white">
+        <div v-if="object.seller._id == profile._id" class="object_btns-owner">
+          <router-link
+            :to="{ name: 'objects.edit' }"
+            class="button button--purple"
+            >Modifier</router-link
+          >
+          <router-link
+            :to="{ name: 'objects.delete' }"
+            class="button button--red"
+            >Supprimer</router-link
+          >
+        </div>
+        <div v-else>
           <p>
             Vendu par :
             <router-link
@@ -26,13 +38,21 @@
               >Profil du vendeur</router-link
             >
             <div class="object_btns-actions">
-              <button class="button button--purple">Swaper</button>
-              <button class="button button--green">Acheter</button>
+              <router-link
+                :to="{ name: 'objects.create' }"
+                class="button button--purple"
+                >Swaper</router-link
+              >
+              <router-link
+                :to="{ name: 'objects.create' }"
+                class="button button--green"
+                >Acheter</router-link
+              >
             </div>
           </div>
         </div>
       </div>
-      <div class="object_details">
+      <div class="object_details box-white">
         <h2>{{ object.title }}</h2>
         <div class="object_criteria">
           <p><span>Prix :</span> {{ object.price }}€</p>
@@ -66,14 +86,17 @@ export default {
   computed: {
     ...mapState({
       object: (state) => state.objects.object,
+      profile: (state) => state.profile.profile.data,
     }),
   },
   methods: {
     ...mapActions({
       fetchObject: "objects/fetchObject",
+      fetchProfile: "profile/fetchProfile",
     }),
   },
   async mounted() {
+    await this.fetchProfile();
     await this.fetchObject(this.$route.params.id);
   },
 };
@@ -92,9 +115,7 @@ export default {
     margin-top: 80px;
   }
 
-  &_details,
-  &_img,
-  &_seller {
+  &_img {
     border-radius: 10px;
   }
 
@@ -104,13 +125,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  &_details,
-  &_seller {
-    background-color: white;
-    box-shadow: $boxshadow;
-    padding: 20px 40px;
+    min-height: 200px;
   }
 
   &_details {
@@ -146,6 +161,13 @@ export default {
       display: flex;
       column-gap: 10px;
       margin-top: 10px;
+    }
+  }
+
+  &_btns-owner {
+    width: 100%;
+    a:not(:last-child) {
+      margin-bottom: 20px;
     }
   }
 }

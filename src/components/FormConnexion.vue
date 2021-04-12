@@ -123,15 +123,30 @@
       <form @submit.prevent="loginPage ? login() : register()">
         <div class="connexion-container_item" v-if="!loginPage">
           <label for="username">Nom d'utilisateur</label> <br />
-          <input type="text" name="username" v-model="username" />
+          <Input
+            name="username"
+            type="text"
+            placeholder="Juliette"
+            v-model="username"
+          />
         </div>
         <div class="connexion-container_item">
           <label for="email">Email</label> <br />
-          <input type="text" name="email" v-model="email" /><br />
+          <Input
+            name="email"
+            type="text"
+            placeholder="juliette@gmail.com"
+            v-model="email"
+          />
         </div>
         <div class="connexion-container_item">
           <label for="password">Mot de passe</label> <br />
-          <input type="password" name="password" v-model="password" /><br />
+          <Input
+            name="password"
+            type="password"
+            placeholder="Juliette"
+            v-model="password"
+          />
         </div>
         <input
           type="submit"
@@ -148,9 +163,13 @@
 <script>
 import axios from "axios";
 import { mapActions } from "vuex";
+import Input from "@/components/ui/Input";
 
 export default {
   name: "FormConnexion",
+  components: {
+    Input,
+  },
   props: {
     loginPage: {
       type: Boolean,
