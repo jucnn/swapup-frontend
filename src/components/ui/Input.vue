@@ -1,5 +1,5 @@
 <template>
-  <div class="input">
+  <div class="form">
     <input
       :type="type"
       :placeholder="placeholder"
@@ -22,16 +22,5 @@ export default {
 </script>
 
 <style lang="scss">
-.input {
-  input {
-    width: 100%;
-    background-color: transparent;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 1px solid $black;
-    padding: 5px;
-    font-size: 16px;
-  }
-}
+
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="container object-container">
-    <BackButton />
+    <!-- <BackButton /> -->
     <div v-if="object" class="object">
       <div class="object_img">
         <img :src="object.image" alt="" />

@@ -4,7 +4,7 @@
     <form @submit.prevent="create">
       <div class="box-white">
         <div class="container">
-          <div class="row object-create_input">
+          <div class="row align-items-start object-create_input">
             <label class="col-12 col-md-6" for="image"
               >Sélectionne une image : (200px x 200px) *</label
             >
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="container">
-          <div class="row object-create_input">
+          <div class="row align-items-start object-create_input">
             <label class="col-12 col-md-6" for="title">Titre</label> <br />
             <Input
               name="title"
@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="container">
-          <div class="row object-create_input">
+          <div class="row align-items-start object-create_input">
             <label class="col-12 col-md-6" for="description">Description</label>
             <br />
             <Textarea
@@ -50,7 +50,7 @@
 
       <div class="box-white">
         <div class="container">
-          <div class="row object-create_input">
+          <div class="row align-items-start object-create_input">
             <label class="col-12 col-md-6" for="categories">Catégorie</label>
             <br />
             <Select
@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="container">
-          <div class="row object-create_input">
+          <div class="row align-items-start object-create_input">
             <label class="col-12 col-md-6" for="states">Etat</label>
             <Select
               class="col-12 col-md-6"
@@ -77,7 +77,7 @@
           </div>
         </div>
         <div class="container">
-          <div class="row object-create_input">
+          <div class="row align-items-start object-create_input">
             <label class="col-12 col-md-6" for="brand">Marque</label> <br />
             <Input
               name="brand"
@@ -92,7 +92,7 @@
 
       <div class="box-white">
         <div class="container">
-          <div class="row object-create_input">
+          <div class="row align-items-start object-create_input">
             <label class="col-12 col-md-6" for="price">Prix</label> <br />
             <Input
               name="price"
@@ -104,7 +104,7 @@
           </div>
         </div>
         <div class="container">
-          <div class="row object-create_input">
+          <div class="row align-items-start object-create_input">
             <label class="col-12 col-md-6" for="associations"
               >Association</label
             >

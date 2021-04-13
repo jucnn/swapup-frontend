@@ -9,11 +9,6 @@
                 <div class="profile-photo">
                   <!-- <img src="" alt="" /> -->
                 </div>
-                <router-link
-                  class="button button--purple"
-                  :to="{ name: 'objects.create' }"
-                  >Modifier mon profil</router-link
-                >
               </div>
             </div>
             <div class="col-8">
@@ -25,6 +20,16 @@
                 Membre depuis le
                 {{ new Date(profile.creationDate).toLocaleDateString() }}
               </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="profile-btns col-12 col-sm-4">
+              <router-link
+                class="button button--purple"
+                :to="{ name: 'objects.create' }"
+                >Modifier mon profil</router-link
+              >
+              <ButtonLogout />
             </div>
           </div>
         </div>
@@ -60,17 +65,20 @@
                 :object="object"
               />
             </div>
+            <div class="d-sm-none addbutton-container">
+              <AddButton />
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <AddButton class="d-sm-none" />
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
 import Button from "@/components/ui/Button";
+import ButtonLogout from "@/components/user/ButtonLogout";
 import AddButton from "@/components/ui/AddButton";
 import ObjectCard from "@/components/object/ObjectCard";
 
@@ -80,6 +88,7 @@ export default {
     Button,
     AddButton,
     ObjectCard,
+    ButtonLogout,
   },
   data() {
     return {
@@ -124,6 +133,14 @@ export default {
     }
   }
 
+  &-btns {
+    width: 100%;
+
+    & > * {
+      margin-bottom: 20px;
+    }
+  }
+
   &-bottom {
     margin-top: 60px;
 
@@ -144,11 +161,30 @@ export default {
   }
 
   &-photo {
-    height: 200px;
-    width: 200px;
+    height: 100px;
+    width: 100px;
     border-radius: 100%;
     background-color: lightgrey;
     margin-bottom: 60px;
+  }
+
+  .addbutton-container {
+    position: sticky;
+    bottom: 20px;
+    left: 80%;
+    display: inline-block;
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .profile {
+    &-top {
+      padding: 30px 0;
+      p {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+    }
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="col col-sm-4 col-xs-12">
+  <div class="col-6 col-lg-4">
     <div class="object-card">
       <router-link :to="{ name: 'objects.show', params: { id: object._id } }">
         <div class="object-card_img">
@@ -7,9 +7,13 @@
         </div>
         <div class="object-card_description">
           <Tag :category="object.category.label" />
-          <div class="d-flex justify-content-between align-items-center">
-            <h3>{{ object.title }}</h3>
-            <p>{{ object.price }}€</p>
+          <div
+            class="container-fluid "
+          >
+            <div class="row justify-content-between align-items-center">
+              <h3 class="col-12 col-md-9">{{ object.title }}</h3>
+              <p class="col-12 col-md-3">{{ object.price }}€</p>
+            </div>
           </div>
           <p>{{ object.seller.address }}</p>
           <p>
@@ -57,15 +61,18 @@ export default {
   }
 
   &_description {
-    padding: 20px;
+    padding: 30px 20px 20px 20px;
     position: relative;
 
+    .container-fluid {
+      padding: 0;
+    }
+
     h3 {
-      font-size: 22px;
+      font-size: 18px;
       line-height: 22px;
       font-weight: $semibold;
       margin-bottom: 10px;
-      margin-top: 10px;
     }
 
     p {

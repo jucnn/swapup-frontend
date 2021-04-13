@@ -1,5 +1,5 @@
 <template>
-  <div class="textarea">
+  <div class="form">
     <textarea
       :maxlength="maxlength"
       :placeholder="placeholder"
@@ -20,9 +20,5 @@ export default {
 </script>
 
 <style lang="scss">
-.textarea {
-  textarea {
-    width: 100%;
-  }
-}
+
 </style>

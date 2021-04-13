@@ -1,7 +1,7 @@
 <template>
   <div class="objects-feed">
     <div class="objects-container container header-space">
-      <h1>Tous les objets</h1>
+      <h1>Tous les objets </h1>
       <div class="row">
         <div class="d-md-block d-none col-3">
           <Filters
@@ -13,7 +13,7 @@
           <div class="row">
             <ObjectCard
               class="objects-item"
-              v-for="object in allObjects"
+              v-for="object in filteredObject"
               :key="object.id"
               :object="object"
             />
@@ -34,7 +34,7 @@ export default {
   name: "Index",
   data() {
     return {
-      othersObjects: [],
+      filteredObject: [],
       query: {
         title: null,
         description: null,
@@ -63,12 +63,13 @@ export default {
 
       // We have to move our method to a handler field
       handler() {
+        console.log(this.query);
         axios
           .post("http://localhost:8769/api/object/search", this.query, {
             withCredentials: true,
           })
           .then((data) => {
-            this.othersObjects = data.data.data;
+            this.filteredObject = data.data.data;
           })
           .catch((err) => console.log(err));
       },
@@ -95,8 +96,9 @@ export default {
       }
     },
   },
-  mounted() {
-    this.fetchAllObjects(this.$route.query);
+  async mounted() {
+    await this.fetchAllObjects(this.$route.query);
+    this.filteredObject = this.allObjects
   },
 };
 </script>

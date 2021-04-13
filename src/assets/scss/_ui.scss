@@ -37,3 +37,16 @@
   padding: 20px 40px;
   border-radius: 10px;
 }
+
+.form {
+  input, textarea {
+    width: 100%;
+    background-color: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid $black;
+    padding: 5px;
+    font-size: 16px;
+  }
+}

@@ -6,6 +6,7 @@
 
 main {
   min-height: 100vh;
+  padding-top: 10vh;
 }
 
 body {
@@ -88,4 +89,17 @@ p {
 
 input:focus {
   outline: 2px solid $lightpurple;
+}
+
+
+@media screen and (max-width:$sm) {
+ p {
+   font-size:14px;
+ } 
+}
+
+@media screen and (max-width:$md) {
+  main {
+    padding-top: 15vh;
+  }
 }

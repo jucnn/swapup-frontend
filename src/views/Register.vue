@@ -7,7 +7,7 @@
 <script>
 import axios from "axios";
 import { mapActions } from "vuex";
-import FormConnexion from "@/components/FormConnexion"
+import FormConnexion from "@/components/user/FormConnexion"
 
 
 export default {

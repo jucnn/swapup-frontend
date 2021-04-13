@@ -1,8 +1,8 @@
 <template>
-  <header>
+  <header :class="windowTop > 200 ? 'small-header' : ''">
     <div class="container">
       <div class="row align-items-center justify-content-between">
-        <div class="header-logo col-md-3">
+        <div class="header-logo col-xs-12 col-md-3">
           <router-link :to="{ name: 'index' }">
             <svg
               id="Logo_-_Desktop"
@@ -55,10 +55,10 @@
             </svg>
           </router-link>
         </div>
-        <div class="header-search col-md-6 d-md-block d-sm-none">
-          <SearchBar @search="getSearchValue"/>
+        <div class="header-search col-xs-12 col-md-6">
+          <SearchBar @search="getSearchValue" />
         </div>
-        <div class="header-connexion_container col col-md-3">
+        <div class="header-connexion_container col col-md-3 d-none d-md-block">
           <div class="header-connexion" v-if="profile == undefined">
             <router-link :to="{ name: 'login' }">Se connecter</router-link>
             <span>|</span>
@@ -85,6 +85,11 @@ export default {
   components: {
     SearchBar,
   },
+  data() {
+    return {
+      windowTop: 0,
+    };
+  },
   computed: {
     ...mapState({
       profile: (state) => state.profile.profile.data,
@@ -96,24 +101,45 @@ export default {
     }),
     getSearchValue(value) {
       console.log(value);
-    }
+    },
+    onScroll(e) {
+      this.windowTop = e.target.documentElement.scrollTop;
+      console.log({ top: this.windowTop });
+    },
   },
   mounted() {
     this.fetchProfile();
+    window.addEventListener("scroll", this.onScroll);
+  },
+
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.onScroll);
   },
 };
 </script>
 
 <style lang="scss">
 header {
+  position: fixed;
+  top: 0;
   background-color: $lightpurple;
   padding: 25px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  z-index: 1000;
+ transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+
+  &.small-header {
+    padding: 12px 0;
+  }
 }
 
 .header {
+  /*  &-container {
+  } */
+
   &-search {
     width: 40%;
   }
@@ -141,9 +167,19 @@ header {
   }
 
   &-profile {
-
     a {
       color: $white;
+    }
+  }
+}
+
+@media screen and (max-width: $md) {
+  .header {
+    &-log {
+      text-align: center;
+    }
+    &-search {
+      margin-top: 20px;
     }
   }
 }

@@ -3,7 +3,7 @@
     <input
       type="checkbox"
       :id="slug"
-      :value="label"
+      :value="id"
       v-model="checked"
       @change="onChange"
     />
