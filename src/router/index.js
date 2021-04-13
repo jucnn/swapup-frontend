@@ -6,6 +6,7 @@ import Index from "@/views/Index";
 import Login from "@/views/Login";
 import Register from "@/views/Register";
 import Profile from "@/views/Profile";
+import Feed from "@/views/Feed";
 
 import Main from "@/layouts/Main";
 
@@ -39,6 +40,11 @@ const router = new Router({
           name: "profile",
           component: Profile,
           beforeEnter: auth,
+        },
+        {
+          path: "/feed",
+          name: "feed",
+          component: Feed
         },
       ],
     },

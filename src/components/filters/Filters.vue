@@ -96,5 +96,6 @@ export default {
 .filters-container {
   position: sticky;
   padding: 10px;
+  background-color: $white;
 }
 </style>

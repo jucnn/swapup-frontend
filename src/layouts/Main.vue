@@ -18,8 +18,12 @@ export default {
     TheHeader,
     TheFooter,
   },
+  data() {
+    return {
+      isMenuOpened: false,
+    }
+  },
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

@@ -3,6 +3,18 @@
     <div class="container">
       <div class="row align-items-center justify-content-between">
         <div class="header-logo col-xs-12 col-md-3">
+          <div class="menu-responsive_container d-md-none">
+            <MenuResponsiveButton
+              class="menu-responsive_btn "
+              @clicked="isMenuOpened = true"
+            />
+            <transition name="slide-fade">
+              <MenuResponsive
+                class="menu-responsive_container"
+                v-if="isMenuOpened" @clicked="isMenuOpened = false"
+              />
+            </transition>
+          </div>
           <router-link :to="{ name: 'index' }">
             <svg
               id="Logo_-_Desktop"
@@ -55,10 +67,13 @@
             </svg>
           </router-link>
         </div>
-        <div class="header-search col-xs-12 col-md-6">
-          <SearchBar @search="getSearchValue" />
+        <div class="header-search col-xs-12 col-md-7 container">
+          <div class="row align-items-center">
+            <SearchBar class="col col-10 col-md-12" @search="getSearchValue" />
+            <FiltersButton class="fitlers-btn_container col-2 d-md-none" />
+          </div>
         </div>
-        <div class="header-connexion_container col col-md-3 d-none d-md-block">
+        <div class="header-connexion_container col col-md-2 d-none d-md-block">
           <div class="header-connexion" v-if="profile == undefined">
             <router-link :to="{ name: 'login' }">Se connecter</router-link>
             <span>|</span>
@@ -79,15 +94,22 @@
 import { mapState, mapActions } from "vuex";
 
 import SearchBar from "@/components/ui/SearchBar";
+import MenuResponsiveButton from "@/components/layout/MenuResponsiveButton";
+import MenuResponsive from "@/components/layout/MenuResponsive";
+import FiltersButton from "@/components/filters/FiltersButton";
 
 export default {
   name: "TheHeader",
   components: {
     SearchBar,
+    MenuResponsiveButton,
+    MenuResponsive,
+    FiltersButton,
   },
   data() {
     return {
       windowTop: 0,
+      isMenuOpened: false,
     };
   },
   computed: {
@@ -104,8 +126,7 @@ export default {
     },
     onScroll(e) {
       this.windowTop = e.target.documentElement.scrollTop;
-      console.log({ top: this.windowTop });
-    },
+    }
   },
   mounted() {
     this.fetchProfile();
@@ -128,11 +149,30 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  z-index: 1000;
- transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  z-index: 100;
+  transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 
   &.small-header {
     padding: 12px 0;
+  }
+}
+
+.menu-responsive {
+  &_container {
+    z-index: 1000;
+  }
+  &_btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 30px;
+  }
+}
+
+.fitlers-btn_container {
+  svg {
+    max-width: 25px;
+    padding-top: 5px;
   }
 }
 
@@ -140,8 +180,18 @@ header {
   /*  &-container {
   } */
 
+  &-logo {
+    svg {
+      max-width: 100%;
+    }
+  }
+
   &-search {
     width: 40%;
+
+    .search-bar {
+      padding-right: 0;
+    }
   }
 
   &-connexion {
@@ -175,11 +225,15 @@ header {
 
 @media screen and (max-width: $md) {
   .header {
-    &-log {
+    &-logo {
       text-align: center;
+
+      svg {
+        max-width: 140px;
+      }
     }
     &-search {
-      margin-top: 20px;
+      margin-top: 10px;
     }
   }
 }
