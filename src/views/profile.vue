@@ -42,33 +42,53 @@
           </div>
         </div>
         <p>{{ profile.description }}</p>
-        <hr class="row" />
-        <div class="profile-objects">
-          <div class="container profile-objects_title">
-            <div class="row align-items-center">
-              <h2 class="col">Mes objets</h2>
-              <div class="col-4 d-none d-sm-block">
-                <router-link
-                  class="button button--purple"
-                  :to="{ name: 'objects.create' }"
-                  >Ajouter un objet</router-link
-                >
+        <div class="tabs-container">
+          <Tabs>
+            <Tab title="Mes objets">
+              <div class="profile-objects">
+                <div class="container profile-objects_title">
+                  <div class="row align-items-center">
+                    <h2 class="col">Mes objets</h2>
+                    <div class="col-4 d-none d-sm-block">
+                      <router-link
+                        class="button button--purple"
+                        :to="{ name: 'objects.create' }"
+                        >Ajouter un objet</router-link
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="container">
+                  <p>Tu as publié {{userObjects.length}} objets</p>
+                </div>
+                <div class="container">
+                  <div class="row">
+                    <ObjectCard
+                      class="objects-item"
+                      v-for="object in userObjects"
+                      :key="object._id"
+                      :object="object"
+                    />
+                  </div>
+                  <div class="d-sm-none addbutton-container">
+                    <AddButton />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="row">
-              <ObjectCard
-                class="objects-item"
-                v-for="object in userObjects"
-                :key="object._id"
-                :object="object"
-              />
-            </div>
-            <div class="d-sm-none addbutton-container">
-              <AddButton />
-            </div>
-          </div>
+            </Tab>
+            <Tab title="Mes swaps envoyés">
+              <div class="profile-swap">
+                <h2 class="col">Mes swaps envoyés</h2>
+                {{this.sentSwap}}
+              </div>
+            </Tab>
+            <Tab title="Mes swaps reçus">
+              <div class="profile-swap">
+                <h2 class="col">Mes swaps reçus</h2>
+                {{this.receivedSwap}}
+              </div>
+            </Tab>
+          </Tabs>
         </div>
       </div>
     </div>
@@ -80,6 +100,8 @@ import { mapState, mapActions } from "vuex";
 import Button from "@/components/ui/Button";
 import ButtonLogout from "@/components/user/ButtonLogout";
 import AddButton from "@/components/ui/AddButton";
+import Tabs from "@/components/ui/Tabs";
+import Tab from "@/components/ui/Tab";
 import ObjectCard from "@/components/object/ObjectCard";
 
 export default {
@@ -89,6 +111,8 @@ export default {
     AddButton,
     ObjectCard,
     ButtonLogout,
+    Tabs,
+    Tab,
   },
   data() {
     return {
@@ -99,6 +123,8 @@ export default {
   computed: {
     ...mapState({
       profile: (state) => state.profile.profile.data,
+      sentSwap: (state) => state.swap.sentSwapByUser,
+      receivedSwap: (state) => state.swap.receivedSwapByUser,
       allObjects: (state) => state.objects.allObjects,
       allSwap: (state) => state.swap.allSwap,
     }),
@@ -106,12 +132,16 @@ export default {
   methods: {
     ...mapActions({
       fetchProfile: "profile/fetchProfile",
+      fetchSentSwapByUser: "swap/fetchSentSwapByUser",
+      fetchReceivedSwapByUser: "swap/fetchReceivedSwapByUser",
       fetchAllObjects: "objects/fetchAllObjects",
       fetchAllSwap: "swap/fetchAllSwap",
     }),
   },
   async mounted() {
     await this.fetchProfile();
+    await this.fetchSentSwapByUser();
+    await this.fetchReceivedSwapByUser();
     await this.fetchAllObjects();
     await this.fetchAllSwap(this.$route.query);
     this.userObjects = this.allObjects.filter(
@@ -147,6 +177,10 @@ export default {
     hr {
       margin-top: 30px;
       margin-bottom: 30px;
+    }
+
+    .tabs-container {
+      margin-top: 60px;
     }
   }
 

@@ -1,10 +1,13 @@
 import axios from "axios";
 
 const apiUrl = "http://localhost:8769/api/";
+const authUrl = "http://localhost:8769/auth/";
 
 const state = () => ({
   allSwap: [],
   swap: null,
+  sentSwapByUser: [],
+  receivedSwapByUser: [],
 });
 
 const getters = {
@@ -18,16 +21,34 @@ const mutations = {
   setSwap(state, val) {
     state.swap = val;
   },
+  setSentSwapByUser(state, val) {
+    state.sentSwapByUser = val;
+  },
+  setReceivedSwapByUser(state, val) {
+    state.receivedSwapByUser = val;
+  },
 };
 
 const actions = {
   async fetchAllSwap({ commit }, query) {
-    console.log(query);
     const data = await axios.get(`${apiUrl}swap`, {
       params: query,
     });
-    console.log(data);
     commit("setAllSwap", data.data.data);
+  },
+  async fetchSentSwapByUser({ commit }) {
+    const data = await axios.get(`${authUrl}swapsent`, {
+      withCredentials: true,
+    });
+    console.log(data);
+    commit("setSentSwapByUser", data.data);
+  },
+  async fetchReceivedSwapByUser({ commit }) {
+    const data = await axios.get(`${authUrl}swapreceived`, {
+      withCredentials: true,
+    });
+    console.log(data);
+    commit("setReceivedSwapByUser", data.data);
   },
   async fetchSwap({ commit }, id) {
     const data = await axios.get(`${apiUrl}swap/${id}`);
