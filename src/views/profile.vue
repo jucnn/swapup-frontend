@@ -14,8 +14,8 @@
             <div class="col-8">
               <p>
                 <b>{{ profile.username }}</b>
+                <br />{{ profile.address }}
               </p>
-              <p>{{ profile.address }}</p>
               <p>
                 Membre depuis le
                 {{ new Date(profile.creationDate).toLocaleDateString() }}
@@ -59,7 +59,7 @@
                   </div>
                 </div>
                 <div class="container">
-                  <p>Tu as publié {{userObjects.length}} objets</p>
+                  <p>Tu as publié {{ userObjects.length }} objets</p>
                 </div>
                 <div class="container">
                   <div class="row">
@@ -79,13 +79,13 @@
             <Tab title="Mes swaps envoyés">
               <div class="profile-swap">
                 <h2 class="col">Mes swaps envoyés</h2>
-                {{this.sentSwap}}
+                {{ this.sentSwap }}
               </div>
             </Tab>
             <Tab title="Mes swaps reçus">
               <div class="profile-swap">
                 <h2 class="col">Mes swaps reçus</h2>
-                {{this.receivedSwap}}
+                {{ this.receivedSwap }}
               </div>
             </Tab>
           </Tabs>

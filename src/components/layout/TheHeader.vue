@@ -11,7 +11,8 @@
             <transition name="slide-fade">
               <MenuResponsive
                 class="menu-responsive_container"
-                v-if="isMenuOpened" @clicked="isMenuOpened = false"
+                v-if="isMenuOpened"
+                @clicked="isMenuOpened = false"
               />
             </transition>
           </div>
@@ -67,22 +68,21 @@
             </svg>
           </router-link>
         </div>
-        <div class="header-search col-xs-12 col-md-7 container">
+        <div class="header-search col-xs-12 col-md-6 container">
           <div class="row align-items-center">
             <SearchBar class="col col-10 col-md-12" @search="getSearchValue" />
             <FiltersButton class="fitlers-btn_container col-2 d-md-none" />
           </div>
         </div>
-        <div class="header-connexion_container col col-md-2 d-none d-md-block">
+        <div class="header-connexion_container col col-md-3 d-none d-md-block">
           <div class="header-connexion" v-if="profile == undefined">
             <router-link :to="{ name: 'login' }">Se connecter</router-link>
             <span>|</span>
             <router-link :to="{ name: 'register' }">S'inscrire</router-link>
           </div>
           <div class="header-profile" v-else>
-            <router-link :to="{ name: 'profile' }">{{
-              profile.username
-            }}</router-link>
+            <p @click="isProfileMenuOpened = !isProfileMenuOpened">{{ profile.username }}</p>
+            <MenuDropdown :isOpen="isProfileMenuOpened" :items="profileMenu" />
           </div>
         </div>
       </div>
@@ -94,8 +94,9 @@
 import { mapState, mapActions } from "vuex";
 
 import SearchBar from "@/components/ui/SearchBar";
-import MenuResponsiveButton from "@/components/layout/MenuResponsiveButton";
-import MenuResponsive from "@/components/layout/MenuResponsive";
+import MenuResponsiveButton from "@/components/menu/MenuResponsiveButton";
+import MenuResponsive from "@/components/menu/MenuResponsive";
+import MenuDropdown from "@/components/menu/MenuDropdown";
 import FiltersButton from "@/components/filters/FiltersButton";
 
 export default {
@@ -105,11 +106,14 @@ export default {
     MenuResponsiveButton,
     MenuResponsive,
     FiltersButton,
+    MenuDropdown,
   },
   data() {
     return {
       windowTop: 0,
       isMenuOpened: false,
+      isProfileMenuOpened: false,
+      profileMenu: [{ label: "Profile", link: "profile" }],
     };
   },
   computed: {
@@ -126,7 +130,7 @@ export default {
     },
     onScroll(e) {
       this.windowTop = e.target.documentElement.scrollTop;
-    }
+    },
   },
   mounted() {
     this.fetchProfile();
@@ -213,12 +217,16 @@ header {
       color: $white;
       text-decoration: none;
       font-weight: $semibold;
+      font-size: 14px;
     }
   }
 
   &-profile {
-    a {
+    p {
       color: $white;
+      margin-bottom: 0;
+      font-weight: $semibold;
+      cursor: pointer;
     }
   }
 }

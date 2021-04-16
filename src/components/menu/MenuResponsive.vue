@@ -12,10 +12,10 @@
             <router-link :to="{ path: 'index' }">Notifications</router-link>
           </p>
           <p>
-            <router-link :to="{ path: 'index' }">Swaps en attente</router-link>
+            <router-link :to="{ path: 'index' }">Swaps envoyés</router-link>
           </p>
           <p>
-            <router-link :to="{ path: 'index' }">Se déconnecter</router-link>
+            <router-link :to="{ path: 'index' }">Swaps reçus</router-link>
           </p>
         </div>
       </div>
