@@ -5,7 +5,7 @@
         <div class="header-logo col-xs-12 col-md-3">
           <div class="menu-responsive_container d-md-none">
             <MenuResponsiveButton
-              class="menu-responsive_btn "
+              class="menu-responsive_btn"
               @clicked="isMenuOpened = true"
             />
             <transition name="slide-fade">
@@ -81,7 +81,9 @@
             <router-link :to="{ name: 'register' }">S'inscrire</router-link>
           </div>
           <div class="header-profile" v-else>
-            <p @click="isProfileMenuOpened = !isProfileMenuOpened">{{ profile.username }}</p>
+            <p @click="isProfileMenuOpened = !isProfileMenuOpened">
+              {{ profile.username }}
+            </p>
             <MenuDropdown :isOpen="isProfileMenuOpened" :items="profileMenu" />
           </div>
         </div>
@@ -122,9 +124,6 @@ export default {
     }),
   },
   methods: {
-    ...mapActions({
-      fetchProfile: "profile/fetchProfile",
-    }),
     getSearchValue(value) {
       console.log(value);
     },
@@ -133,7 +132,6 @@ export default {
     },
   },
   mounted() {
-    this.fetchProfile();
     window.addEventListener("scroll", this.onScroll);
   },
 

@@ -11,11 +11,9 @@ export default {
   methods: {
     logout() {
       axios
-        .get(
-          "http://localhost:8769/auth/logout",
-          { withCredentials: true }
-        )
+        .get("http://localhost:8769/auth/logout", { withCredentials: true })
         .then(() => {
+          Vue.prototype.$isUser = false;
           this.$router.push({ name: "index" });
         })
         .catch((err) => console.log(err));

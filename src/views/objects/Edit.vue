@@ -68,7 +68,6 @@ export default {
           donationPercentage: this.object.donationPercentage,
         },
       };
-      console.log(datas);
       this.updateObject(datas);
       this.$router.go(-1)
     },

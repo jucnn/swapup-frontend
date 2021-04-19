@@ -63,7 +63,6 @@ export default {
 
       // We have to move our method to a handler field
       handler() {
-        console.log(this.query);
         axios
           .post("http://localhost:8769/api/object/search", this.query, {
             withCredentials: true,
@@ -88,7 +87,6 @@ export default {
       }
     },
     categoryChecked(category) {
-      console.log(category);
       if (category != "Toutes les catégories") {
         this.query.category = category;
       } else {

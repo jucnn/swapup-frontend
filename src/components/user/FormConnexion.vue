@@ -188,7 +188,6 @@ export default {
       createAccount: "profile/register",
     }),
     login() {
-      console.log("fzf");
       axios
         .post(
           "http://localhost:8769/auth/login",
@@ -204,8 +203,6 @@ export default {
         .catch((err) => console.log(err));
     },
     register() {
-      console.log("fzffds");
-
       axios
         .post(
           "http://localhost:8769/auth/register",

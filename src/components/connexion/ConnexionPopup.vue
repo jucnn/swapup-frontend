@@ -1,10 +1,9 @@
 <template>
   <div>
-    <div>
-        
-    </div>
     <span>close</span>
-    <p>Lequel de tes objets veux tu échanger ?</p>
+    <p>Tu ne sembles pas connecté !</p>
+    <router-link :to="{ name: 'login' }">Se connecter</router-link>
+    <router-link :to="{ name: 'register' }">S'inscrire</router-link>
   </div>
 </template>
 
@@ -13,10 +12,7 @@ import ObjectCard from "@/components/object/ObjectCard";
 
 export default {
   components: {
-    ObjectCard,
-  },
-  props: {
-    userObject: Array,
+    ObjectCard
   },
 };
 </script>

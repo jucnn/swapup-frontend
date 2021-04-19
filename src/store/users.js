@@ -28,7 +28,6 @@ const actions = {
   async fetchUser({ commit }, id) {
     const data = await axios.get(`${apiUrl}${id}`);
     commit("setUser", data.data);
-    console.log(data.data);
   },
 };
 

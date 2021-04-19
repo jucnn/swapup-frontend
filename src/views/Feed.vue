@@ -1,7 +1,7 @@
 <template>
   <div class="objects-feed">
     <div class="objects-container container header-space">
-      <h1>Tous les objets </h1>
+      <h1>Tous les objets</h1>
       <div class="row">
         <div class="d-md-block d-none col-3">
           <Filters
@@ -58,12 +58,8 @@ export default {
   },
   watch: {
     query: {
-      // This will let Vue know to look inside the array
       deep: true,
-
-      // We have to move our method to a handler field
       handler() {
-        console.log(this.query);
         axios
           .post("http://localhost:8769/api/object/search", this.query, {
             withCredentials: true,
@@ -78,7 +74,6 @@ export default {
   methods: {
     ...mapActions({
       fetchAllObjects: "objects/fetchAllObjects",
-      /*  fetchObjectBySearching: "objects/fetchObjectBySearching" */
     }),
     statesChecked(states) {
       if (states.length != 0) {
@@ -88,7 +83,6 @@ export default {
       }
     },
     categoryChecked(category) {
-      console.log(category);
       if (category != "Toutes les catégories") {
         this.query.category = category;
       } else {
@@ -98,7 +92,7 @@ export default {
   },
   async mounted() {
     await this.fetchAllObjects(this.$route.query);
-    this.filteredObject = this.allObjects
+    this.filteredObject = this.allObjects;
   },
 };
 </script>

@@ -174,8 +174,6 @@ export default {
       fetchAllAssociations: "filters/fetchAllAssociations",
       fetchAllCategories: "filters/fetchAllCategories",
       fetchAllStates: "filters/fetchAllStates",
-      fetchProfile: "profile/fetchProfile",
-
       createObject: "objects/createObject",
     }),
     async create() {
@@ -194,7 +192,6 @@ export default {
         price: this.query.price,
         association: this.query.association,
       };
-      console.log(payload);
       this.createObject(payload);
       this.$router.push({ name: "profile" });
     },
@@ -252,7 +249,6 @@ export default {
     },
   },
   mounted() {
-    this.fetchProfile();
     this.fetchAllAssociations();
     this.fetchAllCategories();
     this.fetchAllStates();

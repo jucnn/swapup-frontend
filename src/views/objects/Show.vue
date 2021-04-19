@@ -6,7 +6,10 @@
         <img :src="object.image" alt="" />
       </div>
       <div class="object_seller box-white">
-        <div v-if="object.seller._id == profile._id" class="object_btns-owner">
+        <div
+          v-if="profile && object.seller._id == profile._id"
+          class="object_btns-owner"
+        >
           <router-link
             :to="{ name: 'objects.edit' }"
             class="button button--purple"
@@ -38,16 +41,10 @@
               >Profil du vendeur</router-link
             >
             <div class="object_btns-actions">
-              <router-link
-                :to="{ name: 'objects.create' }"
-                class="button button--purple"
-                >Swaper</router-link
-              >
-              <router-link
-                :to="{ name: 'objects.create' }"
-                class="button button--green"
-                >Acheter</router-link
-              >
+              <button class="button button--purple" @click="swapBtnClicked()">
+                Swaper
+              </button>
+              <button class="button button--green">Acheter</button>
             </div>
           </div>
         </div>
@@ -70,6 +67,8 @@
         <p>{{ object.description }}</p>
       </div>
     </div>
+    <SwapPopup v-if="swapPopup" />
+    <ConnexionPopup v-if="connexionPopup" />
   </div>
 </template>
 
@@ -77,11 +76,21 @@
 import { mapState, mapActions } from "vuex";
 
 import BackButton from "@/components/ui/BackButton";
+import SwapPopup from "@/components/swap/SwapPopup";
+import ConnexionPopup from "@/components/connexion/ConnexionPopup";
 
 export default {
   name: "Index",
   components: {
     BackButton,
+    SwapPopup,
+    ConnexionPopup,
+  },
+  data() {
+    return {
+      swapPopup: false,
+      connexionPopup: false,
+    };
   },
   computed: {
     ...mapState({
@@ -91,13 +100,13 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchObject: "objects/fetchObject",
-      fetchProfile: "profile/fetchProfile",
+      fetchObject: "objects/fetchObject"
     }),
+    swapBtnClicked() {
+    },
   },
-  async mounted() {
-    await this.fetchProfile();
-    await this.fetchObject(this.$route.params.id);
+  mounted() {
+    this.fetchObject(this.$route.params.id);
   },
 };
 </script>

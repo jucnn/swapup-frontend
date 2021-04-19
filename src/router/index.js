@@ -44,7 +44,7 @@ const router = new Router({
         {
           path: "/feed",
           name: "feed",
-          component: Feed
+          component: Feed,
         },
       ],
     },

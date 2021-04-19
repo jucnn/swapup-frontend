@@ -40,14 +40,12 @@ const actions = {
     const data = await axios.get(`${authUrl}swapsent`, {
       withCredentials: true,
     });
-    console.log(data);
     commit("setSentSwapByUser", data.data);
   },
   async fetchReceivedSwapByUser({ commit }) {
     const data = await axios.get(`${authUrl}swapreceived`, {
       withCredentials: true,
     });
-    console.log(data);
     commit("setReceivedSwapByUser", data.data);
   },
   async fetchSwap({ commit }, id) {

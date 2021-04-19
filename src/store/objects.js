@@ -43,8 +43,6 @@ const actions = {
     );
   },
   async createObject({ commit }, data) {
-    console.log("test");
-    console.log(data);
     await axios.post(
       `${apiUrl}object`,
       {
