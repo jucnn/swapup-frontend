@@ -98,7 +98,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import Button from "@/components/ui/Button";
-import ButtonLogout from "@/components/user/ButtonLogout";
+import ButtonLogout from "@/components/connexion/ButtonLogout";
 import AddButton from "@/components/ui/AddButton";
 import Tabs from "@/components/ui/Tabs";
 import Tab from "@/components/ui/Tab";

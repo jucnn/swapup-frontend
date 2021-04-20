@@ -54,7 +54,7 @@
 <script>
 import axios from "axios";
 import { mapActions } from "vuex";
-import FormConnexion from "@/components/user/FormConnexion";
+import FormConnexion from "@/components/connexion/FormConnexion";
 
 export default {
   name: "Register",

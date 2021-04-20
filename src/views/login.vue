@@ -63,7 +63,7 @@
 
 <script>
 import axios from "axios";
-import FormConnexion from "@/components/user/FormConnexion";
+import FormConnexion from "@/components/connexion/FormConnexion";
 
 export default {
   name: "Login",
@@ -81,7 +81,7 @@ export default {
     login() {
       axios
         .post(
-          "http://localhost:8769/auth/login",
+          `${process.env.VUE_APP_API_URL}auth/login`,
           {
             email: this.email,
             password: this.password,

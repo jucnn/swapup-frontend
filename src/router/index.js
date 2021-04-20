@@ -2,7 +2,7 @@ import Router from "vue-router";
 import Vue from "vue";
 import VueCookies from "vue-cookies";
 
-import Index from "@/views/Index"; 
+import Index from "@/views/Index";
 import Login from "@/views/Login";
 import Register from "@/views/Register";
 import Profile from "@/views/Profile";
@@ -53,7 +53,7 @@ const router = new Router({
       name: "login",
       component: Login,
       beforeEnter: (to, from, next) => {
-        if (Vue.$cookies.get("3El6HEDeBFX8m")) {
+        if (Vue.$cookies.get(process.env.VUE_APP_COOKIE_NAME)) {
           next("/");
           return;
         }
@@ -65,7 +65,7 @@ const router = new Router({
       name: "register",
       component: Register,
       beforeEnter: (to, from, next) => {
-        if (Vue.$cookies.get("3El6HEDeBFX8m")) {
+        if (Vue.$cookies.get(process.env.VUE_APP_COOKIE_NAME)) {
           next("/");
           return;
         }
@@ -79,10 +79,9 @@ const router = new Router({
       component: UserIndex,
     },
   ],
-  scrollBehavior (to, from, savedPosition) {
-    return { x: 0, y: 0 }
-  }
+  scrollBehavior(to, from, savedPosition) {
+    return { x: 0, y: 0 };
+  },
 });
-
 
 export default router;

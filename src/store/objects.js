@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = "http://localhost:8769/api/";
+const apiUrl = `${process.env.VUE_APP_API_URL}api/`;
 
 const state = () => ({
   allObjects: [],

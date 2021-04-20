@@ -5,7 +5,7 @@ Vue.use(VueCookies);
 
 
 export default function auth(to, from, next) {
-  if (Vue.$cookies.get("3El6HEDeBFX8m")) {
+  if (Vue.$cookies.get(process.env.VUE_APP_COOKIE_NAME)) {
     next();
     return;
   }

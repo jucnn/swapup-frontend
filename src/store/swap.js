@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const apiUrl = "http://localhost:8769/api/";
-const authUrl = "http://localhost:8769/auth/";
+const apiUrl = `${process.env.VUE_APP_API_URL}api/`;
+const authUrl = `${process.env.VUE_APP_API_URL}auth/`;
 
 const state = () => ({
   allSwap: [],

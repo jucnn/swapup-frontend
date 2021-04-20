@@ -61,7 +61,7 @@ export default {
       deep: true,
       handler() {
         axios
-          .post("http://localhost:8769/api/object/search", this.query, {
+          .post(`${process.env.VUE_APP_API_URL}api/object/search`, this.query, {
             withCredentials: true,
           })
           .then((data) => {
