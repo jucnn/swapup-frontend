@@ -2,29 +2,31 @@
   <div class="menu-responsive">
     <span class="menu-responsive_close" @click="$emit('clicked')">fermer</span>
     <div class="menu-responsive_content">
-      <div class="menu-responsive_account">
-        <!-- If connected -->
-        <h2>Mon compte</h2>
-        <div>
-          <p><router-link :to="{ path: 'profile' }">Profil</router-link></p>
-          <p><router-link :to="{ path: 'index' }">Favoris</router-link></p>
-          <p>
-            <router-link :to="{ path: 'index' }">Notifications</router-link>
-          </p>
-          <p>
-            <router-link :to="{ path: 'index' }">Swaps envoyés</router-link>
-          </p>
-          <p>
-            <router-link :to="{ path: 'index' }">Swaps reçus</router-link>
-          </p>
+      <div v-if="profile">
+        <div class="menu-responsive_account">
+          <!-- If connected -->
+          <h2>Mon compte</h2>
+          <div>
+            <p><router-link :to="{ path: 'profile' }">Profil</router-link></p>
+            <p><router-link :to="{ path: 'index' }">Favoris</router-link></p>
+            <p>
+              <router-link :to="{ path: 'index' }">Notifications</router-link>
+            </p>
+            <p>
+              <router-link :to="{ path: 'index' }">Swaps envoyés</router-link>
+            </p>
+            <p>
+              <router-link :to="{ path: 'index' }">Swaps reçus</router-link>
+            </p>
+          </div>
         </div>
+        <hr />
       </div>
-      <hr />
       <!-- If not connected -->
-      <div class="menu-responsive_connect">
+      <div class="menu-responsive_connect" v-else>
         <p><router-link :to="{ path: 'index' }">Connecte toi</router-link></p>
+        <hr />
       </div>
-      <hr />
       <div class="menu-responsive_discover">
         <h2>Découvrir</h2>
         <div>
@@ -42,7 +44,15 @@
 </template>
 
 <script>
-export default {};
+import { mapState } from "vuex";
+
+export default {
+  computed: {
+    ...mapState({
+      profile: (state) => state.profile.profile.data,
+    }),
+  },
+};
 </script>
 
 <style lang="scss">
@@ -56,6 +66,10 @@ export default {};
   z-index: 200;
   background-color: $white;
   padding: 20px;
+
+  hr {
+    margin: 40px 0;
+  }
 
   p {
     font-size: 16px;

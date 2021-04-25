@@ -6,13 +6,13 @@
           <div class="menu-responsive_container d-md-none">
             <MenuResponsiveButton
               class="menu-responsive_btn"
-              @clicked="isMenuOpened = true"
+              @clicked="isResponsiveMenuOpened = true"
             />
             <transition name="slide-fade">
               <MenuResponsive
                 class="menu-responsive_container"
-                v-if="isMenuOpened"
-                @clicked="isMenuOpened = false"
+                v-if="isResponsiveMenuOpened"
+                @clicked="isResponsiveMenuOpened = false"
               />
             </transition>
           </div>
@@ -84,7 +84,13 @@
             <p @click="isProfileMenuOpened = !isProfileMenuOpened">
               {{ profile.username }}
             </p>
-            <MenuDropdown :isOpen="isProfileMenuOpened" :items="profileMenu" />
+            <transition name="slide-down">
+              <MenuDropdown
+                v-if="isProfileMenuOpened"
+                :items="profileMenu"
+                @handleClick="closeMenuDropdown()"
+              />
+            </transition>
           </div>
         </div>
       </div>
@@ -93,7 +99,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 
 import SearchBar from "@/components/ui/SearchBar";
 import MenuResponsiveButton from "@/components/menu/MenuResponsiveButton";
@@ -113,9 +119,12 @@ export default {
   data() {
     return {
       windowTop: 0,
-      isMenuOpened: false,
+      isResponsiveMenuOpened: false,
       isProfileMenuOpened: false,
-      profileMenu: [{ label: "Profile", link: "profile" }],
+      profileMenu: [
+        { label: "Mon profile", url: "profile" },
+        { label: "Mes favoris", url: "index" },
+      ],
     };
   },
   computed: {
@@ -130,6 +139,10 @@ export default {
     onScroll(e) {
       this.windowTop = e.target.documentElement.scrollTop;
     },
+    closeMenuDropdown() {
+      console.log("close");
+      this.isProfileMenuOpened = false;
+    }
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll);
@@ -156,6 +169,10 @@ header {
 
   &.small-header {
     padding: 12px 0;
+  }
+
+  .dropdown {
+    margin-top: 10px;
   }
 }
 

@@ -35,7 +35,6 @@ const actions = {
     const data = await axios.get(`${apiUrl}auth/me`, {
       withCredentials: true,
     });
-    console.log(data);
     commit("setProfile", data);
   },
   async fetchUserObjects({ commit }) {
