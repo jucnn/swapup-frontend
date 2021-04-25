@@ -74,7 +74,7 @@ p {
 #login form [type="submit"] {
   background-color: $purple;
   border: none;
-  border-radius: 10px;
+  border-radius: $mainborderradius;
   width: 70%;
   padding: 10px 0;
   color: $white;

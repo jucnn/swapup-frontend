@@ -41,8 +41,9 @@
               >Profil du vendeur</router-link
             >
             <div class="object_btns-actions">
-              <button class="button button--purple" @click="swapBtnClicked()">
-                Swaper
+              <button class="button button--purple" @click="swapBtnClicked()" :disabled="isSwapExist">
+                <span v-if="!isSwapExist">Swaper</span>
+                <span v-else>Swap envoyé</span>
               </button>
               <button class="button button--green">Acheter</button>
             </div>
@@ -67,8 +68,19 @@
         <p>{{ object.description }}</p>
       </div>
     </div>
-    <SwapPopup v-if="swapPopup" />
-    <ConnexionPopup v-if="connexionPopup" />
+    <Popup
+      v-if="popup"
+      :isValidate="swapSent"
+      :isUserConnected="isUserConnected"
+      @handleClick="popup = false"
+    >
+      <SwapPopup v-if="swapPopup" @handleClick="sendSwap" />
+      <div v-if="swapSent" class="swappopup-validation">
+        <img src="@/assets/img/check.png" alt="" />
+        <h4>Swap envoyé !</h4>
+        <p>Maintenant, attends la réponse du swapeur</p>
+      </div>
+    </Popup>
   </div>
 </template>
 
@@ -76,33 +88,57 @@
 import { mapState, mapActions } from "vuex";
 
 import BackButton from "@/components/ui/BackButton";
+import Popup from "@/components/ui/Popup";
 import SwapPopup from "@/components/swap/SwapPopup";
-import ConnexionPopup from "@/components/connexion/ConnexionPopup";
 
 export default {
   name: "Index",
   components: {
     BackButton,
+    Popup,
     SwapPopup,
-    ConnexionPopup,
   },
   data() {
     return {
+      popup: false,
       swapPopup: false,
-      connexionPopup: false,
+      swapSent: false,
     };
   },
   computed: {
     ...mapState({
       object: (state) => state.objects.object,
       profile: (state) => state.profile.profile.data,
+      userSwapSent: (state) => state.profile.userSwapSent,
+      userSwapRecieved: (state) => state.profile.userSwapReceived,
     }),
+    isUserConnected() {
+      return this.profile ? true : false;
+    },
+    isSwapExist() {
+     return this.userSwapSent.some(swapSent => swapSent.objectWanted._id == this.object._id)
+    }
   },
   methods: {
     ...mapActions({
-      fetchObject: "objects/fetchObject"
+      fetchObject: "objects/fetchObject",
+      createSwap: "swap/createSwap",
     }),
     swapBtnClicked() {
+      this.popup = true;
+      this.swapPopup = true;
+    },
+    sendSwap(value) {
+      this.swapPopup = false;
+      const payload = {
+        objectWanted: this.object._id,
+        objectToExchange: value,
+        swap_sender: this.profile._id,
+        swap_receiver: this.object.seller._id,
+      };
+      this.createSwap(payload);
+      //TODO : add swap state (pending / Back ?)
+      this.swapSent = true;
     },
   },
   mounted() {
@@ -125,7 +161,7 @@ export default {
   }
 
   &_img {
-    border-radius: 10px;
+    border-radius: $mainborderradius;
   }
 
   &_img {
@@ -178,6 +214,23 @@ export default {
     a:not(:last-child) {
       margin-bottom: 20px;
     }
+  }
+}
+
+.swappopup-validation {
+  color: $white;
+
+  img {
+    margin-bottom: 20px;
+  }
+
+  p,
+  h4 {
+    margin-bottom: 10px;
+  }
+
+  h4 {
+    font-weight: $semibold;
   }
 }
 </style>

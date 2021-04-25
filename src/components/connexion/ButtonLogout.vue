@@ -15,7 +15,7 @@ export default {
           withCredentials: true,
         })
         .then(() => {
-          this.$store.commit("profile/SET_PROFILE", {});
+          this.$store.commit("profile/setProfile", {});
           this.$router.push({ name: "index" });
         })
         .catch((err) => console.log(err));

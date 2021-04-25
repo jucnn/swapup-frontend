@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = `${process.env.VUE_APP_API_URL}auth`;
+const apiUrl = `${process.env.VUE_APP_API_URL}auth/`;
 
 const state = () => ({
   allUsers: [],

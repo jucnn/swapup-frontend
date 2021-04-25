@@ -1,5 +1,5 @@
 <template>
-  <div class="col-6 col-lg-4">
+  <div class="">
     <div class="object-card">
       <router-link :to="{ name: 'objects.show', params: { id: object._id } }">
         <div class="object-card_img">
@@ -42,7 +42,7 @@ export default {
 .object-card {
   background-color: white;
   box-shadow: $boxshadow;
-  border-radius: 10px;
+  border-radius: $mainborderradius;
   overflow: hidden;
   margin-bottom: 30px;
 

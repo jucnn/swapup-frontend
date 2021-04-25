@@ -265,7 +265,7 @@ export default {
     }
     &-container {
       width: 380px;
-      border-radius: 10px;
+      border-radius: $mainborderradius;
 
       &_item {
         margin-bottom: 30px;
@@ -288,7 +288,7 @@ export default {
   form input[type="submit"] {
     background-color: $purple;
     border: none;
-    border-radius: 10px;
+    border-radius: $mainborderradius;
     width: 70%;
     padding: 10px 0;
     color: $white;

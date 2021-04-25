@@ -32,5 +32,6 @@ export default {
     color:$white;
     font-weight: $bold;
     font-size: 10px;
+    letter-spacing: 1px;
 }
 </style>

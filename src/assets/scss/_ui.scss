@@ -1,6 +1,6 @@
 .button {
   padding: 10px;
-  border-radius: 10px;
+  border-radius: $mainborderradius;
   color: white;
   border: none;
   cursor: pointer;
@@ -9,6 +9,11 @@
   font-weight: $semibold;
   text-align: center;
   width: 100%;
+
+  &:disabled {
+    background-color: $grey;
+    cursor: none;
+  }
 
   &--blue {
     background-color: $blue;
@@ -35,7 +40,7 @@
   background-color: white;
   box-shadow: $boxshadow;
   padding: 20px 40px;
-  border-radius: 10px;
+  border-radius: $mainborderradius;
 }
 
 .form {

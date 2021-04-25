@@ -11,8 +11,8 @@
         </div>
         <div class="col container col-md-9 col-xs-12">
           <div class="row">
-            <ObjectCard
-              class="objects-item"
+            <ObjectCard 
+              class="objects-item col-6 col-lg-4"
               v-for="object in filteredObject"
               :key="object.id"
               :object="object"

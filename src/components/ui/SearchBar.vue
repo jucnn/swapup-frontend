@@ -23,7 +23,7 @@ export default {
 .search-bar {
   input {
     width: 100%;
-    border-radius: 10px;
+    border-radius: $mainborderradius;
     border: none;
     padding: 10px 20px;
     color: $grey;

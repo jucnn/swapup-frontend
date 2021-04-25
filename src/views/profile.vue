@@ -64,7 +64,7 @@
                 <div class="container">
                   <div class="row">
                     <ObjectCard
-                      class="objects-item"
+                      class="objects-item col-6 col-lg-4"
                       v-for="object in userObjects"
                       :key="object._id"
                       :object="object"
@@ -79,13 +79,24 @@
             <Tab title="Mes swaps envoyés">
               <div class="profile-swap">
                 <h2 class="col">Mes swaps envoyés</h2>
-                {{ this.sentSwap }}
+                <div v-for="swapSent in userSwapSent" :key="swapSent._id">
+                  <p>
+                    {{ swapSent }}
+                  </p>
+                </div>
               </div>
             </Tab>
             <Tab title="Mes swaps reçus">
               <div class="profile-swap">
                 <h2 class="col">Mes swaps reçus</h2>
-                {{ this.receivedSwap }}
+                <div
+                  v-for="swapRecieved in userSwapRecieved"
+                  :key="swapRecieved._id"
+                >
+                  <p>
+                    {{ swapRecieved }}
+                  </p>
+                </div>
               </div>
             </Tab>
           </Tabs>
@@ -116,37 +127,25 @@ export default {
   },
   data() {
     return {
-      userObjects: [],
+      /*  userObjects: [], */
     };
   },
 
   computed: {
     ...mapState({
       profile: (state) => state.profile.profile.data,
-      sentSwap: (state) => state.swap.sentSwapByUser,
-      receivedSwap: (state) => state.swap.receivedSwapByUser,
-      allObjects: (state) => state.objects.allObjects,
-      allSwap: (state) => state.swap.allSwap,
+      userSwapSent: (state) => state.profile.userSwapSent,
+      userSwapRecieved: (state) => state.profile.userSwapReceived,
+      userObjects: (state) => state.profile.userObjects,
     }),
   },
   methods: {
     ...mapActions({
-      fetchProfile: "profile/fetchProfile",
-      fetchSentSwapByUser: "swap/fetchSentSwapByUser",
-      fetchReceivedSwapByUser: "swap/fetchReceivedSwapByUser",
-      fetchAllObjects: "objects/fetchAllObjects",
-      fetchAllSwap: "swap/fetchAllSwap",
+      fetchUserObjects: "profile/fetchUserObjects",
     }),
   },
-  async mounted() {
-    await this.fetchProfile();
-    await this.fetchSentSwapByUser();
-    await this.fetchReceivedSwapByUser();
-    await this.fetchAllObjects();
-    await this.fetchAllSwap(this.$route.query);
-    this.userObjects = this.allObjects.filter(
-      (object) => object.seller._id == this.profile._id
-    );
+  mounted() {
+    this.fetchUserObjects();
   },
 };
 </script>

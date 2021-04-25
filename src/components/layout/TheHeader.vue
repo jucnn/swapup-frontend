@@ -198,7 +198,7 @@ header {
 
   &-connexion {
     background-color: $purple;
-    border-radius: 10px;
+    border-radius: $mainborderradius;
     padding: 5px 15px;
     color: $white;
     display: inline-block;
