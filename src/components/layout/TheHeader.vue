@@ -124,6 +124,8 @@ export default {
       profileMenu: [
         { label: "Mon profile", url: "profile" },
         { label: "Mes favoris", url: "index" },
+   /*      { label: "Mes swaps envoyés", url: "profile", tab: "sent-swaps" },
+        { label: "Mes swaps reçus", url: "profile", tab: "received-swaps" }, */
       ],
     };
   },
@@ -140,9 +142,8 @@ export default {
       this.windowTop = e.target.documentElement.scrollTop;
     },
     closeMenuDropdown() {
-      console.log("close");
       this.isProfileMenuOpened = false;
-    }
+    },
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll);

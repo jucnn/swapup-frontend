@@ -32,12 +32,10 @@
 </template>
 
 <script>
-import SwapPopup from "@/components/swap/SwapPopup";
 import ConnexionPopup from "@/components/connexion/ConnexionPopup";
 
 export default {
   components: {
-    SwapPopup,
     ConnexionPopup,
   },
   props: {

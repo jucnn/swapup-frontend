@@ -11,6 +11,10 @@ export default {
       type: String,
       default: "Tab",
     },
+    type: {
+      type: String,
+      default: "pending"
+    }
   },
   data() {
     return {

@@ -1,17 +1,17 @@
 <template>
-  <div class="tabs">
-    <div class="tabs-header">
+  <div class="tabsh">
+    <div class="tabsh-header">
       <div
         v-for="(tab, index) in tabs"
         @click="selectTab(index)"
-        :class="['tabs-header_item', { 'is-active': index == selectedIndex }]"
+        :class="['tabsh-header_item', { 'is-active': index == selectedIndex }]"
         :key="tab.title"
       >
         {{ tab.title }}
       </div>
     </div>
 
-    <div class="tabs-details">
+    <div class="tabsh-details">
       <slot></slot>
     </div>
   </div>
@@ -19,6 +19,12 @@
 
 <script>
 export default {
+  props: {
+    openedTab: {
+      type: Number,
+      default: 0,
+    },
+  },
   data() {
     return {
       selectedIndex: 0,
@@ -37,13 +43,14 @@ export default {
     this.tabs = this.$children;
   },
   mounted() {
-    this.selectTab(0);
+    this.selectTab(this.openedTab);
   },
+  updated() {},
 };
 </script>
 
 <style lang="scss">
-.tabs {
+.tabsh {
   &-header {
     display: flex;
     border-bottom: 1px solid $grey;
@@ -62,7 +69,7 @@ export default {
   }
 
   &-details {
-      margin-top: 40px;
+    margin-top: 40px;
   }
 }
 </style>

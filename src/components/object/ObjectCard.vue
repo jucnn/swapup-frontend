@@ -2,8 +2,11 @@
   <div class="">
     <div class="object-card">
       <router-link :to="{ name: 'objects.show', params: { id: object._id } }">
-        <div class="object-card_img">
-          <img :src="object.image" alt="" />
+        <div class="object-card_img-bcg">
+          <div  class="object-card_img" :style="{ backgroundImage: 'url(' + object.image + ')' }">
+
+          </div>
+         <!--  <img :src="object.image" alt="" /> -->
         </div>
         <div class="object-card_description">
           <Tag :category="object.category.label" />
@@ -51,9 +54,14 @@ export default {
   }
 
   &_img {
-    background-color: $lightgrey;
     height: 160px;
-    text-align: center;
+    background-size: cover;
+    background-position: center;
+
+    &-bcg {
+      background-color: $lightgrey;
+
+    }
 
     img {
       height: 100%;

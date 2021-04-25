@@ -74,7 +74,7 @@
       :isUserConnected="isUserConnected"
       @handleClick="popup = false"
     >
-      <SwapPopup v-if="swapPopup" @handleClick="sendSwap" />
+      <SwapPopupRequest v-if="swapPopup" @handleClick="sendSwap" />
       <div v-if="swapSent" class="swappopup-validation">
         <img src="@/assets/img/check.png" alt="" />
         <h4>Swap envoyé !</h4>
@@ -89,14 +89,14 @@ import { mapState, mapActions } from "vuex";
 
 import BackButton from "@/components/ui/BackButton";
 import Popup from "@/components/ui/Popup";
-import SwapPopup from "@/components/swap/SwapPopup";
+import SwapPopupRequest from "@/components/swap/SwapPopupRequest";
 
 export default {
   name: "Index",
   components: {
     BackButton,
     Popup,
-    SwapPopup,
+    SwapPopupRequest,
   },
   data() {
     return {

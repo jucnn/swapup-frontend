@@ -25,7 +25,7 @@
           <div class="container">
             <div class="row align-items-center">
               <div class="swappopup-object_image col-6">
-                <img :src="object.img" alt="" />
+                <img :src="object.image" alt="" />
               </div>
               <div class="swappopup-object_details col-6">
                 <Tag :category="object.category.label" />

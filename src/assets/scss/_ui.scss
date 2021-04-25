@@ -12,7 +12,7 @@
 
   &:disabled {
     background-color: $grey;
-    cursor: none;
+    cursor: default;
   }
 
   &--blue {

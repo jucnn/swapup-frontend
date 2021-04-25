@@ -7,11 +7,11 @@
             <div class="col-4 container">
               <div class="row justify-content-center">
                 <div class="profile-photo">
-                  <!-- <img src="" alt="" /> -->
+                  <!--  <img src="" alt="" /> -->
                 </div>
               </div>
             </div>
-            <div class="col-8">
+            <div class="col-5">
               <p>
                 <b>{{ profile.username }}</b>
                 <br />{{ profile.address }}
@@ -21,29 +21,35 @@
                 {{ new Date(profile.creationDate).toLocaleDateString() }}
               </p>
             </div>
+            <div class="col-3">
+              <router-link
+                class="button button--purple"
+                :to="{ name: 'objects.create' }"
+                >Modifier mon profil</router-link
+              >
+            </div>
           </div>
-          <div class="row">
+          <!-- <div class="row">
             <div class="profile-btns col-12 col-sm-4">
               <router-link
                 class="button button--purple"
                 :to="{ name: 'objects.create' }"
                 >Modifier mon profil</router-link
               >
-              <ButtonLogout />
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="profile-bottom container">
-        <div class="container">
+        <!-- <div class="container">
           <div class="row justify-content-between">
             <p>{{ profile.email }}</p>
             <p>{{ profile.telephone }}</p>
           </div>
-        </div>
+        </div> -->
         <p>{{ profile.description }}</p>
         <div class="tabs-container">
-          <Tabs>
+          <TabsHorizontal :openedTab="getIndexOfTab">
             <Tab title="Mes objets">
               <div class="profile-objects">
                 <div class="container profile-objects_title">
@@ -79,27 +85,52 @@
             <Tab title="Mes swaps envoyés">
               <div class="profile-swap">
                 <h2 class="col">Mes swaps envoyés</h2>
-                <div v-for="swapSent in userSwapSent" :key="swapSent._id">
-                  <p>
-                    {{ swapSent }}
-                  </p>
-                </div>
+                <TabsVertical>
+                  <Tab title="En attente" type="pending">
+                    <div v-for="swapSent in userSwapByState(userSwapSent, 'pending')" :key="swapSent._id">
+                      <SwapCard :swap="swapSent" :sendSwap="true" />
+                    </div>
+                  </Tab>
+                  <Tab title="Accepté" type="accepted">
+                    <div
+                      v-for="swapSent in userSwapByState(userSwapSent, 'accepted')"
+                      :key="swapSent._id"
+                    ></div>
+                  </Tab>
+                  <Tab title="Refusé" type="refused">
+                    <div
+                      v-for="swapSent in userSwapByState(userSwapSent, 'refused')"
+                      :key="swapSent._id"
+                    ></div>
+                  </Tab>
+                </TabsVertical>
               </div>
             </Tab>
             <Tab title="Mes swaps reçus">
               <div class="profile-swap">
                 <h2 class="col">Mes swaps reçus</h2>
-                <div
-                  v-for="swapRecieved in userSwapRecieved"
-                  :key="swapRecieved._id"
-                >
-                  <p>
-                    {{ swapRecieved }}
-                  </p>
-                </div>
+                <TabsVertical>
+                  <Tab title="En attente" type="pending">
+                    <div v-for="swapReceived in userSwapByState(userSwapReceived, 'pending')" :key="swapReceived._id">
+                      <SwapCard :swap="swapReceived" :sendSwap="true" />
+                    </div>
+                  </Tab>
+                  <Tab title="Accepté" type="accepted">
+                    <div
+                      v-for="swapReceived in userSwapByState(userSwapReceived, 'accepted')"
+                      :key="swapReceived._id"
+                    ></div>
+                  </Tab>
+                  <Tab title="Refusé" type="refused">
+                    <div
+                      v-for="swapReceived in userSwapByState(userSwapReceived, 'refused')"
+                      :key="swapReceived._id"
+                    ></div>
+                  </Tab>
+                </TabsVertical>
               </div>
             </Tab>
-          </Tabs>
+          </TabsHorizontal>
         </div>
       </div>
     </div>
@@ -111,9 +142,11 @@ import { mapState, mapActions } from "vuex";
 import Button from "@/components/ui/Button";
 import ButtonLogout from "@/components/connexion/ButtonLogout";
 import AddButton from "@/components/ui/AddButton";
-import Tabs from "@/components/ui/Tabs";
+import TabsHorizontal from "@/components/ui/TabsHorizontal";
+import TabsVertical from "@/components/ui/TabsVertical";
 import Tab from "@/components/ui/Tab";
 import ObjectCard from "@/components/object/ObjectCard";
+import SwapCard from "@/components/swap/SwapCard";
 
 export default {
   name: "Profile",
@@ -122,29 +155,55 @@ export default {
     AddButton,
     ObjectCard,
     ButtonLogout,
-    Tabs,
+    TabsHorizontal,
+    TabsVertical,
     Tab,
+    SwapCard,
   },
   data() {
     return {
       /*  userObjects: [], */
+      openedTab: null,
     };
   },
-
   computed: {
     ...mapState({
       profile: (state) => state.profile.profile.data,
       userSwapSent: (state) => state.profile.userSwapSent,
-      userSwapRecieved: (state) => state.profile.userSwapReceived,
+      userSwapReceived: (state) => state.profile.userSwapReceived,
       userObjects: (state) => state.profile.userObjects,
     }),
+    getIndexOfTab() {
+      switch (this.openedTab) {
+        case "objects":
+          return 0;
+          break;
+        case "sent-swaps":
+          return 1;
+          break;
+        case "received-swaps":
+          return 2;
+          break;
+        default:
+          return 0;
+      }
+    },
+  },
+  watch: {
+    $route(to, from) {
+      this.openedTab = to.query.openedTab;
+    },
   },
   methods: {
     ...mapActions({
       fetchUserObjects: "profile/fetchUserObjects",
     }),
+    userSwapByState(array, state) {
+      return array.filter((item) => item.swap_state.slug == state);
+    },
   },
   mounted() {
+    this.openedTab = this.$route.query.openedTab;
     this.fetchUserObjects();
   },
 };
@@ -154,11 +213,11 @@ export default {
 .profile {
   &-top {
     background-color: $lightpurple;
-    padding: 60px 0;
+    padding: 50px 0px;
     color: $white;
 
     p {
-      font-size: 22px;
+      font-size: 18px;
     }
   }
 
@@ -194,11 +253,10 @@ export default {
   }
 
   &-photo {
-    height: 100px;
-    width: 100px;
+    height: 150px;
+    width: 150px;
     border-radius: 100%;
     background-color: lightgrey;
-    margin-bottom: 60px;
   }
 
   .addbutton-container {
