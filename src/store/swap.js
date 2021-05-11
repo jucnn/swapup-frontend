@@ -8,6 +8,7 @@ const state = () => ({
   swap: null,
   sentSwapByUser: [],
   receivedSwapByUser: [],
+  allSwapstate: []
 });
 
 const getters = {
@@ -27,6 +28,9 @@ const mutations = {
   setReceivedSwapByUser(state, val) {
     state.receivedSwapByUser = val;
   },
+  setAllSwapstate(state, val) {
+    state.allSwapstate = val
+  }
 };
 
 const actions = {
@@ -74,6 +78,12 @@ const actions = {
         withCredentials: true,
       }
     );
+  },
+  async fetchAllSwapstate({ commit }, query) {
+    const data = await axios.get(`${apiUrl}swapstate`, {
+      params: query,
+    });
+    commit("setAllSwapstate", data.data.data);
   },
 };
 

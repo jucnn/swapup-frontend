@@ -87,21 +87,41 @@
                 <h2 class="col">Mes swaps envoyés</h2>
                 <TabsVertical>
                   <Tab title="En attente" type="pending">
-                    <div v-for="swapSent in userSwapByState(userSwapSent, 'pending')" :key="swapSent._id">
-                      <SwapCard :swap="swapSent" :sendSwap="true" />
+                    <div
+                      v-for="swapSent in userSwapByState(
+                        userSwapSent,
+                        'pending'
+                      )"
+                      :key="swapSent._id"
+                    >
+                      <SwapCard
+                        @handleClick="displaySwapPopup"
+                        :swap="swapSent"
+                        :sentSwap="true"
+                      />
                     </div>
                   </Tab>
                   <Tab title="Accepté" type="accepted">
                     <div
-                      v-for="swapSent in userSwapByState(userSwapSent, 'accepted')"
+                      v-for="swapSent in userSwapByState(
+                        userSwapSent,
+                        'accepted'
+                      )"
                       :key="swapSent._id"
-                    ></div>
+                    >
+                      <SwapCard :swap="swapSent" :sentSwap="true" />
+                    </div>
                   </Tab>
                   <Tab title="Refusé" type="refused">
                     <div
-                      v-for="swapSent in userSwapByState(userSwapSent, 'refused')"
+                      v-for="swapSent in userSwapByState(
+                        userSwapSent,
+                        'refused'
+                      )"
                       :key="swapSent._id"
-                    ></div>
+                    >
+                      <SwapCard :swap="swapSent" :sentSwap="true" />
+                    </div>
                   </Tab>
                 </TabsVertical>
               </div>
@@ -111,26 +131,75 @@
                 <h2 class="col">Mes swaps reçus</h2>
                 <TabsVertical>
                   <Tab title="En attente" type="pending">
-                    <div v-for="swapReceived in userSwapByState(userSwapReceived, 'pending')" :key="swapReceived._id">
-                      <SwapCard :swap="swapReceived" :sendSwap="true" />
+                    <div
+                      v-for="swapReceived in userSwapByState(
+                        userSwapReceived,
+                        'pending'
+                      )"
+                      :key="swapReceived._id"
+                    >
+                      <SwapCard
+                        @handleClick="displaySwapPopup"
+                        :swap="swapReceived"
+                        :receivedSwap="true"
+                      />
                     </div>
                   </Tab>
                   <Tab title="Accepté" type="accepted">
                     <div
-                      v-for="swapReceived in userSwapByState(userSwapReceived, 'accepted')"
+                      v-for="swapReceived in userSwapByState(
+                        userSwapReceived,
+                        'accepted'
+                      )"
                       :key="swapReceived._id"
-                    ></div>
+                    >
+                      <SwapCard :swap="swapReceived" :receivedSwap="true" />
+                    </div>
                   </Tab>
                   <Tab title="Refusé" type="refused">
                     <div
-                      v-for="swapReceived in userSwapByState(userSwapReceived, 'refused')"
+                      v-for="swapReceived in userSwapByState(
+                        userSwapReceived,
+                        'refused'
+                      )"
                       :key="swapReceived._id"
-                    ></div>
+                    >
+                      <SwapCard :swap="swapReceived" :receivedSwap="true" />
+                    </div>
                   </Tab>
                 </TabsVertical>
               </div>
             </Tab>
           </TabsHorizontal>
+          <transition name="fade">
+            <Popup
+              v-if="swapupPopup.isDisplayed"
+              :isValidate="isResponseSent"
+              :isUserConnected="isUserConnected"
+              @closeClick="closePopup()"
+            >
+              <SwapPopupDetails
+                v-if="isResponseSent == false"
+                :swap="swapupPopup.swap"
+                :receivedSwap="swapupPopup.isReceivedSwap"
+                :sentSwap="swapupPopup.isSentSwap"
+                @swapAccepted="changeSwapState('accepted', swapupPopup.swap)"
+                @swapRefused="changeSwapState('refused', swapupPopup.swap)"
+                @swapCanceled="changeSwapState('canceled', swapupPopup.swap)"
+              />
+              <div v-else>
+                <div v-if="responseType == 'accepted'">
+                  <p>accepté</p>
+                </div>
+                <div v-if="responseType == 'refused'">
+                  <p>refusé</p>
+                </div>
+                <div v-if="responseType == 'canceled'">
+                  <p>refusé</p>
+                </div>
+              </div>
+            </Popup>
+          </transition>
         </div>
       </div>
     </div>
@@ -147,6 +216,8 @@ import TabsVertical from "@/components/ui/TabsVertical";
 import Tab from "@/components/ui/Tab";
 import ObjectCard from "@/components/object/ObjectCard";
 import SwapCard from "@/components/swap/SwapCard";
+import SwapPopupDetails from "@/components/swap/SwapPopupDetails";
+import Popup from "@/components/ui/Popup";
 
 export default {
   name: "Profile",
@@ -159,11 +230,21 @@ export default {
     TabsVertical,
     Tab,
     SwapCard,
+    SwapPopupDetails,
+    Popup,
   },
   data() {
     return {
       /*  userObjects: [], */
       openedTab: null,
+      swapupPopup: {
+        isDisplayed: false,
+        swap: null,
+        isSentSwap: false,
+        isReceivedSwap: false,
+      },
+      isResponseSent: false,
+      responseType: null,
     };
   },
   computed: {
@@ -172,7 +253,11 @@ export default {
       userSwapSent: (state) => state.profile.userSwapSent,
       userSwapReceived: (state) => state.profile.userSwapReceived,
       userObjects: (state) => state.profile.userObjects,
+      allSwapstate: (state) => state.swap.allSwapstate,
     }),
+    isUserConnected() {
+      return this.profile ? true : false;
+    },
     getIndexOfTab() {
       switch (this.openedTab) {
         case "objects":
@@ -188,6 +273,9 @@ export default {
           return 0;
       }
     },
+ /*    getCopyOfUserSwapReceived() {
+      this.
+    } */
   },
   watch: {
     $route(to, from) {
@@ -197,14 +285,51 @@ export default {
   methods: {
     ...mapActions({
       fetchUserObjects: "profile/fetchUserObjects",
+      fetchAllSwapstate: "swap/fetchAllSwapstate",
+      updateSwap: "swap/updateSwap",
     }),
     userSwapByState(array, state) {
       return array.filter((item) => item.swap_state.slug == state);
+    },
+    displaySwapPopup(swap, sent, received) {
+      this.swapupPopup = {
+        isDisplayed: true,
+        swap: swap,
+        isSentSwap: sent,
+        isReceivedSwap: received,
+      };
+    },
+    changeSwapState(response, swap) {
+      const swapstateId = this.allSwapstate.find(
+        (swapstate) => swapstate.slug == response
+      )._id;
+      if (response != "canceled") {
+        console.log(swap);
+        const datas = {
+          id: swap._id,
+          payload: {
+            swap_state: swapstateId,
+          },
+        };
+        console.log(datas);
+        this.updateSwap(datas);
+      } else {
+        //TODO : delete swap
+        console.log("delete swap");
+      }
+      //TODO : slice array
+      this.isResponseSent = true;
+      this.responseType = response;
+    },
+    closePopup() {
+      this.swapupPopup.isDisplayed = false;
+      this.isResponseSent = false;
     },
   },
   mounted() {
     this.openedTab = this.$route.query.openedTab;
     this.fetchUserObjects();
+    this.fetchAllSwapstate();
   },
 };
 </script>

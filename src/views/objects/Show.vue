@@ -72,7 +72,7 @@
       v-if="popup"
       :isValidate="swapSent"
       :isUserConnected="isUserConnected"
-      @handleClick="popup = false"
+      @closeClick="popup = false"
     >
       <SwapPopupRequest v-if="swapPopup" @handleClick="sendSwap" />
       <div v-if="swapSent" class="swappopup-validation">

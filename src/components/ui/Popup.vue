@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="popup-overlay" @click="$emit('handleClick')"></div>
+    <div class="popup-overlay" @click="$emit('closeClick')"></div>
     <div class="popup-container" :class="isValidate ? 'popup-validation' : ''">
-      <div class="popup-close" @click="$emit('handleClick')">
+      <div class="popup-close" @click="$emit('closeClick')">
         <svg
           id="close"
           xmlns="http://www.w3.org/2000/svg"
@@ -40,13 +40,12 @@ export default {
   },
   props: {
     isUserConnected: Boolean,
-    isValidate : Boolean
+    isValidate: { type: Boolean, default: false },
   },
 };
 </script>
 
 <style lang="scss">
-
 .popup {
   &-overlay {
     position: fixed;
@@ -56,6 +55,7 @@ export default {
     width: 100vw;
     overflow: hidden;
     background-color: rgba(0, 0, 0, 0.4);
+    z-index: 100;
   }
   &-container {
     position: fixed;
@@ -68,6 +68,7 @@ export default {
     transform: translate(-50%, -50%);
     border-radius: $mainborderradius;
     box-shadow: $boxshadow;
+    z-index: 200;
   }
 
   &-close {

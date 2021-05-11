@@ -123,7 +123,7 @@ export default {
       isProfileMenuOpened: false,
       profileMenu: [
         { label: "Mon profile", url: "profile" },
-        { label: "Mes favoris", url: "index" },
+        { label: "Messagerie", url: "index" },
    /*      { label: "Mes swaps envoyés", url: "profile", tab: "sent-swaps" },
         { label: "Mes swaps reçus", url: "profile", tab: "received-swaps" }, */
       ],

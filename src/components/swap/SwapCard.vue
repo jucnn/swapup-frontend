@@ -1,25 +1,40 @@
 <template>
   <div class="container">
-    <div class="swapcard row">
+    <div :class="['swapcard row ', 'swapcard--' + swap.swap_state.slug]">
       <div class="swapcard-imgs col-4">
         <img :src="swap.objectToExchange.image" alt="" />
         <img :src="swap.objectWanted.image" alt="" />
       </div>
       <div class="col-6">
-        <div v-if="sendSwap">
+        <div v-if="sentSwap">
           <p>
             Tu as envoyé un swap à <b>{{ swap.swap_receiver.username }}</b
             >. Attends sa réponse !
           </p>
-
-          <button class="button button--blue">Voir les détails</button>
         </div>
         <div v-if="receivedSwap">
           <p>
             <b>{{ swap.swap_sender.username }}</b> te propose un swap !
           </p>
-          <button class="button button--blue">Voir les détails</button>
         </div>
+        <button
+          v-if="swap.swap_state.slug == 'pending'"
+          class="button button--blue" @click="$emit('handleClick', swap, sentSwap, receivedSwap)"
+        >
+          Voir les détails
+        </button>
+        <button
+          v-if="swap.swap_state.slug == 'accepted'"
+          class="button button--green"
+        >
+          Envoyer un message
+        </button>
+        <button
+          v-if="swap.swap_state.slug == 'refused'"
+          class="button button--red"
+        >
+          Supprimer le swap
+        </button>
       </div>
     </div>
   </div>
@@ -29,7 +44,7 @@
 export default {
   props: {
     swap: Object,
-    sendSwap: { type: Boolean, default: false },
+    sentSwap: { type: Boolean, default: false },
     receivedSwap: { type: Boolean, default: false },
   },
   components: {},
@@ -38,7 +53,6 @@ export default {
 
 <style lang="scss">
 .swapcard {
-  background-color: rgba(255, 226, 102, 0.3);
   padding: 20px;
   border-radius: $mainborderradius;
   margin-bottom: 20px;
@@ -61,6 +75,15 @@ export default {
         right: 0;
       }
     }
+  }
+
+  &--pending {
+    background-color: rgba(255, 226, 102, 0.3);
+  }
+
+  &--accepted {
+    background-color: $lightgreen;
+    color: $white;
   }
 }
 </style>
