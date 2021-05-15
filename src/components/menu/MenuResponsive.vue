@@ -16,6 +16,7 @@
                 item.label
               }}</router-link>
             </p>
+            <ButtonLogout @click="$emit('clicked')"/>
           </div>
         </div>
         <hr />
@@ -50,8 +51,12 @@
 
 <script>
 import { mapState } from "vuex";
+import ButtonLogout from "@/components/connexion/ButtonLogout";
 
 export default {
+  components: {
+    ButtonLogout
+  },
   props: {
     profileMenuResponsive: {
       type: Object,

@@ -18,7 +18,7 @@
         </div>
         <div class="container">
           <div class="row align-items-start object-create_input">
-            <label class="col-12 col-md-6" for="title">Titre</label> <br />
+            <label class="col-12 col-md-6" for="title">Titre *</label> <br />
             <Input
               name="title"
               class="col-12 col-md-6"
@@ -36,7 +36,7 @@
               class="col-12 col-md-6"
               :value="query.description"
               :maxlength="300"
-              placeholder="Sac à dos renforcé dans le dos de couleur noir avec des bandes réfléchissantes. Encore avec étiquette"
+              placeholder="Ex : Sac à dos renforcé dans le dos de couleur noir avec des bandes réfléchissantes. Encore avec étiquette"
               v-model="query.description"
             />
             <!--  <textarea
@@ -51,7 +51,7 @@
       <div class="box-white">
         <div class="container">
           <div class="row align-items-start object-create_input">
-            <label class="col-12 col-md-6" for="categories">Catégorie</label>
+            <label class="col-12 col-md-6" for="categories">Catégorie *</label>
             <br />
             <Select
               class="col-12 col-md-6"
@@ -65,7 +65,7 @@
         </div>
         <div class="container">
           <div class="row align-items-start object-create_input">
-            <label class="col-12 col-md-6" for="states">Etat</label>
+            <label class="col-12 col-md-6" for="states">Etat *</label>
             <Select
               class="col-12 col-md-6"
               v-if="states[0]"
@@ -106,7 +106,7 @@
         <div class="container">
           <div class="row align-items-start object-create_input">
             <label class="col-12 col-md-6" for="associations"
-              >Association</label
+              >Association *</label
             >
             <br />
             <Select
@@ -118,6 +118,9 @@
             />
           </div>
         </div>
+      </div>
+      <div class="object-create_error">
+        <p v-if="inputEmpty">As-tu bien remplis tous les champs ?</p>
       </div>
       <div class="container">
         <div class="row justify-content-center">
@@ -149,16 +152,15 @@ export default {
   data() {
     return {
       query: {
-        title: "Télévision",
-        description:
-          "Télévision encore en état de marche mais sans télécommande. Taille : 22",
+        title: "Ballon de foot",
+        description: "",
         state: null,
-        brand: "LG",
+        brand: "",
         category: null,
-        price: "22",
+        price: "5",
         association: null,
       },
-      categoriesWithAll: null,
+      inputEmpty: false,
     };
   },
   computed: {
@@ -192,8 +194,27 @@ export default {
         price: this.query.price,
         association: this.query.association,
       };
-      this.createObject(payload);
-      this.$router.push({ name: "profile" });
+
+      if (this.query.description === "") {
+        payload.description = " ";
+      }
+
+      if (this.query.brand === "") {
+        payload.brand = null;
+      }
+
+      if (
+        this.query.category == null ||
+        this.query.association == null ||
+        this.query.state == null ||
+        this.query.title == ""
+      ) {
+        this.inputEmpty = true;
+      } else {
+        console.log(payload);
+        this.createObject(payload);
+        this.$router.push({ name: "profile" });
+      }
     },
     extractImage(input) {
       return new Promise((resolve, reject) => {
@@ -265,6 +286,14 @@ export default {
 
     &_input {
       margin-bottom: 30px;
+    }
+
+    &_error {
+      p {
+        color: $red;
+        font-weight: bold;
+        font-size: 18px;
+      }
     }
 
     button {

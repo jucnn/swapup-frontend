@@ -14,11 +14,7 @@
             class="button button--purple"
             >Modifier</router-link
           >
-          <router-link
-            :to="{ name: 'objects.delete' }"
-            class="button button--red"
-            >Supprimer</router-link
-          >
+          <a @click="handleDelete" class="button button--red">Supprimer</a>
         </div>
         <div v-else>
           <p>
@@ -68,7 +64,8 @@
             }})
           </p>
         </div>
-        <p>{{ object.description }}</p>
+        <p v-if="object.description == ' '">Pas de description</p>
+        <p v-else>{{ object.description }}</p>
       </div>
     </div>
     <Popup
@@ -127,6 +124,7 @@ export default {
   methods: {
     ...mapActions({
       fetchObject: "objects/fetchObject",
+      deleteObject: "objects/deleteObject",
       createSwap: "swap/createSwap",
     }),
     swapBtnClicked() {
@@ -143,6 +141,11 @@ export default {
       };
       this.createSwap(payload);
       this.swapSent = true;
+    },
+    handleDelete() {
+      console.log("delete");
+      this.deleteObject(this.object._id);
+      this.$router.go(-1);
     },
   },
   mounted() {

@@ -7,7 +7,13 @@
       </div>
       <div class="col-12 col-sm-6">
         <div v-if="sentSwap">
-          <p>
+          <p v-if="swap.swap_state.slug == 'accepted'">
+            Ton swap avec <b>{{ swap.swap_receiver.username }}</b> a été accepté !
+          </p>
+          <p v-else-if="swap.swap_state.slug == 'refused'">
+            Ton swap avec <b>{{ swap.swap_receiver.username }}</b> a été refusé
+          </p>
+          <p v-else>
             Tu as envoyé un swap à <b>{{ swap.swap_receiver.username }}</b
             >. Attends sa réponse !
           </p>

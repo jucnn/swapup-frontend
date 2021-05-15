@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="profile-bottom container">
-        <div class="d-block d-md-none btn-editprofile">
+        <div class="d-block d-md-none btn-actions">
           <router-link
             class="button button--purple"
             :to="{ name: 'profile.edit' }"
@@ -185,10 +185,10 @@
               />
               <div v-else>
                 <div v-if="responseType == 'accepted'">
-                  <p>accepté</p>
+                  <p>Tu as accepté le swap !</p>
                 </div>
                 <div v-if="responseType == 'refused'">
-                  <p>refusé</p>
+                  <p>Swap refusé</p>
                 </div>
                 <div v-if="responseType == 'canceled'">
                   <p>refusé</p>
@@ -274,10 +274,10 @@ export default {
       this.$route.query.tab = slug;
     },
   },
-   watch: {
+  watch: {
     $route(to, from) {
       // react to route changes...
-    }
+    },
   },
   methods: {
     ...mapActions({
@@ -298,8 +298,7 @@ export default {
     },
     getSelectedTab(value) {
       console.log(value);
-      this.$router.replace({ query: {tab:value} }).catch(()=>{});
-
+      this.$router.replace({ query: { tab: value } }).catch(() => {});
     },
     changeSwapState(response, swap) {
       const swapstateId = this.allSwapstate.find(
@@ -313,7 +312,7 @@ export default {
             swap_state: swapstateId,
           },
         };
-      this.isReponseAccepted = true;
+        this.isReponseAccepted = true;
 
         console.log(datas);
         this.updateSwap(datas);
@@ -363,9 +362,13 @@ export default {
 
     @media screen and (max-width: $md) {
       margin-top: 30px;
-      .btn-editprofile {
+      .btn-actions {
         max-width: 80%;
         margin: 30px auto;
+
+        a {
+          margin-bottom: 10px;
+        }
       }
     }
 

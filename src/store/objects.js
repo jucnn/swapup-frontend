@@ -64,6 +64,14 @@ const actions = {
       }
     );
   },
+  async deleteObject({ commit }, id) {
+    await axios.delete(
+      `${apiUrl}object/${id}`,
+      {
+        withCredentials: true,
+      }
+    );
+  },
 };
 
 export default {
