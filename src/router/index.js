@@ -5,8 +5,10 @@ import VueCookies from "vue-cookies";
 import Index from "@/views/Index";
 import Login from "@/views/Login";
 import Register from "@/views/Register";
-import Profile from "@/views/Profile";
+import Profile from "@/views/Profile/Index";
+import ProfileEdit from "@/views/Profile/Edit";
 import Feed from "@/views/Feed";
+import User from "@/views/User";
 
 import Main from "@/layouts/Main";
 
@@ -40,6 +42,17 @@ const router = new Router({
           name: "profile",
           component: Profile,
           beforeEnter: auth,
+        },
+        {
+          path: "/profile/edit",
+          name: "profile.edit",
+          component: ProfileEdit,
+          beforeEnter: auth,
+        },
+        {
+          path: "/user/:id",
+          name: "user",
+          component: User,
         },
         {
           path: "/feed",

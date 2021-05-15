@@ -98,6 +98,14 @@ export default {
       background-color: $lightgreen;
     }
   }
+
+  &-refusal {
+    background-color: $green;
+
+    .popup-close {
+      background-color: $lightgreen;
+    }
+  }
 }
 
 @media screen and (max-width: $xl) {

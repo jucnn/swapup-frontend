@@ -7,7 +7,9 @@
         :class="['tabsh-header_item', { 'is-active': index == selectedIndex }]"
         :key="tab.title"
       >
-        {{ tab.title }}
+        <span>
+          {{ tab.title }}
+        </span>
       </div>
     </div>
 
@@ -24,6 +26,10 @@ export default {
       type: Number,
       default: 0,
     },
+    openedTabSlug: {
+      type: String,
+      default: "objects",
+    },
   },
   data() {
     return {
@@ -34,12 +40,14 @@ export default {
   methods: {
     selectTab(i) {
       this.selectedIndex = i;
+      this.$emit("changeTab", this.tabs[i].slug);
       this.tabs.forEach((tab, index) => {
         tab.isActive = index === i;
       });
     },
   },
   created() {
+    this.$route.query.tab = this.openedTabSlug;
     this.tabs = this.$children;
   },
   mounted() {
@@ -53,13 +61,20 @@ export default {
 .tabsh {
   &-header {
     display: flex;
-    border-bottom: 1px solid $grey;
+      border-bottom: 1px solid $grey;
 
     &_item {
       color: $grey;
-      padding-bottom: 10px;
-      margin-right: 20px;
       cursor: pointer;
+
+      span {
+        margin: 0 10px 7px 10px;
+        display: inline-block;
+      }
+
+      @media screen and (max-width: $sm) {
+        font-size: 14px;
+      }
 
       &.is-active {
         color: $black;

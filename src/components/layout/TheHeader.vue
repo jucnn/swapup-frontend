@@ -10,13 +10,14 @@
             />
             <transition name="slide-fade">
               <MenuResponsive
+                :profileMenuResponsive="profileMenuResponsive"
                 class="menu-responsive_container"
                 v-if="isResponsiveMenuOpened"
                 @clicked="isResponsiveMenuOpened = false"
               />
             </transition>
           </div>
-          <router-link :to="{ name: 'index' }">
+          <router-link :to="{ path: '/' }">
             <svg
               id="Logo_-_Desktop"
               data-name="Logo - Desktop"
@@ -87,7 +88,7 @@
             <transition name="slide-down">
               <MenuDropdown
                 v-if="isProfileMenuOpened"
-                :items="profileMenu"
+                :items="profileMenuDropdown"
                 @handleClick="closeMenuDropdown()"
               />
             </transition>
@@ -121,12 +122,30 @@ export default {
       windowTop: 0,
       isResponsiveMenuOpened: false,
       isProfileMenuOpened: false,
-      profileMenu: [
+      profileMenuDropdown: [
         { label: "Mon profile", url: "profile" },
         { label: "Messagerie", url: "index" },
-   /*      { label: "Mes swaps envoyés", url: "profile", tab: "sent-swaps" },
+        /*      { label: "Mes swaps envoyés", url: "profile", tab: "sent-swaps" },
         { label: "Mes swaps reçus", url: "profile", tab: "received-swaps" }, */
       ],
+      profileMenuResponsive: {
+        discover: [
+          { label: "Comment ça marche ?", url: "index" },
+          { label: "FAQ", url: "index" },
+          { label: "A propos", url: "index" },
+        ],
+        notConnected: [
+          { label: "Crée ton compte", url: "register" },
+          { label: "Connecte toi", url: "login" },
+        ],
+        connected: [
+          { label: "Profil", url: "profile" },
+          { label: "Favoris", url: "profile" },
+          { label: "Notifications", url: "profile" },
+          { label: "Swaps envoyés", url: "profile", query: {tab: 'sentswaps'} },
+          { label: "Swaps reçus", url: "profile", query: {tab: 'receivedswaps'} },
+        ],
+      },
     };
   },
   computed: {

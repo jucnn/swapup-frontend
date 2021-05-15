@@ -1,5 +1,5 @@
 <template>
-  <div id="connexion">
+  <div id="connexion" class="container-fluid">
     <router-link class="connexion-logo" :to="{ name: 'index' }">
       <svg
         id="Logo_-_Desktop"
@@ -117,45 +117,50 @@
       "
       alt=""
     /> -->
-    <h1 v-if="loginPage">Connecte<br />toi</h1>
-    <h1 v-else>Crée ton<br />compte</h1>
-    <div class="connexion-container">
-      <form @submit.prevent="loginPage ? login() : register()">
-        <div class="connexion-container_item" v-if="!loginPage">
-          <label for="username">Nom d'utilisateur</label> <br />
-          <Input
-            name="username"
-            type="text"
-            placeholder="Juliette"
-            v-model="username"
+    <div class="row justify-content-around">
+      <div class="col-12 col-md-5">
+        <h1 v-if="loginPage">Connecte<br />toi</h1>
+        <h1 v-else>Crée ton<br />compte</h1>
+      </div>
+
+      <div class="connexion-container col-12 col-md-5">
+        <form @submit.prevent="loginPage ? login() : register()">
+          <div class="connexion-container_item" v-if="!loginPage">
+            <label for="username">Nom d'utilisateur</label> <br />
+            <Input
+              name="username"
+              type="text"
+              placeholder="Juliette"
+              v-model="username"
+            />
+          </div>
+          <div class="connexion-container_item">
+            <label for="email">Email</label> <br />
+            <Input
+              name="email"
+              type="text"
+              placeholder="juliette@gmail.com"
+              v-model="email"
+            />
+          </div>
+          <div class="connexion-container_item">
+            <label for="password">Mot de passe</label> <br />
+            <Input
+              name="password"
+              type="password"
+              placeholder="Juliette"
+              v-model="password"
+            />
+          </div>
+          <input
+            type="submit"
+            :value="loginPage ? 'Se connecter' : 'Créer mon compte'"
           />
-        </div>
-        <div class="connexion-container_item">
-          <label for="email">Email</label> <br />
-          <Input
-            name="email"
-            type="text"
-            placeholder="juliette@gmail.com"
-            v-model="email"
-          />
-        </div>
-        <div class="connexion-container_item">
-          <label for="password">Mot de passe</label> <br />
-          <Input
-            name="password"
-            type="password"
-            placeholder="Juliette"
-            v-model="password"
-          />
-        </div>
-        <input
-          type="submit"
-          :value="loginPage ? 'Se connecter' : 'Créer mon compte'"
-        />
-      </form>
-      <router-link :to="{ name: loginPage ? 'register' : 'login' }">{{
-        loginPage ? "S'inscrire" : "Se connecter"
-      }}</router-link>
+        </form>
+        <router-link :to="{ name: loginPage ? 'register' : 'login' }">{{
+          loginPage ? "S'inscrire" : "Se connecter"
+        }}</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -227,10 +232,14 @@ export default {
 
 <style lang="scss">
 #connexion {
-  display: flex;
-  justify-content: space-around;
+  /* display: flex;
+  justify-content: space-around; */
   position: relative;
   padding-top: 30vh;
+
+  @media screen and (max-width: $sm) {
+    padding-top: 26vh;
+  }
 
   .bcg {
     position: absolute;
@@ -238,6 +247,14 @@ export default {
     z-index: -1;
     top: 0;
     left: 0;
+
+    @media screen and (max-width: $md) {
+      max-width: inherit;
+    }
+
+    @media screen and (max-width: $sm) {
+      width: 140%;
+    }
 
     &-register {
       #Tracé_66 {
@@ -248,10 +265,16 @@ export default {
 
   h1 {
     color: $white;
-    font-size: 60px;
     font-weight: $semibold;
+    font-size: 60px;
     line-height: 60px;
     margin: 0;
+
+    @media screen and (max-width: $sm) {
+      font-size: 40px;
+      line-height: 40px;
+      padding: 0 15px;
+    }
   }
 
   .connexion {
@@ -266,6 +289,11 @@ export default {
     &-container {
       width: 380px;
       border-radius: $mainborderradius;
+
+      @media screen and (max-width: $sm) {
+        margin-top: 80px;
+        padding: 0 25px;
+      }
 
       &_item {
         margin-bottom: 30px;
@@ -290,11 +318,16 @@ export default {
     border: none;
     border-radius: $mainborderradius;
     width: 70%;
-    padding: 10px 0;
+    padding: 12px 0;
     color: $white;
     font-weight: $semibold;
     margin: 20px 0;
     cursor: pointer;
+    font-size: 16px;
+
+    @media screen and (max-width: $sm) {
+      width: 100%;
+    }
   }
 
   form label {

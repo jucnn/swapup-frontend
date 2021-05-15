@@ -1,6 +1,5 @@
 <template>
   <div class="container object-container">
-    <!-- <BackButton /> -->
     <div v-if="object" class="object">
       <div class="object_img">
         <img :src="object.image" alt="" />
@@ -25,7 +24,7 @@
           <p>
             Vendu par :
             <router-link
-              :to="{ name: 'user.index', params: { id: object.seller._id } }"
+              :to="{ name: 'user', params: { id: object.seller._id } }"
               >{{ object.seller.username }}</router-link
             >
           </p>
@@ -37,11 +36,15 @@
           <div class="object_btns">
             <router-link
               class="button button--blue"
-              :to="{ name: 'user.index', params: { id: object.seller._id } }"
+              :to="{ name: 'user', params: { id: object.seller._id } }"
               >Profil du vendeur</router-link
             >
             <div class="object_btns-actions">
-              <button class="button button--purple" @click="swapBtnClicked()" :disabled="isSwapExist">
+              <button
+                class="button button--purple"
+                @click="swapBtnClicked()"
+                :disabled="isSwapExist"
+              >
                 <span v-if="!isSwapExist">Swaper</span>
                 <span v-else>Swap envoyé</span>
               </button>
@@ -116,8 +119,10 @@ export default {
       return this.profile ? true : false;
     },
     isSwapExist() {
-     return this.userSwapSent.some(swapSent => swapSent.objectWanted._id == this.object._id)
-    }
+      return this.userSwapSent.some(
+        (swapSent) => swapSent.objectWanted._id == this.object._id
+      );
+    },
   },
   methods: {
     ...mapActions({
@@ -137,7 +142,6 @@ export default {
         swap_receiver: this.object.seller._id,
       };
       this.createSwap(payload);
-      //TODO : add swap state (pending / Back ?)
       this.swapSent = true;
     },
   },
@@ -155,6 +159,13 @@ export default {
   grid-template-areas:
     "img seller"
     "details details";
+
+  @media screen and (max-width: $md) {
+    grid-template-areas:
+      "img img"
+      "details details"
+      "seller seller";
+  }
 
   &-container {
     margin-top: 80px;

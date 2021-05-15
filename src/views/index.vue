@@ -12,7 +12,7 @@
         <div class="col container col-md-9 col-xs-12">
           <div class="row">
             <ObjectCard
-              class="objects-item col-6 col-lg-4"
+              class="objects-item col-12 col-sm-6 col-lg-4"
               v-for="object in filteredObject"
               :key="object.id"
               :object="object"

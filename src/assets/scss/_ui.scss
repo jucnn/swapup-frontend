@@ -10,6 +10,10 @@
   text-align: center;
   width: 100%;
 
+  @media screen and (max-width:$md) {
+    font-size:16px;
+  }
+
   &:disabled {
     background-color: $grey;
     cursor: default;
@@ -29,6 +33,14 @@
 
   &--red {
     background-color: $red;
+  }
+
+  &--lightblue {
+    background-color: $lightblue;
+  }
+
+  &--lightred {
+    background-color: $lightred;
   }
 }
 

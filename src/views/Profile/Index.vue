@@ -24,7 +24,7 @@
             <div class="col-3 d-none d-md-block">
               <router-link
                 class="button button--purple"
-                :to="{ name: 'profil.edit' }"
+                :to="{ name: 'profile.edit' }"
                 >Modifier mon profil</router-link
               >
             </div>
@@ -34,15 +34,19 @@
       <div class="profile-bottom container">
         <div class="d-block d-md-none btn-editprofile">
           <router-link
-            class="button button--purple "
-            :to="{ name: 'profil.edit' }"
+            class="button button--purple"
+            :to="{ name: 'profile.edit' }"
             >Modifier mon profil</router-link
           >
         </div>
         <p>{{ profile.description }}</p>
         <div class="tabs-container">
-          <TabsHorizontal :openedTab="getIndexOfTab">
-            <Tab title="Mes objets">
+          <TabsHorizontal
+            :openedTab="getIndexOfTab.index"
+            :openedTabSlug="getIndexOfTab.slug"
+            @changeTab="getSelectedTab"
+          >
+            <Tab title="Mes objets" slug="objects">
               <div class="profile-objects">
                 <div class="container profile-objects_title">
                   <div class="row align-items-center">
@@ -74,7 +78,7 @@
                 </div>
               </div>
             </Tab>
-            <Tab title="Mes swaps envoyés">
+            <Tab title="Mes swaps envoyés" slug="sentswaps">
               <div class="profile-swap">
                 <h2 class="col">Mes swaps envoyés</h2>
                 <TabsVertical>
@@ -118,7 +122,7 @@
                 </TabsVertical>
               </div>
             </Tab>
-            <Tab title="Mes swaps reçus">
+            <Tab title="Mes swaps reçus" slug="receivedswaps">
               <div class="profile-swap">
                 <h2 class="col">Mes swaps reçus</h2>
                 <TabsVertical>
@@ -166,7 +170,7 @@
           <transition name="fade">
             <Popup
               v-if="swapupPopup.isDisplayed"
-              :isValidate="isResponseSent"
+              :isValidate="isReponseAccepted"
               :isUserConnected="isUserConnected"
               @closeClick="closePopup()"
             >
@@ -236,6 +240,7 @@ export default {
         isReceivedSwap: false,
       },
       isResponseSent: false,
+      isReponseAccepted: null,
       responseType: null,
     };
   },
@@ -251,28 +256,28 @@ export default {
       return this.profile ? true : false;
     },
     getIndexOfTab() {
-      switch (this.openedTab) {
+      switch (this.$route.query.tab) {
         case "objects":
-          return 0;
+          return { slug: "objects", index: 0 };
           break;
-        case "sent-swaps":
-          return 1;
+        case "sentswaps":
+          return { slug: "sentswaps", index: 1 };
           break;
-        case "received-swaps":
-          return 2;
+        case "receivedswaps":
+          return { slug: "receivedswaps", index: 2 };
           break;
         default:
-          return 0;
+          return { slug: "objects", index: 0 };
       }
     },
-    /*    getCopyOfUserSwapReceived() {
-      this.
-    } */
-  },
-  watch: {
-    $route(to, from) {
-      this.openedTab = to.query.openedTab;
+    changeRouteQuery(slug) {
+      this.$route.query.tab = slug;
     },
+  },
+   watch: {
+    $route(to, from) {
+      // react to route changes...
+    }
   },
   methods: {
     ...mapActions({
@@ -291,6 +296,11 @@ export default {
         isReceivedSwap: received,
       };
     },
+    getSelectedTab(value) {
+      console.log(value);
+      this.$router.replace({ query: {tab:value} }).catch(()=>{});
+
+    },
     changeSwapState(response, swap) {
       const swapstateId = this.allSwapstate.find(
         (swapstate) => swapstate.slug == response
@@ -303,6 +313,8 @@ export default {
             swap_state: swapstateId,
           },
         };
+      this.isReponseAccepted = true;
+
         console.log(datas);
         this.updateSwap(datas);
       } else {
@@ -319,7 +331,7 @@ export default {
     },
   },
   mounted() {
-    this.openedTab = this.$route.query.openedTab;
+    this.openedTab = this.$route.query.tab;
     this.fetchUserObjects();
     this.fetchAllSwapstate();
   },
@@ -353,7 +365,7 @@ export default {
       margin-top: 30px;
       .btn-editprofile {
         max-width: 80%;
-        margin:30px auto;
+        margin: 30px auto;
       }
     }
 

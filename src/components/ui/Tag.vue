@@ -33,5 +33,11 @@ export default {
     font-weight: $bold;
     font-size: 10px;
     letter-spacing: 1px;
+
+    @media screen and (max-width :$sm) {
+      font-size: 9px;
+      padding:3px 12px;
+      letter-spacing: 0.7px;
+    }
 }
 </style>

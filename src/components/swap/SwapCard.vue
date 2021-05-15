@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <div :class="['swapcard row ', 'swapcard--' + swap.swap_state.slug]">
-      <div class="swapcard-imgs col-4">
+      <div class="swapcard-imgs col-4 d-none d-sm-block">
         <img :src="swap.objectToExchange.image" alt="" />
         <img :src="swap.objectWanted.image" alt="" />
       </div>
-      <div class="col-6">
+      <div class="col-12 col-sm-6">
         <div v-if="sentSwap">
           <p>
             Tu as envoyé un swap à <b>{{ swap.swap_receiver.username }}</b
@@ -13,13 +13,20 @@
           </p>
         </div>
         <div v-if="receivedSwap">
-          <p>
+          <p v-if="swap.swap_state.slug == 'accepted'">
+            Tu as accepté le swap de <b>{{ swap.swap_sender.username }}</b>
+          </p>
+          <p v-else-if="swap.swap_state.slug == 'refused'">
+            Tu as refusé le swap de <b>{{ swap.swap_sender.username }}</b>
+          </p>
+          <p v-else>
             <b>{{ swap.swap_sender.username }}</b> te propose un swap !
           </p>
         </div>
         <button
           v-if="swap.swap_state.slug == 'pending'"
-          class="button button--blue" @click="$emit('handleClick', swap, sentSwap, receivedSwap)"
+          class="button button--blue"
+          @click="$emit('handleClick', swap, sentSwap, receivedSwap)"
         >
           Voir les détails
         </button>
@@ -57,6 +64,10 @@ export default {
   border-radius: $mainborderradius;
   margin-bottom: 20px;
 
+  @media screen and (max-width:$sm) {
+    padding:15px 0px;
+  }
+
   &-imgs {
     position: relative;
 
@@ -83,6 +94,10 @@ export default {
 
   &--accepted {
     background-color: $lightgreen;
+    color: $white;
+  }
+  &--refused {
+    background-color: $lightred;
     color: $white;
   }
 }

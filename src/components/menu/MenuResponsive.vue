@@ -7,16 +7,14 @@
           <!-- If connected -->
           <h2>Mon compte</h2>
           <div>
-            <p><router-link :to="{ path: 'profile' }">Profil</router-link></p>
-            <p><router-link :to="{ path: 'index' }">Favoris</router-link></p>
-            <p>
-              <router-link :to="{ path: 'index' }">Notifications</router-link>
-            </p>
-            <p>
-              <router-link :to="{ path: 'index' }">Swaps envoyés</router-link>
-            </p>
-            <p>
-              <router-link :to="{ path: 'index' }">Swaps reçus</router-link>
+            <p
+              v-for="(item, index) in profileMenuResponsive.connected"
+              :key="index"
+              @click="$emit('clicked')"
+            >
+              <router-link :to="{ name: item.url, query: item.query }">{{
+                item.label
+              }}</router-link>
             </p>
           </div>
         </div>
@@ -24,19 +22,26 @@
       </div>
       <!-- If not connected -->
       <div class="menu-responsive_connect" v-else>
-        <p><router-link :to="{ path: 'index' }">Connecte toi</router-link></p>
+        <p
+          v-for="(item, index) in profileMenuResponsive.notConnected"
+          :key="index"
+          @click="$emit('clicked')"
+        >
+          <router-link :to="{ name: item.url }">{{ item.label }}</router-link>
+        </p>
+
         <hr />
       </div>
       <div class="menu-responsive_discover">
         <h2>Découvrir</h2>
         <div>
-          <p>
-            <router-link :to="{ path: 'index' }"
-              >Comment ça marche ?</router-link
-            >
+          <p
+            v-for="(item, index) in profileMenuResponsive.discover"
+            :key="index"
+            @click="$emit('clicked')"
+          >
+            <router-link :to="{ name: item.url }">{{ item.label }}</router-link>
           </p>
-          <p><router-link :to="{ path: 'index' }">FAQ</router-link></p>
-          <p><router-link :to="{ path: 'index' }">A propos</router-link></p>
         </div>
       </div>
     </div>
@@ -47,6 +52,12 @@
 import { mapState } from "vuex";
 
 export default {
+  props: {
+    profileMenuResponsive: {
+      type: Object,
+      default: () => {},
+    },
+  },
   computed: {
     ...mapState({
       profile: (state) => state.profile.profile.data,
@@ -81,7 +92,7 @@ export default {
   }
 
   &_content {
-    margin-top: 20px;
+    margin-top: 40px;
   }
 }
 </style>

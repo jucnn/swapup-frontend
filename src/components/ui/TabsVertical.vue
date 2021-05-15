@@ -68,6 +68,10 @@ export default {
       cursor: pointer;
       padding: 15px;
 
+      @media screen and (max-width:$md) {
+        padding: 10px;
+      }
+
       &.is-active {
         transition: 200ms;
         p {

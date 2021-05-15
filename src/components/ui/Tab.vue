@@ -11,6 +11,10 @@ export default {
       type: String,
       default: "Tab",
     },
+    slug: {
+      type: String,
+      default: "objects"
+    },
     type: {
       type: String,
       default: "pending"
