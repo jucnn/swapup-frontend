@@ -37,6 +37,17 @@ const actions = {
     });
     commit("setProfile", data);
   },
+  async updateProfile({ commit }, data) {
+    await axios.patch(
+      `${apiUrl}auth/${data.id}`,
+      {
+        ...data.payload,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+  },
   async fetchUserObjects({ commit }) {
     const data = await axios.get(`${apiUrl}auth/objects`, {
       withCredentials: true,
@@ -55,7 +66,7 @@ const actions = {
     });
     commit("setUserSwapReceived", data.data);
   },
-  
+
   /* 
   async register({ commit }, data) {
     await axios.post(`${apiUrl}auth/register`, {
