@@ -1,0 +1,109 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+main {
+  min-height: 100vh;
+  padding-top: 10vh;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  line-height: 1.5;
+  color: $black;
+  background-color: $white;
+  position: relative;
+}
+
+body,
+input,
+textarea,
+button,
+select {
+  font-family: $fontfamily;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: $black;
+  font-weight: $semibold;
+  text-decoration: none;
+}
+
+hr {
+  color: $grey;
+  border-style: solid;
+  height: 2px;
+  border-bottom: none;
+}
+
+p,
+h1,
+h2,
+h3,
+h4 {
+  margin-top: 0;
+}
+
+h3, h4 {
+  font-weight: 600;
+}
+
+p {
+  font-size:16px;
+}
+
+#register form [type="text"],
+#login form [type="text"],
+#register form [type="password"],
+#login form [type="password"] {
+  background-color: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid $black;
+  padding: 5px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+#register form [type="submit"],
+#login form [type="submit"] {
+  background-color: $purple;
+  border: none;
+  border-radius: $mainborderradius;
+  width: 70%;
+  padding: 10px 0;
+  color: $white;
+  font-weight: $semibold;
+  margin: 20px 0;
+}
+
+#register form label,
+#login form label {
+  font-weight: $semibold;
+}
+
+input:focus {
+  outline: 2px solid $lightpurple;
+}
+
+
+@media screen and (max-width:$sm) {
+ p {
+   font-size:14px;
+ } 
+}
+
+@media screen and (max-width:$md) {
+  main {
+    padding-top: 20vh;
+  }
+}

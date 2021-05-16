@@ -1,23 +1,36 @@
 $black: #494949;
-$white: #FAF9F9;
+$white: #faf9f9;
+$grey: #cfcfcf;
+$lightgrey: #f3f3f3;
 
-$lightpurple: #A491D3; 
-$purple:#7A5EBF;
-$darkpurple:#8777AC;
+$lightpurple: #a491d3;
+$purple: #7a5ebf;
+$darkpurple: #8777ac;
 
-$lightyellow: #FFE266; 
-$yellow:#FFD41F;
-$darkyellow:#D0B855;
+$lightyellow: #ffe266;
+$yellow: #ffd41f;
+$darkyellow: #d0b855;
 
-$lightgreen: #97D8B1; 
-$green:#62C489;
-$darkgreen:#7CB091;
+$lightgreen: #97d8b1;
+$green: #62c489;
+$darkgreen: #7cb091;
 
-$lightred: #FFA8AE; 
-$red:#FF4F5B;
-$darkred:#D3848A;
+$lightred: #ffa8ae;
+$red: #ff4f5b;
+$darkred: #d3848a;
 
-$lightblue: #B3D7F9; 
-$blue:#64ADF3;
-$darkblue:#93B0CB;
+$lightblue: #b3d7f9;
+$blue: #64adf3;
+$darkblue: #93b0cb;
 
+$boxshadow: 0px 3px 15px rgba(0, 0, 0, 0.08);
+
+$mainborderradius: 10px;
+
+// Media queries
+
+$xs: 370px;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;

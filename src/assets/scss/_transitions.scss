@@ -1,0 +1,44 @@
+//Slide fade left
+
+.slide-fade-left-enter-active {
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.slide-fade-left-leave-active {
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.slide-fade-left-enter,
+.slide-fade-left-leave-to {
+  transform: translateX(-100%);
+}
+
+//Slide fade right
+
+.slide-fade-right-enter-active {
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.slide-fade-right-leave-active {
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.slide-fade-right-enter,
+.slide-fade-right-leave-to {
+  transform: translateX(100%);
+}
+
+//Fade
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+//Slide down
+
+.slide-down-enter-active {
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.slide-down-enter {
+  transform: translateY(-5px);
+}
