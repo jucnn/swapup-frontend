@@ -37,10 +37,7 @@
         <h3>Prix</h3>
         <Range />
       </div>
-      <button
-        class="button button--green"
-        @click.prevent="$emit('submitFilters', filters)"
-      >
+      <button class="button button--green" @click.prevent="search()">
         Rechercher
       </button>
     </div>
@@ -87,6 +84,10 @@ export default {
     }),
     categoryChecked(value) {
       this.filters.checkedCategory = value;
+    },
+    search() {
+      this.$emit("submitFilters", this.filters);
+      this.$emit("clicked");
     },
   },
   async mounted() {
