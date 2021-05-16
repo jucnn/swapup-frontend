@@ -29,8 +29,7 @@ export default {
   },
   methods: {
     handleClick() {
-      this.isOpen = !this.isOpen;
-      this.$emit("clicked", this.isOpen);
+      this.$emit("clicked");
     },
   },
 };

@@ -1,7 +1,6 @@
 <template>
   <div class="objects-feed">
     <div class="objects-container container header-space">
-      <h1>Tous les objets </h1>
       <div class="row">
         <div class="d-md-block d-none col-3">
           <Filters
@@ -10,7 +9,7 @@
           />
         </div>
         <div class="col container col-md-9 col-xs-12">
-          <div class="row">
+          <div class="row" v-if="filteredObject.length > 0">
             <ObjectCard
               class="objects-item col-12 col-sm-6 col-lg-4"
               v-for="object in filteredObject"
@@ -18,6 +17,7 @@
               :object="object"
             />
           </div>
+          <p v-else>Pas d'objets correspondant à la demande</p>
         </div>
       </div>
     </div>
@@ -32,6 +32,7 @@ import Filters from "@/components/filters/Filters";
 
 export default {
   name: "Index",
+  props: ["filtersChecked"],
   data() {
     return {
       filteredObject: [],
@@ -73,6 +74,18 @@ export default {
           .catch((err) => console.log(err));
       },
     },
+    filtersChecked: function () {
+      this.query.category = this.filtersChecked.checkedCategory;
+      this.query.state = this.filtersChecked.checkedState;
+      axios
+        .post(`${process.env.VUE_APP_API_URL}api/object/search`, this.query, {
+          withCredentials: true,
+        })
+        .then((data) => {
+          this.filteredObject = data.data.data;
+        })
+        .catch((err) => console.log(err));
+    },
   },
   methods: {
     ...mapActions({
@@ -96,7 +109,7 @@ export default {
   },
   async mounted() {
     await this.fetchAllObjects(this.$route.query);
-    this.filteredObject = this.allObjects
+    this.filteredObject = this.allObjects;
   },
 };
 </script>

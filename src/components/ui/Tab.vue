@@ -1,6 +1,6 @@
 <template>
   <div v-show="isActive">
-    <slot></slot>
+    <slot @click="$emit('tabClick')"></slot>
   </div>
 </template>
 

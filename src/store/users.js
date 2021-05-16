@@ -5,6 +5,7 @@ const apiUrl = `${process.env.VUE_APP_API_URL}auth/`;
 const state = () => ({
   allUsers: [],
   user: null,
+  objectsByUser: []
 });
 
 const getters = {
@@ -18,6 +19,9 @@ const mutations = {
   setUser(state, val) {
     state.user = val;
   },
+  setObjectsByUser(state, val) {
+    state.objectsByUser = val
+  }
 };
 
 const actions = {
@@ -28,6 +32,10 @@ const actions = {
   async fetchUser({ commit }, id) {
     const data = await axios.get(`${apiUrl}${id}`);
     commit("setUser", data.data);
+  },
+  async fetchObjectsByUser({ commit }, id) {
+    const data = await axios.get(`${apiUrl}${id}/objects`);
+    commit("setObjectsByUser", data.data);
   },
 };
 

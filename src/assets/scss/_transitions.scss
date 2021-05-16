@@ -1,14 +1,27 @@
-//Slide fade
+//Slide fade left
 
-.slide-fade-enter-active {
+.slide-fade-left-enter-active {
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.slide-fade-leave-active {
+.slide-fade-left-leave-active {
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.slide-fade-enter,
-.slide-fade-leave-to {
+.slide-fade-left-enter,
+.slide-fade-left-leave-to {
   transform: translateX(-100%);
+}
+
+//Slide fade right
+
+.slide-fade-right-enter-active {
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.slide-fade-right-leave-active {
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.slide-fade-right-enter,
+.slide-fade-right-leave-to {
+  transform: translateX(100%);
 }
 
 //Fade

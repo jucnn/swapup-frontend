@@ -1,8 +1,8 @@
 <template>
   <div>
-    <TheHeader>I'm a header</TheHeader>
+    <TheHeader @submitFilters="getFilters">I'm a header</TheHeader>
     <main>
-      <router-view />
+      <router-view :filtersChecked="filters"/>
     </main>
     <TheFooter>I'm a footer</TheFooter>
   </div>
@@ -20,9 +20,15 @@ export default {
   },
   data() {
     return {
-      isMenuOpened: false,
+      filters: null,
     }
   },
+  methods: {
+    getFilters(value) {
+this.filters = value
+      console.log(value);
+    }
+  }
 };
 </script>
 

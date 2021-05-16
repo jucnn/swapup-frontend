@@ -8,7 +8,7 @@
               class="menu-responsive_btn"
               @clicked="isResponsiveMenuOpened = true"
             />
-            <transition name="slide-fade">
+            <transition name="slide-fade-left">
               <MenuResponsive
                 :profileMenuResponsive="profileMenuResponsive"
                 class="menu-responsive_container"
@@ -72,7 +72,15 @@
         <div class="header-search col-xs-12 col-md-6 container">
           <div class="row align-items-center">
             <SearchBar class="col col-10 col-md-12" @search="getSearchValue" />
-            <FiltersButton class="fitlers-btn_container col-2 d-md-none" />
+            <FiltersButton class="fitlers-btn_container col-2 d-md-none" @clicked="isFiltersResponsiveOpened = true"/>
+            <transition name="slide-fade-right">
+              <FiltersResponsive
+                class="filters-responsive_container"
+                v-if="isFiltersResponsiveOpened"
+                @clicked="isFiltersResponsiveOpened = false"
+                v-on="$listeners"
+              />
+            </transition>
           </div>
         </div>
         <div class="header-connexion_container col col-md-3 d-none d-md-block">
@@ -107,6 +115,7 @@ import MenuResponsiveButton from "@/components/menu/MenuResponsiveButton";
 import MenuResponsive from "@/components/menu/MenuResponsive";
 import MenuDropdown from "@/components/menu/MenuDropdown";
 import FiltersButton from "@/components/filters/FiltersButton";
+import FiltersResponsive from "@/components/filters/FiltersResponsive";
 
 export default {
   name: "TheHeader",
@@ -116,12 +125,14 @@ export default {
     MenuResponsive,
     FiltersButton,
     MenuDropdown,
+    FiltersResponsive
   },
   data() {
     return {
       windowTop: 0,
       isResponsiveMenuOpened: false,
       isProfileMenuOpened: false,
+      isFiltersResponsiveOpened: false,
       profileMenuDropdown: [
         { label: "Mon profile", url: "profile" },
         { label: "Messagerie", url: "index" },
@@ -142,8 +153,16 @@ export default {
           { label: "Profil", url: "profile" },
           { label: "Favoris", url: "profile" },
           { label: "Notifications", url: "profile" },
-          { label: "Swaps envoyés", url: "profile", query: {tab: 'sentswaps'} },
-          { label: "Swaps reçus", url: "profile", query: {tab: 'receivedswaps'} },
+          {
+            label: "Swaps envoyés",
+            url: "profile",
+            query: { tab: "sentswaps" },
+          },
+          {
+            label: "Swaps reçus",
+            url: "profile",
+            query: { tab: "receivedswaps" },
+          },
         ],
       },
     };

@@ -126,10 +126,14 @@
               <div class="profile-swap">
                 <h2 class="col">Mes swaps reçus</h2>
                 <TabsVertical>
-                  <Tab title="En attente" type="pending">
+                  <Tab
+                    title="En attente"
+                    type="pending"
+                    @tabClick="handleClickTab()"
+                  >
                     <div
                       v-for="swapReceived in userSwapByState(
-                        userSwapReceived,
+                        copyOfUserSwapReceived,
                         'pending'
                       )"
                       :key="swapReceived._id"
@@ -141,10 +145,14 @@
                       />
                     </div>
                   </Tab>
-                  <Tab title="Accepté" type="accepted">
+                  <Tab
+                    title="Accepté"
+                    type="accepted"
+                    @tabClick="handleClickTab()"
+                  >
                     <div
                       v-for="swapReceived in userSwapByState(
-                        userSwapReceived,
+                        copyOfUserSwapReceived,
                         'accepted'
                       )"
                       :key="swapReceived._id"
@@ -152,10 +160,14 @@
                       <SwapCard :swap="swapReceived" :receivedSwap="true" />
                     </div>
                   </Tab>
-                  <Tab title="Refusé" type="refused">
+                  <Tab
+                    title="Refusé"
+                    type="refused"
+                    @tabClick="handleClickTab()"
+                  >
                     <div
                       v-for="swapReceived in userSwapByState(
-                        userSwapReceived,
+                        copyOfUserSwapReceived,
                         'refused'
                       )"
                       :key="swapReceived._id"
@@ -186,16 +198,25 @@
                 @swapCanceled="changeSwapState('canceled', swapupPopup.swap)"
               />
               <div v-else>
-                <div v-if="responseType == 'accepted'" class="swappopup-validation">
-                  <img src="@/assets/img/check.png" alt="">
+                <div
+                  v-if="responseType == 'accepted'"
+                  class="swappopup-validation"
+                >
+                  <img src="@/assets/img/check.png" alt="" />
                   <h3>Tu as accepté le swap !</h3>
                 </div>
-                <div v-if="responseType == 'refused'" class="swappopup-validation">
-                  <img src="@/assets/img/check.png" alt="">
+                <div
+                  v-if="responseType == 'refused'"
+                  class="swappopup-validation"
+                >
+                  <img src="@/assets/img/check.png" alt="" />
                   <h3>Tu as refusé le swap.</h3>
                 </div>
-                <div v-if="responseType == 'canceled'" class="swappopup-validation">
-                  <img src="@/assets/img/check.png" alt="">
+                <div
+                  v-if="responseType == 'canceled'"
+                  class="swappopup-validation"
+                >
+                  <img src="@/assets/img/check.png" alt="" />
                   <h3>Tu as annulé le swap.</h3>
                 </div>
               </div>
@@ -247,6 +268,7 @@ export default {
       isResponseSent: false,
       isReponseAccepted: null,
       responseType: null,
+      copyOfUserSwapReceived: [],
     };
   },
   computed: {
@@ -260,6 +282,14 @@ export default {
     isUserConnected() {
       return this.profile ? true : false;
     },
+    /*     copyOfUserSwapReceived: {
+      get: function () {
+        return this.userSwapReceived;
+      },
+      set: function (newValue) {
+        this.userSwapReceived = newValue;
+      },
+    }, */
     getIndexOfTab() {
       switch (this.$route.query.tab) {
         case "objects":
@@ -289,6 +319,7 @@ export default {
       fetchUserObjects: "profile/fetchUserObjects",
       fetchAllSwapstate: "swap/fetchAllSwapstate",
       updateSwap: "swap/updateSwap",
+      fetchProfile: "profile/fetchProfile",
     }),
     userSwapByState(array, state) {
       return array.filter((item) => item.swap_state.slug == state);
@@ -304,6 +335,9 @@ export default {
     getSelectedTab(value) {
       console.log(value);
       this.$router.replace({ query: { tab: value } }).catch(() => {});
+    },
+    handleClickTab() {
+      console.log("heyy");
     },
     changeSwapState(response, swap) {
       const swapstateId = this.allSwapstate.find(
@@ -326,6 +360,11 @@ export default {
         console.log("delete swap");
       }
       //TODO : slice array
+      this.copyOfUserSwapReceived = this.copyOfUserSwapReceived.filter(
+        (item) => {
+          return item._id != swap._id;
+        }
+      );
       this.isResponseSent = true;
       this.responseType = response;
     },
@@ -334,10 +373,12 @@ export default {
       this.isResponseSent = false;
     },
   },
-  mounted() {
+  async mounted() {
+    this.fetchProfile();
     this.openedTab = this.$route.query.tab;
-    this.fetchUserObjects();
-    this.fetchAllSwapstate();
+    await this.fetchUserObjects();
+    await this.fetchAllSwapstate();
+    this.copyOfUserSwapReceived = this.userSwapReceived;
   },
 };
 </script>
@@ -414,7 +455,7 @@ export default {
   .swappopup {
     &-validation {
       h3 {
-       color:white
+        color: white;
       }
     }
   }

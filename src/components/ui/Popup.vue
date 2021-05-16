@@ -42,7 +42,6 @@ export default {
   },
   props: {
     isUserConnected: Boolean,
-    isValidate: { type: Boolean, default: false },
     isAccepted: { type: Boolean, default: false },
     isRefusal : { type: Boolean, default: false },
   },

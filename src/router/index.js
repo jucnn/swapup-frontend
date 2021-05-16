@@ -12,8 +12,6 @@ import User from "@/views/User";
 
 import Main from "@/layouts/Main";
 
-import UserIndex from "@/views/user/Index.vue";
-
 import objectsRoutes from "@/router/objects";
 
 /* import ObjectsIndex from "@/views/objects/Index.vue";
@@ -84,12 +82,6 @@ const router = new Router({
         }
         next();
       },
-    },
-
-    {
-      path: "/user/:id",
-      name: "user.index",
-      component: UserIndex,
     },
   ],
   scrollBehavior(to, from, savedPosition) {
