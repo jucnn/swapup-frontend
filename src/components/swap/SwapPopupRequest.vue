@@ -106,6 +106,10 @@ export default {
       height: 100px;
       background-color: $grey;
       border-radius: $mainborderradius;
+
+      img {
+        max-height: 100%;
+      }
     }
 
     &_details {

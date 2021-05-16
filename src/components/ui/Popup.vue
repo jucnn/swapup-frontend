@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="popup-overlay" @click="$emit('closeClick')"></div>
-    <div class="popup-container" :class="isValidate ? 'popup-validation' : ''">
+    <div
+      :class="[ {'popup-accepted': isAccepted, 'popup-refusal': isRefusal}, 'popup-container' ]"
+    >
       <div class="popup-close" @click="$emit('closeClick')">
         <svg
           id="close"
@@ -41,6 +43,8 @@ export default {
   props: {
     isUserConnected: Boolean,
     isValidate: { type: Boolean, default: false },
+    isAccepted: { type: Boolean, default: false },
+    isRefusal : { type: Boolean, default: false },
   },
 };
 </script>
@@ -91,7 +95,7 @@ export default {
     }
   }
 
-  &-validation {
+  &-accepted {
     background-color: $green;
 
     .popup-close {
@@ -100,10 +104,10 @@ export default {
   }
 
   &-refusal {
-    background-color: $green;
+    background-color: $red;
 
     .popup-close {
-      background-color: $lightgreen;
+      background-color: $lightred;
     }
   }
 }

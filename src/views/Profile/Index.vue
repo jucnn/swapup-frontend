@@ -171,6 +171,8 @@
             <Popup
               v-if="swapupPopup.isDisplayed"
               :isValidate="isReponseAccepted"
+              :isAccepted="responseType == 'accepted' ? true : false"
+              :isRefusal="responseType == 'refused' ? true : false"
               :isUserConnected="isUserConnected"
               @closeClick="closePopup()"
             >
@@ -184,14 +186,17 @@
                 @swapCanceled="changeSwapState('canceled', swapupPopup.swap)"
               />
               <div v-else>
-                <div v-if="responseType == 'accepted'">
-                  <p>Tu as accepté le swap !</p>
+                <div v-if="responseType == 'accepted'" class="swappopup-validation">
+                  <img src="@/assets/img/check.png" alt="">
+                  <h3>Tu as accepté le swap !</h3>
                 </div>
-                <div v-if="responseType == 'refused'">
-                  <p>Swap refusé</p>
+                <div v-if="responseType == 'refused'" class="swappopup-validation">
+                  <img src="@/assets/img/check.png" alt="">
+                  <h3>Tu as refusé le swap.</h3>
                 </div>
-                <div v-if="responseType == 'canceled'">
-                  <p>refusé</p>
+                <div v-if="responseType == 'canceled'" class="swappopup-validation">
+                  <img src="@/assets/img/check.png" alt="">
+                  <h3>Tu as annulé le swap.</h3>
                 </div>
               </div>
             </Popup>
@@ -404,6 +409,14 @@ export default {
     bottom: 20px;
     left: 80%;
     display: inline-block;
+  }
+
+  .swappopup {
+    &-validation {
+      h3 {
+       color:white
+      }
+    }
   }
 }
 

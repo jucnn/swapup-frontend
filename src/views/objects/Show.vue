@@ -39,10 +39,10 @@
               <button
                 class="button button--purple"
                 @click="swapBtnClicked()"
-                :disabled="isSwapExist"
+                :disabled="swapSent || isSwapAlreadyExist"
               >
-                <span v-if="!isSwapExist">Swaper</span>
-                <span v-else>Swap envoyé</span>
+                <span v-if="swapSent || isSwapAlreadyExist">Swap envoyé</span>
+                <span v-else>Swaper</span>
               </button>
               <button class="button button--green">Acheter</button>
             </div>
@@ -70,7 +70,7 @@
     </div>
     <Popup
       v-if="popup"
-      :isValidate="swapSent"
+      :isAccepted="swapSent"
       :isUserConnected="isUserConnected"
       @closeClick="popup = false"
     >
@@ -115,7 +115,7 @@ export default {
     isUserConnected() {
       return this.profile ? true : false;
     },
-    isSwapExist() {
+    isSwapAlreadyExist() {
       return this.userSwapSent.some(
         (swapSent) => swapSent.objectWanted._id == this.object._id
       );
