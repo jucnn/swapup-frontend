@@ -44,6 +44,7 @@ export default {
     padding: 10px 20px;
     color: $black;
     box-shadow: $boxshadow;
+    background-color:$white;
   }
 }
 </style>

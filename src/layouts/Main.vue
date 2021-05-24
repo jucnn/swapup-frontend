@@ -1,8 +1,10 @@
 <template>
   <div>
-    <TheHeader @submitFilters="getFilters">I'm a header</TheHeader>
+    <TheHeader @submitFilters="getFilters" @searchValue="getSearch"
+      >I'm a header</TheHeader
+    >
     <main>
-      <router-view :filtersChecked="filters"/>
+      <router-view :filtersChecked="filters" :searchValue="search" />
     </main>
     <TheFooter>I'm a footer</TheFooter>
   </div>
@@ -21,14 +23,19 @@ export default {
   data() {
     return {
       filters: null,
-    }
+      search: null,
+    };
   },
   methods: {
     getFilters(value) {
-this.filters = value
+      this.filters = value;
       console.log(value);
-    }
-  }
+    },
+    getSearch(value) {
+      console.log(value);
+      this.search = value;
+    },
+  },
 };
 </script>
 

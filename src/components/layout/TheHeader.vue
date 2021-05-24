@@ -174,7 +174,7 @@ export default {
   },
   methods: {
     getSearchValue(value) {
-      console.log(value);
+      this.$emit('searchValue', value)
     },
     onScroll(e) {
       this.windowTop = e.target.documentElement.scrollTop;
