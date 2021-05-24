@@ -26,7 +26,7 @@ export default {
     border-radius: $mainborderradius;
     border: none;
     padding: 10px 20px;
-    color: $grey;
+    color: $black;
     box-shadow: $boxshadow;
   }
 }
