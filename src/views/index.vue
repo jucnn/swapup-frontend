@@ -6,6 +6,7 @@
           <Filters
             @statesChecked="statesChecked"
             @checkCategory="categoryChecked"
+            @priceChanged="priceChecked"
           />
         </div>
         <div class="col container col-md-9 col-xs-12">
@@ -59,7 +60,8 @@ export default {
         category: null,
         state: null,
         brand: null,
-        price: null,
+        priceMin: null,
+        priceMax: null,
         association: null,
         seller: null,
       },
@@ -80,9 +82,10 @@ export default {
     query: {
       deep: true,
       handler() {
+        console.log(this.$route.query);
         this.currentPage = 1;
         axios
-          .post(`${process.env.VUE_APP_API_URL}api/object/search`, this.query, {
+          .post(`${process.env.VUE_APP_API_URL}api/object/search`, this.$route.query, {
             withCredentials: true,
           })
           .then((data) => {
@@ -95,7 +98,7 @@ export default {
       this.query.category = this.filtersChecked.checkedCategory;
       this.query.state = this.filtersChecked.checkedState;
       axios
-        .post(`${process.env.VUE_APP_API_URL}api/object/search`, this.query, {
+        .post(`${process.env.VUE_APP_API_URL}api/object/search`, this.$route.query, {
           withCredentials: true,
         })
         .then((data) => {
@@ -122,30 +125,55 @@ export default {
       /*  fetchObjectBySearching: "objects/fetchObjectBySearching" */
     }),
     statesChecked(states) {
+      console.log(states);
       if (states.length != 0) {
+        this.getRouteQuery({ ...this.$route.query, state: states });
+
         this.query.state = states;
       } else {
+        this.getRouteQuery({ ...this.$route.query, state: null });
+
         this.query.state = null;
       }
     },
     categoryChecked(category) {
       if (category != "Toutes les catégories") {
+        this.getRouteQuery({ ...this.$route.query, category: category });
         this.query.category = category;
       } else {
+        this.getRouteQuery({ ...this.$route.query, category: null });
         this.query.category = null;
       }
+    },
+    priceChecked(price) {
+      this.query.price = price;
+      this.getRouteQuery({
+        ...this.$route.query,
+        priceMin: price[0],
+        priceMax: price[1],
+      });
     },
     changePage(pageNum) {
       window.scrollTo(0, 0);
       this.currentPage = pageNum;
       /*  this.filteredObjectPerPage = this.filteredObject.slice(pageNum * this.numberPerPage - this.numberPerPage, pageNum * this.numberPerPage)
       console.log(pageNum); */
+      this.$router.replace({
+        name: "index",
+        query: { ...this.$route.query, page: pageNum },
+      });
     },
     getItemsPerPage(array, actualPage, numbersPerPage) {
       return array.slice(
         actualPage * numbersPerPage - numbersPerPage,
         actualPage * numbersPerPage
       );
+    },
+    getRouteQuery(query) {
+      return this.$router.replace({
+        name: "index",
+        query: query,
+      });
     },
   },
   async mounted() {

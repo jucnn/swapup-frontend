@@ -3,7 +3,12 @@
     <h2>Filtres</h2>
     <div>
       <h3>Catégories</h3>
-      <Select v-if="categoriesWithAll" :options="categoriesWithAll" :defaultValue="categoriesWithAll[0].label" @select="categoryChecked" />
+      <Select
+        v-if="categoriesWithAll"
+        :options="categoriesWithAll"
+        :defaultValue="categoriesWithAll[0].label"
+        @select="categoryChecked"
+      />
     </div>
     <hr />
     <div>
@@ -26,18 +31,27 @@
       </div>
     </div>
     <hr />
-    <div>
+    <div class="price">
       <h3>Prix</h3>
-      <Range />
+      <vue-range-slider
+        :bg-style="bgStyle"
+        v-model="price"
+        :process-style="processStyle"
+        :tooltip-style="tooltipStyle"
+        @slide-end="$emit('priceChanged', price)"
+      ></vue-range-slider>
     </div>
   </div>
 </template>
 
 <script>
+import 'vue-range-component/dist/vue-range-slider.css'
+
 import SearchBar from "@/components/ui/SearchBar";
 import Select from "@/components/ui/Select";
 import Range from "@/components/ui/Range";
 import Checkbox from "@/components/ui/Checkbox";
+import VueRangeSlider from "vue-range-component";
 
 import { mapState, mapActions } from "vuex";
 
@@ -47,11 +61,13 @@ export default {
     Select,
     Range,
     Checkbox,
+    VueRangeSlider,
   },
   data() {
     return {
       checkedStates: [],
       categoriesWithAll: null,
+      price: [0, 100],
       /*    checkCategory: null, */
     };
   },
@@ -59,6 +75,7 @@ export default {
     checkedStates() {
       this.$emit("statesChecked", this.checkedStates);
     },
+
     /*   checkedCategory() {
       this.$emit("categoryChecked", this.checkCategory);
     }, */
@@ -89,6 +106,18 @@ export default {
       ...this.categories,
     ];
   },
+  created() {
+    this.bgStyle = {
+      backgroundColor: "#a491d3",
+    };
+    this.tooltipStyle = {
+      backgroundColor: "#7a5ebf",
+      borderColor: "#7a5ebf",
+    };
+    this.processStyle = {
+      backgroundColor: "#7a5ebf",
+    };
+  },
 };
 </script>
 
@@ -97,5 +126,11 @@ export default {
   position: sticky;
   padding: 10px;
   background-color: $white;
+
+  .price {
+    h3 {
+      margin-bottom: 40px;
+    }
+  }
 }
 </style>
