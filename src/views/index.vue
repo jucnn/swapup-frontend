@@ -6,14 +6,15 @@
           <Filters
             @statesChecked="statesChecked"
             @checkCategory="categoryChecked"
-            @priceChanged="priceChanged"
+            @priceChanged="priceChecked"
+            @searchChanged="searchChanged"
           />
         </div>
         <div class="col container col-md-9 col-xs-12">
           <div class="row" v-if="filteredObject.length > 0">
             <ObjectCard
               class="objects-item col-12 col-sm-6 col-lg-4"
-              v-for="object in getItemsPerPage(
+              v-for="object in getItemsPerPageAndSearch(
                 filteredObject,
                 currentPage,
                 numberPerPage
@@ -47,7 +48,6 @@ import Select from "@/components/ui/Select";
 
 export default {
   name: "Index",
-  props: ["filtersChecked", "searchValue"],
   data() {
     return {
       filteredObject: [],
@@ -65,6 +65,7 @@ export default {
         association: null,
         seller: null,
       },
+      searchObjectValue:"",
     };
   },
   components: {
@@ -86,7 +87,7 @@ export default {
         axios
           .post(
             `${process.env.VUE_APP_API_URL}api/object/search`,
-            this.$route.query,
+            this.query,
             {
               withCredentials: true,
             }
@@ -97,35 +98,7 @@ export default {
           .catch((err) => console.log(err));
       },
     },
-    filtersChecked: function() {
-      this.query.category = this.filtersChecked.checkedCategory;
-      this.query.state = this.filtersChecked.checkedState;
-      axios
-        .post(
-          `${process.env.VUE_APP_API_URL}api/object/search`,
-          this.$route.query,
-          {
-            withCredentials: true,
-          }
-        )
-        .then((data) => {
-          this.filteredObject = data.data.data;
-        })
-        .catch((err) => console.log(err));
-    },
-    searchValue: function() {
-      console.log(this.searchValue);
-      this.query.title = this.searchValue;
-      console.log(this.query);
-      axios
-        .post(`${process.env.VUE_APP_API_URL}api/object/search`, this.query, {
-          withCredentials: true,
-        })
-        .then((data) => {
-          this.filteredObject = data.data.data;
-        })
-        .catch((err) => console.log(err));
-    },
+ 
   },
   methods: {
     ...mapActions({
@@ -135,57 +108,46 @@ export default {
     statesChecked(states) {
       console.log(states);
       if (states.length != 0) {
-        this.getRouteQuery({ ...this.$route.query, state: states });
-
         this.query.state = states;
       } else {
-        this.getRouteQuery({ ...this.$route.query, state: null });
-
         this.query.state = null;
       }
     },
     searchChanged(search) {
-      console.log(search);
+      this.searchObjectValue = search
     },
     categoryChecked(category) {
       if (category != "Toutes les catégories") {
-        this.getRouteQuery({ ...this.$route.query, category: category });
         this.query.category = category;
       } else {
-        this.getRouteQuery({ ...this.$route.query, category: null });
         this.query.category = null;
       }
     },
-    priceChanged(price) {
+    priceChecked(price) {
       this.query.price = price;
-      this.getRouteQuery({
-        ...this.$route.query,
-        priceMin: price.min,
-        priceMax: price.max,
-      });
+
     },
     changePage(pageNum) {
       window.scrollTo(0, 0);
       this.currentPage = pageNum;
       /*  this.filteredObjectPerPage = this.filteredObject.slice(pageNum * this.numberPerPage - this.numberPerPage, pageNum * this.numberPerPage)
       console.log(pageNum); */
-      this.$router.replace({
-        name: "index",
-        query: { ...this.$route.query, page: pageNum },
-      });
+    
     },
-    getItemsPerPage(array, actualPage, numbersPerPage) {
-      return array.slice(
+    getItemsPerPageAndSearch(array, actualPage, numbersPerPage) {
+      const arrayPage = array.slice(
         actualPage * numbersPerPage - numbersPerPage,
         actualPage * numbersPerPage
       );
+      if(this.searchObjectValue.length > 0) {
+        console.log(this.searchObjectValue);
+        //Remove accent  
+        return arrayPage.filter(object => object.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(this.searchObjectValue.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")))
+      } else {
+        return arrayPage
+      }
     },
-    getRouteQuery(query) {
-      return this.$router.replace({
-        name: "index",
-        query: query,
-      });
-    },
+   
   },
   async mounted() {
     await this.fetchAllObjects(this.$route.query);

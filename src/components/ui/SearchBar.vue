@@ -1,6 +1,6 @@
 <template>
   <div class="search-bar">
-    <input v-model="searchValue" type="text" placeholder="Recherche" @keyup.enter="sendSearchValue()" />
+    <input v-model="searchValue" type="text" placeholder="Recherche" />
   </div>
 </template>
 
@@ -11,11 +11,11 @@ export default {
       searchValue: "",
     };
   },
-  methods: {
-    sendSearchValue() {
-      this.$emit('search', this.searchValue)
-    }
-  }
+   watch: {
+    searchValue() {
+      this.$emit("search", this.searchValue);
+    },
+  },
 };
 </script>
 
@@ -23,11 +23,11 @@ export default {
 .search-bar {
   input {
     width: 100%;
-    border-radius: $mainborderradius;
-    border: none;
-    padding: 10px 20px;
+    border:none;
+    border-bottom: 1px solid $grey;
+    padding: 10px;
     color: $black;
-    box-shadow: $boxshadow;
+    background-color: $white;
   }
 }
 </style>

@@ -2,6 +2,10 @@
   <div class="filters-container">
     <h2>Filtres</h2>
     <div class="filters-item">
+      <h3>Mots-clés</h3>
+      <SearchBar @search="searchChanged" />
+    </div>
+    <div class="filters-item">
       <h3>Catégories</h3>
       <Select
         v-if="categoriesWithAll"
@@ -10,10 +14,6 @@
         @select="categoryChecked"
       />
     </div>
-    <!--  <div class="filters-item">
-      <h3>Localisation</h3>
-      <SearchBar />
-    </div> -->
     <div class="filters-item">
       <h3>Etat</h3>
       <div>
@@ -28,31 +28,6 @@
         ></Checkbox>
       </div>
     </div>
-    <div class="filters-item filters-price">
-      <h3>Prix</h3>
-      <div class="filters-price_container container-fluid">
-        <div class="row">
-          <div class="col-12 col-md-4 filters-price_min">
-            <input type="number" v-model="price.min" />
-            <p>Min</p>
-          </div>
-          <div class="col-12 col-md-4 filters-price_max">
-            <input type="number" v-model="price.max" />
-            <p>Max</p>
-          </div>
-          <div class="col-12 col-md-3">
-            <button class="filters-price_btn" @click="handlePrice()" >Ok</button>
-          </div>
-        </div>
-      </div>
-      <!-- <vue-range-slider
-        :bg-style="bgStyle"
-        v-model="price"
-        :process-style="processStyle"
-        :tooltip-style="tooltipStyle"
-        @slide-end="$emit('priceChanged', price)"
-      ></vue-range-slider> -->
-    </div>
   </div>
 </template>
 
@@ -61,6 +36,7 @@ import "vue-range-component/dist/vue-range-slider.css";
 
 import SearchBar from "@/components/ui/SearchBar";
 import Select from "@/components/ui/Select";
+import Input from "@/components/ui/Input";
 import Range from "@/components/ui/Range";
 import Checkbox from "@/components/ui/Checkbox";
 import VueRangeSlider from "vue-range-component";
@@ -74,6 +50,7 @@ export default {
     Range,
     Checkbox,
     VueRangeSlider,
+    Input,
   },
   data() {
     return {
@@ -83,17 +60,12 @@ export default {
         min: null,
         max: null,
       },
-      /*    checkCategory: null, */
     };
   },
   watch: {
     checkedStates() {
       this.$emit("statesChecked", this.checkedStates);
     },
-
-    /*   checkedCategory() {
-      this.$emit("categoryChecked", this.checkCategory);
-    }, */
   },
   computed: {
     ...mapState({
@@ -112,8 +84,11 @@ export default {
       this.$emit("checkCategory", value);
     },
     handlePrice() {
-      this.$emit("priceChanged", this.price)
-    }
+      this.$emit("priceChanged", this.price);
+    },
+    searchChanged(value) {
+      this.$emit("searchChanged", value);
+    },
   },
   async mounted() {
     this.fetchAllAssociations();

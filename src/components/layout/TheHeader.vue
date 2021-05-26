@@ -71,7 +71,7 @@
         </div>
         <div class="header-search col-xs-12 col-md-6 container">
           <div class="row align-items-center">
-            <SearchBar class="col col-10 col-md-12" @search="getSearchValue" />
+           <!--  <SearchBar class="col col-10 col-md-12" @search="getSearchValue" /> -->
             <FiltersButton
               class="fitlers-btn_container col-2 d-md-none"
               @clicked="isFiltersResponsiveOpened = true"
