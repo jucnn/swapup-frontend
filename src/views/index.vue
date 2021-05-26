@@ -123,6 +123,7 @@ export default {
         })
         .then((data) => {
           this.filteredObject = data.data.data;
+          
         })
         .catch((err) => console.log(err));
     },
