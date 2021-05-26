@@ -6,7 +6,11 @@
       class="dropdown-item"
       @click="$emit('handleClick')"
     >
-      <router-link :to="{ name: item.url }">{{ item.label }}</router-link>
+      <router-link
+        :class="item.state == 'disabled' ? 'disabled' : ''"
+        :to="{ name: item.url }"
+        >{{ item.label }}</router-link
+      >
     </div>
     <ButtonLogout />
   </div>
@@ -74,6 +78,15 @@ export default {
       &:before {
         width: 15px;
         transition: 250ms;
+      }
+    }
+
+    &.disabled {
+      &:hover {
+        padding-left: 5px;
+      }
+      &:before {
+        width: 0;
       }
     }
   }

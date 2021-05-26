@@ -72,7 +72,10 @@
         <div class="header-search col-xs-12 col-md-6 container">
           <div class="row align-items-center">
             <SearchBar class="col col-10 col-md-12" @search="getSearchValue" />
-            <FiltersButton class="fitlers-btn_container col-2 d-md-none" @clicked="isFiltersResponsiveOpened = true"/>
+            <FiltersButton
+              class="fitlers-btn_container col-2 d-md-none"
+              @clicked="isFiltersResponsiveOpened = true"
+            />
             <transition name="slide-fade-right">
               <FiltersResponsive
                 class="filters-responsive_container"
@@ -125,7 +128,7 @@ export default {
     MenuResponsive,
     FiltersButton,
     MenuDropdown,
-    FiltersResponsive
+    FiltersResponsive,
   },
   data() {
     return {
@@ -134,25 +137,27 @@ export default {
       isProfileMenuOpened: false,
       isFiltersResponsiveOpened: false,
       profileMenuDropdown: [
-        { label: "Mon profile", url: "profile" },
-        { label: "Messagerie", url: "index" },
+        { label: "Profile", url: "profile", state: "enable" },
+        { label: "Messagerie", url: "index", state: "disabled" },
+        { label: "Favoris", url: "profile", state: "disabled" },
+
         /*      { label: "Mes swaps envoyés", url: "profile", tab: "sent-swaps" },
         { label: "Mes swaps reçus", url: "profile", tab: "received-swaps" }, */
       ],
       profileMenuResponsive: {
         discover: [
-          { label: "Comment ça marche ?", url: "index" },
-          { label: "FAQ", url: "index" },
-          { label: "A propos", url: "index" },
+          { label: "Comment ça marche ?", url: "index", state: "disabled" },
+          { label: "FAQ", url: "index", state: "disabled" },
+          { label: "A propos", url: "index", state: "disabled" },
         ],
         notConnected: [
-          { label: "Crée ton compte", url: "register" },
-          { label: "Connecte toi", url: "login" },
+          { label: "Crée ton compte", url: "register", state: "enable" },
+          { label: "Connecte toi", url: "login", state: "enable" },
         ],
         connected: [
-          { label: "Profil", url: "profile" },
-          { label: "Favoris", url: "profile" },
-          { label: "Notifications", url: "profile" },
+          { label: "Profil", url: "profile", state: "enable" },
+          { label: "Favoris", url: "profile", state: "disabled" },
+          { label: "Notifications", url: "profile", state: "disabled" },
           {
             label: "Swaps envoyés",
             url: "profile",
@@ -174,7 +179,7 @@ export default {
   },
   methods: {
     getSearchValue(value) {
-      this.$emit('searchValue', value)
+      this.$emit("searchValue", value);
     },
     onScroll(e) {
       this.windowTop = e.target.documentElement.scrollTop;

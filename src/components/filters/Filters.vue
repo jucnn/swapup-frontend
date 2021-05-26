@@ -1,7 +1,7 @@
 <template>
   <div class="filters-container">
     <h2>Filtres</h2>
-    <div>
+    <div class="filters-item">
       <h3>Catégories</h3>
       <Select
         v-if="categoriesWithAll"
@@ -10,13 +10,11 @@
         @select="categoryChecked"
       />
     </div>
-    <hr />
-    <div>
+   <!--  <div class="filters-item">
       <h3>Localisation</h3>
       <SearchBar />
-    </div>
-    <hr />
-    <div>
+    </div> -->
+    <div class="filters-item">
       <h3>Etat</h3>
       <div>
         <Checkbox
@@ -30,8 +28,7 @@
         ></Checkbox>
       </div>
     </div>
-    <hr />
-    <div class="price">
+    <div class="filters-item filters_price">
       <h3>Prix</h3>
       <vue-range-slider
         :bg-style="bgStyle"
@@ -122,15 +119,23 @@ export default {
 </script>
 
 <style lang="scss">
-.filters-container {
+.filters {
+
+&-container {
   position: sticky;
   padding: 10px;
   background-color: $white;
+}
 
-  .price {
+  &-item {
+    margin-top: 30px;
+  }
+
+  &_price {
     h3 {
       margin-bottom: 40px;
     }
   }
+
 }
 </style>

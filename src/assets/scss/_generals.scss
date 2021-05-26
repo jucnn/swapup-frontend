@@ -52,12 +52,13 @@ h4 {
   margin-top: 0;
 }
 
-h3, h4 {
+h3,
+h4 {
   font-weight: 600;
 }
 
 p {
-  font-size:16px;
+  font-size: 16px;
 }
 
 #register form [type="text"],
@@ -95,14 +96,18 @@ input:focus {
   outline: 2px solid $lightpurple;
 }
 
-
-@media screen and (max-width:$sm) {
- p {
-   font-size:14px;
- } 
+.disabled {
+  color: $grey;
+  cursor:default;
 }
 
-@media screen and (max-width:$md) {
+@media screen and (max-width: $sm) {
+  p {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: $md) {
   main {
     padding-top: 20vh;
   }

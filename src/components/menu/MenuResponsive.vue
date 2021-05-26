@@ -12,7 +12,7 @@
               :key="index"
               @click="$emit('clicked')"
             >
-              <router-link :to="{ name: item.url, query: item.query }">{{
+              <router-link  :class="item.state == 'disabled' ? 'disabled' : ''" :to="{ name: item.url, query: item.query }">{{
                 item.label
               }}</router-link>
             </p>
@@ -28,7 +28,7 @@
           :key="index"
           @click="$emit('clicked')"
         >
-          <router-link :to="{ name: item.url }">{{ item.label }}</router-link>
+          <router-link :class="item.state == 'disabled' ? 'disabled' : ''" :to="{ name: item.url }">{{ item.label }}</router-link>
         </p>
 
         <hr />
@@ -41,7 +41,7 @@
             :key="index"
             @click="$emit('clicked')"
           >
-            <router-link :to="{ name: item.url }">{{ item.label }}</router-link>
+            <router-link  :class="item.state == 'disabled' ? 'disabled' : ''" :to="{ name: item.url }">{{ item.label }}</router-link>
           </p>
         </div>
       </div>
