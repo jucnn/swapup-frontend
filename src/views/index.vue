@@ -23,6 +23,7 @@
               :object="object"
             />
           </div>
+          
           <p v-else>Pas d'objets correspondant à la demande</p>
           <paginate
             :page-count="filteredObject.length / numberPerPage"
