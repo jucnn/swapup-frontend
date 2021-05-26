@@ -10,7 +10,7 @@
         @select="categoryChecked"
       />
     </div>
-   <!--  <div class="filters-item">
+    <!--  <div class="filters-item">
       <h3>Localisation</h3>
       <SearchBar />
     </div> -->
@@ -28,21 +28,36 @@
         ></Checkbox>
       </div>
     </div>
-    <div class="filters-item filters_price">
+    <div class="filters-item filters-price">
       <h3>Prix</h3>
-      <vue-range-slider
+      <div class="filters-price_container container-fluid">
+        <div class="row">
+          <div class="col-12 col-md-4 filters-price_min">
+            <input type="number" v-model="price.min" />
+            <p>Min</p>
+          </div>
+          <div class="col-12 col-md-4 filters-price_max">
+            <input type="number" v-model="price.max" />
+            <p>Max</p>
+          </div>
+          <div class="col-12 col-md-3">
+            <button class="filters-price_btn" @click="handlePrice()" >Ok</button>
+          </div>
+        </div>
+      </div>
+      <!-- <vue-range-slider
         :bg-style="bgStyle"
         v-model="price"
         :process-style="processStyle"
         :tooltip-style="tooltipStyle"
         @slide-end="$emit('priceChanged', price)"
-      ></vue-range-slider>
+      ></vue-range-slider> -->
     </div>
   </div>
 </template>
 
 <script>
-import 'vue-range-component/dist/vue-range-slider.css'
+import "vue-range-component/dist/vue-range-slider.css";
 
 import SearchBar from "@/components/ui/SearchBar";
 import Select from "@/components/ui/Select";
@@ -64,7 +79,10 @@ export default {
     return {
       checkedStates: [],
       categoriesWithAll: null,
-      price: [0, 100],
+      price: {
+        min: null,
+        max: null,
+      },
       /*    checkCategory: null, */
     };
   },
@@ -93,6 +111,9 @@ export default {
     categoryChecked(value) {
       this.$emit("checkCategory", value);
     },
+    handlePrice() {
+      this.$emit("priceChanged", this.price)
+    }
   },
   async mounted() {
     this.fetchAllAssociations();
@@ -120,22 +141,48 @@ export default {
 
 <style lang="scss">
 .filters {
-
-&-container {
-  position: sticky;
-  padding: 10px;
-  background-color: $white;
-}
+  &-container {
+    position: sticky;
+    padding: 10px;
+    background-color: $white;
+  }
 
   &-item {
     margin-top: 30px;
   }
 
-  &_price {
-    h3 {
-      margin-bottom: 40px;
+  &-price {
+    &_container {
+      padding: 0 !important;
+
+      .row {
+        & > div {
+          padding: 0 5px;
+        }
+      }
+    }
+
+    &_min,
+    &_max {
+      input {
+        text-align: right;
+      }
+      p {
+        font-size: 12px;
+        margin-top: 5px;
+      }
+    }
+    &_btn {
+      background-color: $purple;
+      width: 100%;
+      border-radius: 5px;
+      padding: 10px 5px;
+      border: none;
+      color: $white;
+      text-transform: uppercase;
+      font-weight: $semibold;
+      cursor: pointer;
     }
   }
-
 }
 </style>

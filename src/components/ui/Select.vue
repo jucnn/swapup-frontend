@@ -39,11 +39,10 @@ export default {
 .select {
   select {
     width: 100%;
-    border-radius: $mainborderradius;
-    border: none;
+    border-radius: 5px;
+    border: 1px solid $grey;
     padding: 10px 20px;
     color: $black;
-    box-shadow: $boxshadow;
     background-color:$white;
   }
 }

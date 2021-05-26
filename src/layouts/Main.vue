@@ -1,10 +1,10 @@
 <template>
   <div>
-    <TheHeader @submitFilters="getFilters" @searchValue="getSearch"
+    <TheHeader
       >I'm a header</TheHeader
     >
     <main>
-      <router-view :filtersChecked="filters" :searchValue="search" />
+      <router-view />
     </main>
     <TheFooter>I'm a footer</TheFooter>
   </div>
@@ -19,22 +19,6 @@ export default {
   components: {
     TheHeader,
     TheFooter,
-  },
-  data() {
-    return {
-      filters: null,
-      search: null,
-    };
-  },
-  methods: {
-    getFilters(value) {
-      this.filters = value;
-      console.log(value);
-    },
-    getSearch(value) {
-      console.log(value);
-      this.search = value;
-    },
   },
 };
 </script>

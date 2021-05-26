@@ -6,7 +6,7 @@
           <Filters
             @statesChecked="statesChecked"
             @checkCategory="categoryChecked"
-            @priceChanged="priceChecked"
+            @priceChanged="priceChanged"
           />
         </div>
         <div class="col container col-md-9 col-xs-12">
@@ -82,31 +82,39 @@ export default {
     query: {
       deep: true,
       handler() {
-        console.log(this.$route.query);
         this.currentPage = 1;
         axios
-          .post(`${process.env.VUE_APP_API_URL}api/object/search`, this.$route.query, {
-            withCredentials: true,
-          })
+          .post(
+            `${process.env.VUE_APP_API_URL}api/object/search`,
+            this.$route.query,
+            {
+              withCredentials: true,
+            }
+          )
           .then((data) => {
             this.filteredObject = data.data.data;
           })
           .catch((err) => console.log(err));
       },
     },
-    filtersChecked: function () {
+    filtersChecked: function() {
       this.query.category = this.filtersChecked.checkedCategory;
       this.query.state = this.filtersChecked.checkedState;
       axios
-        .post(`${process.env.VUE_APP_API_URL}api/object/search`, this.$route.query, {
-          withCredentials: true,
-        })
+        .post(
+          `${process.env.VUE_APP_API_URL}api/object/search`,
+          this.$route.query,
+          {
+            withCredentials: true,
+          }
+        )
         .then((data) => {
           this.filteredObject = data.data.data;
         })
         .catch((err) => console.log(err));
     },
-    searchValue: function () {
+    searchValue: function() {
+      console.log(this.searchValue);
       this.query.title = this.searchValue;
       console.log(this.query);
       axios
@@ -136,6 +144,9 @@ export default {
         this.query.state = null;
       }
     },
+    searchChanged(search) {
+      console.log(search);
+    },
     categoryChecked(category) {
       if (category != "Toutes les catégories") {
         this.getRouteQuery({ ...this.$route.query, category: category });
@@ -145,12 +156,12 @@ export default {
         this.query.category = null;
       }
     },
-    priceChecked(price) {
+    priceChanged(price) {
       this.query.price = price;
       this.getRouteQuery({
         ...this.$route.query,
-        priceMin: price[0],
-        priceMax: price[1],
+        priceMin: price.min,
+        priceMax: price.max,
       });
     },
     changePage(pageNum) {

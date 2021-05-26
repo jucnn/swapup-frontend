@@ -101,6 +101,15 @@ input:focus {
   cursor:default;
 }
 
+input[type=number] {
+  max-width: 100%;
+ /*  box-shadow: $boxshadow; */
+  border-radius: 5px;
+  border:1px solid $grey;
+  background-color: $white;
+  padding:10px;
+}
+
 @media screen and (max-width: $sm) {
   p {
     font-size: 14px;
