@@ -127,6 +127,9 @@ export default {
       this.query.price = price;
 
     },
+    removeAccentAndMaj(string) {
+      return string.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    },
     changePage(pageNum) {
       window.scrollTo(0, 0);
       this.currentPage = pageNum;
@@ -142,7 +145,7 @@ export default {
       if(this.searchObjectValue.length > 0) {
         console.log(this.searchObjectValue);
         //Remove accent  
-        return arrayPage.filter(object => object.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(this.searchObjectValue.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")))
+        return arrayPage.filter(object => this.removeAccentAndMaj(object.title && object.description).includes(this.removeAccentAndMaj(this.searchObjectValue)))
       } else {
         return arrayPage
       }
