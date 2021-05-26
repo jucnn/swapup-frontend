@@ -374,6 +374,7 @@ export default {
     },
   },
   async mounted() {
+    console.log("yess");
     this.fetchProfile();
     this.openedTab = this.$route.query.tab;
     await this.fetchUserObjects();

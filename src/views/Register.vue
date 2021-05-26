@@ -63,12 +63,12 @@ export default {
   },
   data() {
     return {
-      username: "jucnn",
-      description: "my description",
-      telephone: "0634763289",
-      address: "Paris",
-      email: "juliette@gmail.com",
-      password: "azerty",
+      username: "",
+      description: "",
+      telephone: "",
+      address: "",
+      email: "",
+      password: "",
     };
   },
   methods: {
@@ -80,7 +80,7 @@ export default {
     register() {
       axios
         .post(
-          "http://localhost:8769/auth/register",
+          `${process.env.VUE_APP_API_URL}auth/register`,
           {
             username: this.username,
             description: this.description,
@@ -93,7 +93,7 @@ export default {
         )
         .then(async () => {
           await this.fetchProfile();
-          this.$router.push({ name: "profile" });
+      /*     this.$router.push({ name: "profile" }); */
         })
         .catch((err) => console.log(err));
     },

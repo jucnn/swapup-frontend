@@ -183,9 +183,9 @@ export default {
   },
   data() {
     return {
-      email: "marine@gmail.com",
-      password: "azerty",
-      username: "marinou",
+      email: "",
+      password: "",
+      username: "",
     };
   },
   methods: {
