@@ -34,7 +34,7 @@ const actions = {
   async fetchProfile({ commit }) {
     const data = await axios.get(`${apiUrl}auth/me`, {
       headers: {
-        Authorization: `Bearer ${userToken}`,
+        'Authorization': `Bearer ${userToken}`,
       },
     });
     commit("setProfile", data);
