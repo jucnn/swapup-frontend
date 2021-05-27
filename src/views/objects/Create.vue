@@ -187,7 +187,7 @@ export default {
       const payload = {
         title: this.query.title,
         description: this.query.description,
-        image: null,
+        image: 'https://i.stack.imgur.com/y9DpT.jpg',
         category: this.query.category,
         state: this.query.state,
         brand: this.query.brand,

@@ -371,6 +371,7 @@ export default {
       this.responseType = response;
     },
     closePopup() {
+      this.responseType = null;
       this.swapupPopup.isDisplayed = false;
       this.isResponseSent = false;
     },

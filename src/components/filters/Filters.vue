@@ -62,6 +62,9 @@ export default {
       },
     };
   },
+  props: {
+
+  },
   watch: {
     checkedStates() {
       this.$emit("statesChecked", this.checkedStates);
@@ -120,6 +123,15 @@ export default {
     position: sticky;
     padding: 10px;
     background-color: $white;
+  }
+
+  &-init {
+    text-transform: uppercase;
+    font-size:12px;
+    color:$blue;
+    font-weight: $semibold;
+    cursor: pointer;
+    margin-bottom: 0;
   }
 
   &-item {
