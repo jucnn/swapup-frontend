@@ -89,10 +89,11 @@ export default {
           },
           { withCredentials: true }
         )
-        .then(async () => {
+        .then(async (token) => {
+          console.log(token);
           console.log("yess");
           await this.fetchProfile();
-          this.$router.push({ name: "profile" });
+        /*   this.$router.push({ name: "profile" }); */
         })
         .catch((err) => {
           console.log("noo");
