@@ -1,4 +1,7 @@
-# swapup-frontend
+# Swapup
+
+Swapup is a webapp for swapping objects.
+
 
 ## Project setup
 ```
