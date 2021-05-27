@@ -93,7 +93,7 @@ export default {
         )
         .then(async () => {
           await this.fetchProfile();
-      /*     this.$router.push({ name: "profile" }); */
+          this.$router.push({ name: "profile" });
         })
         .catch((err) => console.log(err));
     },

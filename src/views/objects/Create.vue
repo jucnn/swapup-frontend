@@ -4,7 +4,7 @@
     <form @submit.prevent="create">
       <div class="box-white">
         <div class="container">
-          <div class="row align-items-start object-create_input">
+          <!-- <div class="row align-items-start object-create_input">
             <label class="col-12 col-md-6" for="image"
               >Sélectionne une image : (200px x 200px) *</label
             >
@@ -14,7 +14,7 @@
               name="image"
               id="image"
             />
-          </div>
+          </div> -->
         </div>
         <div class="container">
           <div class="row align-items-start object-create_input">
@@ -282,6 +282,11 @@ export default {
   &-create {
     .box-white {
       margin-bottom: 30px;
+    }
+
+    select, input {
+      background-color: white;
+
     }
 
     &_input {

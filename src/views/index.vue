@@ -10,7 +10,7 @@
             @searchChanged="searchChanged"
           />
         </div>
-        <div class="col container col-md-9 col-xs-12">
+        <div class="col container col-md-9 col-xs-12" v-if="filteredObject">
           <div class="row" v-if="filteredObject.length > 0">
             <ObjectCard
               class="objects-item col-12 col-sm-6 col-lg-4"
@@ -24,14 +24,14 @@
             />
           </div>
           <p v-else>Pas d'objets correspondant à la demande</p>
-          <paginate
+          <!--  <paginate
             :page-count="filteredObject.length / numberPerPage"
             :click-handler="changePage"
             :prev-text="'<'"
             :next-text="'>'"
             :container-class="'pagination-container'"
           >
-          </paginate>
+          </paginate> -->
         </div>
       </div>
     </div>
@@ -65,7 +65,7 @@ export default {
         association: null,
         seller: null,
       },
-      searchObjectValue:"",
+      searchObjectValue: "",
     };
   },
   components: {
@@ -78,6 +78,9 @@ export default {
     ...mapState({
       allObjects: (state) => state.objects.allObjects,
     }),
+    /*  filteredObject() {
+      return this.allObjects
+    } */
   },
   watch: {
     query: {
@@ -85,20 +88,15 @@ export default {
       handler() {
         this.currentPage = 1;
         axios
-          .post(
-            `${process.env.VUE_APP_API_URL}api/object/search`,
-            this.query,
-            {
-              withCredentials: true,
-            }
-          )
+          .post(`${process.env.VUE_APP_API_URL}api/object/search`, this.query, {
+            withCredentials: true,
+          })
           .then((data) => {
             this.filteredObject = data.data.data;
           })
           .catch((err) => console.log(err));
       },
     },
- 
   },
   methods: {
     ...mapActions({
@@ -114,7 +112,7 @@ export default {
       }
     },
     searchChanged(search) {
-      this.searchObjectValue = search
+      this.searchObjectValue = search;
     },
     categoryChecked(category) {
       if (category != "Toutes les catégories") {
@@ -125,35 +123,40 @@ export default {
     },
     priceChecked(price) {
       this.query.price = price;
-
     },
     removeAccentAndMaj(string) {
-      return string.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      return string
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
     },
     changePage(pageNum) {
       window.scrollTo(0, 0);
       this.currentPage = pageNum;
       /*  this.filteredObjectPerPage = this.filteredObject.slice(pageNum * this.numberPerPage - this.numberPerPage, pageNum * this.numberPerPage)
       console.log(pageNum); */
-    
     },
     getItemsPerPageAndSearch(array, actualPage, numbersPerPage) {
       const arrayPage = array.slice(
         actualPage * numbersPerPage - numbersPerPage,
         actualPage * numbersPerPage
       );
-      if(this.searchObjectValue.length > 0) {
+      if (this.searchObjectValue.length > 0) {
         console.log(this.searchObjectValue);
-        //Remove accent  
-        return arrayPage.filter(object => this.removeAccentAndMaj(object.title && object.description).includes(this.removeAccentAndMaj(this.searchObjectValue)))
+        //Remove accent
+        return arrayPage.filter((object) =>
+          this.removeAccentAndMaj(object.title && object.description).includes(
+            this.removeAccentAndMaj(this.searchObjectValue)
+          )
+        );
       } else {
-        return arrayPage
+        return arrayPage;
       }
     },
-   
   },
   async mounted() {
-    await this.fetchAllObjects(this.$route.query);
+    await this.fetchAllObjects();
+    console.log(this.allObjects);
     this.filteredObject = this.allObjects;
   },
 };

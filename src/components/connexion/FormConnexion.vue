@@ -127,31 +127,19 @@
         <form @submit.prevent="loginPage ? login() : register()">
           <div class="connexion-container_item" v-if="!loginPage">
             <label for="username">Nom d'utilisateur</label> <br />
-            <Input
-              name="username"
-              type="text"
-              placeholder="Juliette"
-              v-model="username"
-            />
+            <Input name="username" type="text" v-model="username" />
           </div>
           <div class="connexion-container_item">
             <label for="email">Email</label> <br />
-            <Input
-              name="email"
-              type="text"
-              placeholder="juliette@gmail.com"
-              v-model="email"
-            />
+            <Input name="email" type="text" v-model="email" />
           </div>
           <div class="connexion-container_item">
             <label for="password">Mot de passe</label> <br />
-            <Input
-              name="password"
-              type="password"
-              placeholder="Juliette"
-              v-model="password"
-            />
+            <Input name="password" type="password" v-model="password" />
           </div>
+          <p class="connexion-error" v-if="error">
+            Une erreur est survenue, veuillez réessayer
+          </p>
           <input
             type="submit"
             :value="loginPage ? 'Se connecter' : 'Créer mon compte'"
@@ -186,6 +174,7 @@ export default {
       email: "",
       password: "",
       username: "",
+      error: false,
     };
   },
   methods: {
@@ -205,7 +194,10 @@ export default {
         .then(() => {
           this.$router.push({ name: "profile" });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          this.error = true;
+          console.log(err);
+        });
     },
     register() {
       axios
@@ -224,7 +216,10 @@ export default {
         .then(() => {
           this.$router.push({ name: "profile" });
         })
-        .catch((err) => console.log(err));
+        .catch((error) => {
+          this.error = true;
+          console.log(error);
+        });
     },
   },
 };
@@ -285,6 +280,10 @@ export default {
       svg {
         max-width: 150px;
       }
+    }
+    &-error {
+      color: $red;
+      font-weight: $semibold;
     }
     &-container {
       width: 380px;
