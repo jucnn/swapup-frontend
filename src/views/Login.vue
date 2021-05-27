@@ -47,12 +47,7 @@
         </g>
       </svg>
     </router-link>
-<<<<<<< HEAD
-    <FormConnexion />
-    
-=======
     <FormConnexion :error="error" />
->>>>>>> develop
   </div>
   <!-- <div id="login">
     <h1>Login</h1>
