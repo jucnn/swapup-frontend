@@ -202,7 +202,7 @@ export default {
     register() {
       axios
         .post(
-          "http://localhost:8769/auth/register",
+          `${process.env.VUE_APP_API_URL}auth/register`,
           {
             username: this.username,
             description: this.description,
