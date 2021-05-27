@@ -33,7 +33,9 @@ const mutations = {
 const actions = {
   async fetchProfile({ commit }) {
     const data = await axios.get(`${apiUrl}auth/me`, {
-      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
     });
     commit("setProfile", data);
   },
