@@ -320,6 +320,8 @@ export default {
       fetchAllSwapstate: "swap/fetchAllSwapstate",
       updateSwap: "swap/updateSwap",
       fetchProfile: "profile/fetchProfile",
+      fetchUserSwapReceived: "profile/fetchUserSwapReceived",
+      fetchUserSwapSent: "profile/fetchUserSwapSent",
     }),
     userSwapByState(array, state) {
       return array.filter((item) => item.swap_state.slug == state);
@@ -369,16 +371,18 @@ export default {
       this.responseType = response;
     },
     closePopup() {
+      this.responseType = null;
       this.swapupPopup.isDisplayed = false;
       this.isResponseSent = false;
     },
   },
   async mounted() {
-    console.log("yess");
-    this.fetchProfile();
+    await this.fetchProfile();
     this.openedTab = this.$route.query.tab;
     await this.fetchUserObjects();
     await this.fetchAllSwapstate();
+    this.fetchUserSwapReceived();
+    this.fetchUserSwapSent();
     this.copyOfUserSwapReceived = this.userSwapReceived;
   },
 };

@@ -3,10 +3,6 @@
     <h1>Modifier mon profil</h1>
     <form @submit.prevent="edit" class="form" v-if="profile">
       <div>
-        <label for="title">Nom d'utilisateur</label> <br />
-        <input type="text" name="title" v-model="profile.username" />
-      </div>
-      <div>
         <label for="description">Description</label> <br />
         <textarea name="description" id="description" v-model="profile.description" maxlength="300"></textarea>
       </div>
@@ -49,7 +45,7 @@ export default {
 
 <style lang="scss">
 .profile-edit {
-  margin-top: 20px;
+  margin-top: 50px;
 
   form {
       input, textarea {

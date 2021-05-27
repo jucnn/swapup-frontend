@@ -1,0 +1,31 @@
+{
+  "short_name": "Swapup",
+  "name": "Swapup",
+  "icons": [
+    {
+      "src": "public/icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "public/icons/icon-256x256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "public/icons/icon-384x384.png",
+      "type": "image/png",
+      "sizes": "384x384"
+    },
+    {
+      "src": "public/icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#faf9f9",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#7a5ebf"
+}

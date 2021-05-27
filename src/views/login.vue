@@ -47,8 +47,12 @@
         </g>
       </svg>
     </router-link>
+<<<<<<< HEAD
     <FormConnexion />
     
+=======
+    <FormConnexion :error="error" />
+>>>>>>> develop
   </div>
   <!-- <div id="login">
     <h1>Login</h1>
@@ -76,6 +80,7 @@ export default {
       email: "",
       password: "",
       username: "",
+      error:false
     };
   },
   methods: {
@@ -90,10 +95,15 @@ export default {
           { withCredentials: true }
         )
         .then(async () => {
+          console.log("yess");
           await this.fetchProfile();
           this.$router.push({ name: "profile" });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log("noo");
+          this.error = true;
+          console.log(err);
+        });
     },
   },
 };

@@ -1,42 +1,52 @@
 <template>
   <div class="swappopup-container">
-    <h3>Lequel de tes objets veux-tu échanger ?</h3>
-    <div
-      v-for="object in userObjects"
-      :key="object.id"
-      class="swappopup-object_container"
-    >
-      <input
-        :id="object._id"
-        type="radio"
-        :name="object._id"
-        :value="object._id"
-        v-model="objectSelected"
-      />
-      <label :for="object._id">
-        <div
-          :class="
-            objectSelected == object._id
-              ? 'swappopup_object-checked'
-              : ''
-          "
-        ></div>
-        <div class="swappopup-object">
-          <div class="container">
-            <div class="row align-items-center">
-              <div class="swappopup-object_image col-6">
-                <img :src="object.image" alt="" />
-              </div>
-              <div class="swappopup-object_details col-6">
-                <Tag :category="object.category.label" />
-                <h4>{{ object.title }}</h4>
+    <div v-if="userObjects.length > 0">
+      <h3>Lequel de tes objets veux-tu échanger ?</h3>
+      <div
+        v-for="object in userObjects"
+        :key="object.id"
+        class="swappopup-object_container"
+      >
+        <input
+          :id="object._id"
+          type="radio"
+          :name="object._id"
+          :value="object._id"
+          v-model="objectSelected"
+        />
+        <label :for="object._id">
+          <div
+            :class="
+              objectSelected == object._id ? 'swappopup_object-checked' : ''
+            "
+          ></div>
+          <div class="swappopup-object">
+            <div class="container">
+              <div class="row align-items-center">
+                <div class="swappopup-object_image col-6">
+                  <img :src="object.image" alt="" />
+                </div>
+                <div class="swappopup-object_details col-6">
+                  <Tag :category="object.category.label" />
+                  <h4>{{ object.title }}</h4>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </label>
+        </label>
+      </div>
+      <button
+        :disabled="objectSelected == null"
+        class="button button--green"
+        @click="$emit('handleClick', objectSelected)"
+      >
+        Valider
+      </button>
     </div>
-    <button :disabled="objectSelected == null" class="button button--green" @click="$emit('handleClick', objectSelected)">Valider</button>
+    <div v-else>
+      <p>Tu n'as pas encore d'objets enregistrés, veux-tu en ajouter un ?</p>
+      <router-link :to="{ name: 'objects.create' }" class="button button--purple">Ajouter un objet</router-link>
+    </div>
   </div>
 </template>
 

@@ -44,7 +44,7 @@
                 <span v-if="swapSent || isSwapAlreadyExist">Swap envoyé</span>
                 <span v-else>Swaper</span>
               </button>
-              <button class="button button--green">Acheter</button>
+              <button class="button disabled">Acheter</button>
             </div>
           </div>
         </div>
