@@ -211,7 +211,6 @@ export default {
       ) {
         this.inputEmpty = true;
       } else {
-        console.log(payload);
         this.createObject(payload);
         this.$router.push({ name: "profile" });
       }

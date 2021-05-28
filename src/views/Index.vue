@@ -1,5 +1,22 @@
 <template>
   <div class="objects-feed">
+    <div class="objects-filters container">
+      <FiltersButton
+        class="filters-btn_container col-12 d-md-none"
+        @clicked="isFiltersResponsiveOpened = true"
+      />
+      <transition name="slide-fade-right">
+        <FiltersResponsive
+          class="filters-responsive_container"
+          v-if="isFiltersResponsiveOpened"
+          @clicked="isFiltersResponsiveOpened = false"
+          @statesChecked="statesChecked"
+          @checkCategory="categoryChecked"
+          @priceChanged="priceChecked"
+          @searchChanged="searchChanged"
+        />
+      </transition>
+    </div>
     <div class="objects-container container header-space">
       <div class="row">
         <div class="d-md-block d-none col-3">
@@ -10,6 +27,7 @@
             @searchChanged="searchChanged"
           />
         </div>
+
         <div class="col container col-md-9 col-xs-12" v-if="filteredObject">
           <div class="row" v-if="filteredObject.length > 0">
             <ObjectCard
@@ -23,7 +41,7 @@
               :object="object"
             />
           </div>
-          
+
           <p v-else>Pas d'objets correspondant à la demande</p>
           <!--  <paginate
             :page-count="filteredObject.length / numberPerPage"
@@ -46,6 +64,8 @@ import ObjectCard from "@/components/object/ObjectCard";
 import Filters from "@/components/filters/Filters";
 import Paginate from "vuejs-paginate";
 import Select from "@/components/ui/Select";
+import FiltersButton from "@/components/filters/FiltersButton";
+import FiltersResponsive from "@/components/filters/FiltersResponsive";
 
 export default {
   name: "Index",
@@ -67,6 +87,7 @@ export default {
         seller: null,
       },
       searchObjectValue: "",
+      isFiltersResponsiveOpened: false,
     };
   },
   components: {
@@ -74,6 +95,8 @@ export default {
     Filters,
     Paginate,
     Select,
+    FiltersButton,
+    FiltersResponsive,
   },
   computed: {
     ...mapState({
@@ -105,7 +128,6 @@ export default {
       /*  fetchObjectBySearching: "objects/fetchObjectBySearching" */
     }),
     statesChecked(states) {
-      console.log(states);
       if (states.length != 0) {
         this.query.state = states;
       } else {
@@ -134,8 +156,7 @@ export default {
     changePage(pageNum) {
       window.scrollTo(0, 0);
       this.currentPage = pageNum;
-      /*  this.filteredObjectPerPage = this.filteredObject.slice(pageNum * this.numberPerPage - this.numberPerPage, pageNum * this.numberPerPage)
-      console.log(pageNum); */
+      
     },
     getItemsPerPageAndSearch(array, actualPage, numbersPerPage) {
       const arrayPage = array.slice(
@@ -143,7 +164,6 @@ export default {
         actualPage * numbersPerPage
       );
       if (this.searchObjectValue.length > 0) {
-        console.log(this.searchObjectValue);
         //Remove accent
         return arrayPage.filter((object) =>
           this.removeAccentAndMaj(object.title && object.description).includes(
@@ -157,7 +177,6 @@ export default {
   },
   async mounted() {
     await this.fetchAllObjects();
-    console.log(this.allObjects);
     this.filteredObject = this.allObjects;
   },
 };

@@ -3,6 +3,10 @@
     <span class="menu-responsive_close" @click="$emit('clicked')">fermer</span>
     <div class="filters-responsive_content">
       <h2>Filtres</h2>
+      <div class="filters-responsive_item">
+        <h3>Mots-clés</h3>
+        <SearchBar @search="searchChanged" />
+      </div>
       <div>
         <h3>Catégories</h3>
         <Select
@@ -12,12 +16,6 @@
           @select="categoryChecked"
         />
       </div>
-      <hr />
-      <div>
-        <h3>Localisation</h3>
-        <SearchBar />
-      </div>
-      <hr />
       <div>
         <h3>Etat</h3>
         <div>
@@ -33,10 +31,6 @@
         </div>
       </div>
       <hr />
-      <div>
-        <h3>Prix</h3>
-        <Range />
-      </div>
       <button class="button button--green" @click.prevent="search()">
         Rechercher
       </button>
@@ -64,6 +58,7 @@ export default {
       filters: {
         checkedStates: [],
         checkedCategory: null,
+        search: null,
       },
       categoriesWithAll: null,
       /*    checkCategory: null, */
@@ -82,11 +77,17 @@ export default {
       fetchAllCategories: "filters/fetchAllCategories",
       fetchAllStates: "filters/fetchAllStates",
     }),
+    searchChanged(value) {
+      this.filters.search = value;
+    },
     categoryChecked(value) {
       this.filters.checkedCategory = value;
     },
     search() {
-      this.$emit("submitFilters", this.filters);
+      this.$emit("checkCategory", this.filters.checkedCategory);
+      this.$emit("searchChanged", this.filters.search);
+      this.$emit("statesChecked", this.filters.checkedStates);
+
       this.$emit("clicked");
     },
   },

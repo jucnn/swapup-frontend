@@ -143,7 +143,6 @@ export default {
       this.swapSent = true;
     },
     handleDelete() {
-      console.log("delete");
       this.deleteObject(this.object._id);
       this.$router.go(-1);
     },

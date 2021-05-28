@@ -90,13 +90,10 @@ export default {
           { withCredentials: true }
         )
         .then(async (token) => {
-          console.log(token);
-          console.log("yess");
           await this.fetchProfile();
         /*   this.$router.push({ name: "profile" }); */
         })
         .catch((err) => {
-          console.log("noo");
           this.error = true;
           console.log(err);
         });

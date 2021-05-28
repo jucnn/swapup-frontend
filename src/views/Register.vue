@@ -97,19 +97,6 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    /*  register() {
-      const payload = {
-        username: this.username,
-        description: this.description,
-        password: this.password,
-        telephone: this.telephone,
-        address: this.address,
-        email: this.email,
-      };
-      console.log(payload);
-      this.createAccount(payload);
-       this.$router.push({ name: "profile" });
-    }, */
   },
 };
 </script>

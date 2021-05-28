@@ -69,23 +69,7 @@
             </svg>
           </router-link>
         </div>
-        <div class="header-search col-xs-12 col-md-6 container">
-          <div class="row align-items-center">
-           <!--  <SearchBar class="col col-10 col-md-12" @search="getSearchValue" /> -->
-            <FiltersButton
-              class="fitlers-btn_container col-2 d-md-none"
-              @clicked="isFiltersResponsiveOpened = true"
-            />
-            <transition name="slide-fade-right">
-              <FiltersResponsive
-                class="filters-responsive_container"
-                v-if="isFiltersResponsiveOpened"
-                @clicked="isFiltersResponsiveOpened = false"
-                v-on="$listeners"
-              />
-            </transition>
-          </div>
-        </div>
+   
         <div class="header-connexion_container col col-md-3 d-none d-md-block">
           <div class="header-connexion" v-if="profile == undefined">
             <router-link :to="{ name: 'login' }">Se connecter</router-link>
@@ -117,8 +101,6 @@ import SearchBar from "@/components/ui/SearchBar";
 import MenuResponsiveButton from "@/components/menu/MenuResponsiveButton";
 import MenuResponsive from "@/components/menu/MenuResponsive";
 import MenuDropdown from "@/components/menu/MenuDropdown";
-import FiltersButton from "@/components/filters/FiltersButton";
-import FiltersResponsive from "@/components/filters/FiltersResponsive";
 
 export default {
   name: "TheHeader",
@@ -126,16 +108,13 @@ export default {
     SearchBar,
     MenuResponsiveButton,
     MenuResponsive,
-    FiltersButton,
     MenuDropdown,
-    FiltersResponsive,
   },
   data() {
     return {
       windowTop: 0,
       isResponsiveMenuOpened: false,
       isProfileMenuOpened: false,
-      isFiltersResponsiveOpened: false,
       profileMenuDropdown: [
         { label: "Profile", url: "profile", state: "enable" },
         { label: "Messagerie", url: "index", state: "disabled" },

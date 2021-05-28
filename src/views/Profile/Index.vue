@@ -335,18 +335,16 @@ export default {
       };
     },
     getSelectedTab(value) {
-      console.log(value);
       this.$router.replace({ query: { tab: value } }).catch(() => {});
     },
     handleClickTab() {
-      console.log("heyy");
+      console.log("ckick");
     },
     changeSwapState(response, swap) {
       const swapstateId = this.allSwapstate.find(
         (swapstate) => swapstate.slug == response
       )._id;
       if (response != "canceled") {
-        console.log(swap);
         const datas = {
           id: swap._id,
           payload: {
@@ -355,7 +353,6 @@ export default {
         };
         this.isReponseAccepted = true;
 
-        console.log(datas);
         this.updateSwap(datas);
       } else {
         //TODO : delete swap

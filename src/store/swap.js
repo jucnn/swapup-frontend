@@ -57,7 +57,6 @@ const actions = {
     commit("setSwap", data.data.data);
   },
   async createSwap({ commit }, data) {
-    console.log(data);
     await axios.post(
       `${apiUrl}swap`,
       {
