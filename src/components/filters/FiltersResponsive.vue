@@ -7,7 +7,7 @@
         <h3>Mots-clés</h3>
         <SearchBar @search="searchChanged" />
       </div>
-      <div>
+      <div class="filters-responsive_item">
         <h3>Catégories</h3>
         <Select
           v-if="categoriesWithAll"
@@ -16,7 +16,7 @@
           @select="categoryChecked"
         />
       </div>
-      <div>
+      <div class="filters-responsive_item">
         <h3>Etat</h3>
         <div>
           <Checkbox
@@ -58,7 +58,7 @@ export default {
       filters: {
         checkedStates: [],
         checkedCategory: null,
-        search: null,
+        search: "",
       },
       categoriesWithAll: null,
       /*    checkCategory: null, */
@@ -114,5 +114,9 @@ export default {
   z-index: 200;
   background-color: $white;
   padding: 20px;
+
+  &_item {
+    margin-top: 30px;
+  }
 }
 </style>
