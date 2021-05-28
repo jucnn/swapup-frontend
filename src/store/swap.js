@@ -8,7 +8,7 @@ const state = () => ({
   swap: null,
   sentSwapByUser: [],
   receivedSwapByUser: [],
-  allSwapstate: []
+  allSwapstate: [],
 });
 
 const getters = {
@@ -29,8 +29,8 @@ const mutations = {
     state.receivedSwapByUser = val;
   },
   setAllSwapstate(state, val) {
-    state.allSwapstate = val
-  }
+    state.allSwapstate = val;
+  },
 };
 
 const actions = {
@@ -42,13 +42,17 @@ const actions = {
   },
   async fetchSentSwapByUser({ commit }) {
     const data = await axios.get(`${authUrl}swapsent`, {
-      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
     });
     commit("setSentSwapByUser", data.data);
   },
   async fetchReceivedSwapByUser({ commit }) {
     const data = await axios.get(`${authUrl}swapreceived`, {
-      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
     });
     commit("setReceivedSwapByUser", data.data);
   },
@@ -60,10 +64,12 @@ const actions = {
     await axios.post(
       `${apiUrl}swap`,
       {
-        ...data,
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
       },
       {
-        withCredentials: true,
+        ...data,
       }
     );
   },
@@ -71,10 +77,12 @@ const actions = {
     await axios.patch(
       `${apiUrl}swap/${data.id}`,
       {
-        ...data.payload,
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
       },
       {
-        withCredentials: true,
+        ...data,
       }
     );
   },

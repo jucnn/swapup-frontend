@@ -46,7 +46,9 @@ const actions = {
         ...data.payload,
       },
       {
-        withCredentials: true,
+        headers: {
+          'Authorization': `Bearer ${userToken}`,
+        },
       }
     );
   },

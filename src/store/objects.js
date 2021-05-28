@@ -35,10 +35,12 @@ const actions = {
     await axios.post(
       `${apiUrl}object/search`,
       {
-        ...data,
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
       },
       {
-        withCredentials: true,
+        ...data,
       }
     );
   },
@@ -46,10 +48,12 @@ const actions = {
     await axios.post(
       `${apiUrl}object`,
       {
-        ...data,
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
       },
       {
-        withCredentials: true,
+        ...data,
       }
     );
   },
@@ -57,20 +61,21 @@ const actions = {
     await axios.patch(
       `${apiUrl}object/${data.id}`,
       {
-        ...data.payload,
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
       },
       {
-        withCredentials: true,
+        ...data.payload,
       }
     );
   },
   async deleteObject({ commit }, id) {
-    await axios.delete(
-      `${apiUrl}object/${id}`,
-      {
-        withCredentials: true,
-      }
-    );
+    await axios.delete(`${apiUrl}object/${id}`, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
   },
 };
 
