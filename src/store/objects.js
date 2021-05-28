@@ -1,4 +1,5 @@
 import axios from "axios";
+import Vue from "vue";
 import VueCookies from "vue-cookies";
 
 const apiUrl = `${process.env.VUE_APP_API_URL}api/`;
