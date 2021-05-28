@@ -80,10 +80,11 @@ const actions = {
     );
   },
   async updateSwap({ commit }, data) {
+    console.log(data);
     await axios.patch(
       `${apiUrl}swap/${data.id}`,
       {
-        ...data,
+        ...data.payload,
       },
       {
         headers: {
