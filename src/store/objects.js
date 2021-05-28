@@ -1,6 +1,11 @@
 import axios from "axios";
+import VueCookies from "vue-cookies";
 
 const apiUrl = `${process.env.VUE_APP_API_URL}api/`;
+
+Vue.use(VueCookies);
+
+const userToken = Vue.$cookies.get(process.env.VUE_APP_COOKIE_NAME);
 
 const state = () => ({
   allObjects: [],
