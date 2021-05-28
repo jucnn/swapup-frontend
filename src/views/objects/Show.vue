@@ -24,7 +24,7 @@
               >{{ object.seller.username }}</router-link
             >
           </p>
-          <p>Membre depuis {{ object.seller.creationDate }} (use Moment)</p>
+          <p>Membre depuis le {{ new Date(profile.creationDate).toLocaleDateString() }}</p>
           <div>
             <p v-if="object.seller.objectsWanted">A la recherche de :</p>
             {{ object.seller.objectsWanted }}
