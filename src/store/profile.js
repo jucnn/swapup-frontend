@@ -51,20 +51,26 @@ const actions = {
     );
   },
   async fetchUserObjects({ commit }) {
-    const data = await axios.get(`${apiUrl}auth/objects`, {
-      withCredentials: true,
+    const data = await axios.get(`${apiUrl}auth/objects`,  {
+      headers: {
+        'Authorization': `Bearer ${userToken}`,
+      },
     });
     commit("setUserObjects", data.data);
   },
   async fetchUserSwapSent({ commit }) {
-    const data = await axios.get(`${apiUrl}auth/swapsent`, {
-      withCredentials: true,
+    const data = await axios.get(`${apiUrl}auth/swapsent`,  {
+      headers: {
+        'Authorization': `Bearer ${userToken}`,
+      },
     });
     commit("setUserSwapSent", data.data);
   },
   async fetchUserSwapReceived({ commit }) {
-    const data = await axios.get(`${apiUrl}auth/swapReceived`, {
-      withCredentials: true,
+    const data = await axios.get(`${apiUrl}auth/swapReceived`,  {
+      headers: {
+        'Authorization': `Bearer ${userToken}`,
+      },
     });
     commit("setUserSwapReceived", data.data);
   },
