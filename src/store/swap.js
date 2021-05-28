@@ -64,12 +64,12 @@ const actions = {
     await axios.post(
       `${apiUrl}swap`,
       {
+        ...data,
+      },
+      {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
-      },
-      {
-        ...data,
       }
     );
   },
@@ -77,12 +77,12 @@ const actions = {
     await axios.patch(
       `${apiUrl}swap/${data.id}`,
       {
+        ...data,
+      },
+      {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
-      },
-      {
-        ...data,
       }
     );
   },

@@ -35,12 +35,12 @@ const actions = {
     await axios.post(
       `${apiUrl}object/search`,
       {
+        ...data,
+      },
+      {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
-      },
-      {
-        ...data,
       }
     );
   },
@@ -48,12 +48,12 @@ const actions = {
     await axios.post(
       `${apiUrl}object`,
       {
+        ...data,
+      },
+      {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
-      },
-      {
-        ...data,
       }
     );
   },
@@ -61,12 +61,12 @@ const actions = {
     await axios.patch(
       `${apiUrl}object/${data.id}`,
       {
+        ...data.payload,
+      },
+      {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
-      },
-      {
-        ...data.payload,
       }
     );
   },
