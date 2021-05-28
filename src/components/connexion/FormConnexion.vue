@@ -215,7 +215,7 @@ export default {
           },
           { withCredentials: true }
         )
-        .then(() => {
+        .then((data) => {
           this.$cookies.set(process.env.VUE_APP_COOKIE_NAME, data.data.data);
           this.$router.push({ name: "profile" });
         })
