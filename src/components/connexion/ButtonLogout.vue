@@ -10,6 +10,8 @@ import axios from "axios";
 export default {
   methods: {
     logout() {
+      this.$cookies.remove(process.env.VUE_APP_COOKIE_NAME);
+
       axios
         .get(`${process.env.VUE_APP_API_URL}auth/logout`, {
           withCredentials: true,
@@ -19,6 +21,7 @@ export default {
           this.$router.push({ name: "index" });
         })
         .catch((err) => console.log(err));
+      this.$router.push({ name: "index" });
     },
   },
 };
